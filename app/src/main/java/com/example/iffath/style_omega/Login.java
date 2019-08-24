@@ -2,7 +2,9 @@ package com.example.iffath.style_omega;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -15,10 +17,14 @@ import java.util.List;
 public class Login extends AppCompatActivity {
     EditText pw;
     EditText uname;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.AppTheme);
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
     }
 
@@ -35,6 +41,10 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(this, "Invalid password", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Welcome Back " + username, Toast.LENGTH_SHORT).show();
+                sharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("username",username);
+                editor.commit();
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
             }
