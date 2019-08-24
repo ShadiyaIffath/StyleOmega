@@ -26,12 +26,13 @@ public class Login extends AppCompatActivity {
         //if user has logged in then the username will be retrieved
         sharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
         username = sharedPreferences.getString("username",null);
+
         if(!username.isEmpty()){//the user will be directed to the home page directly
             Toast.makeText(this, "Welcome Back " + username, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, home.class);
             startActivity(intent);
         }
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState); //the user has not logged in hence will be directed to the login page
 
         setContentView(R.layout.activity_login);
     }
@@ -43,20 +44,25 @@ public class Login extends AppCompatActivity {
         String password = pw.getText().toString();
 
         if (!User.find(User.class,"username=?",username).isEmpty()) {
+
             String[] login = {username, password};
+
             if (User.find(User.class, "username=? and password=?", login).isEmpty()) {
+
                 pw.setError("Invalid Password");
                 Toast.makeText(this, "Invalid password", Toast.LENGTH_SHORT).show();
             } else {
+
                 Toast.makeText(this, "Welcome Back " + username, Toast.LENGTH_SHORT).show();
+
                 //on successful login we store the logged in user's username so that the user doesn't have to login everytime
-                    //the app lauches
+                    //the app launches
                 sharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("username",username);
                 editor.apply();
 
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, home.class);
                 startActivity(intent);
             }
         }
