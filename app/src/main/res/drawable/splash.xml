@@ -6,6 +6,6 @@ android:opacity="opaque">
 <item>
     <bitmap
         android:gravity="center"
-        android:src="@drawable/wings"/>
+        android:src="@drawable/splashwings"/>
 </item>
 </layer-list>

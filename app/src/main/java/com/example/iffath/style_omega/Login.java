@@ -17,12 +17,20 @@ import java.util.List;
 public class Login extends AppCompatActivity {
     EditText pw;
     EditText uname;
+    String username;
     SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
-
+        //if user has logged in then the username will be retrieved
+        sharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        username = sharedPreferences.getString("username",null);
+        if(!username.isEmpty()){//the user will be directed to the home page directly
+            Toast.makeText(this, "Welcome Back " + username, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_login);
@@ -31,7 +39,7 @@ public class Login extends AppCompatActivity {
     public void onClick(View view){
         uname = findViewById(R.id.usernametxt);
         pw = findViewById(R.id.pwtxt);
-        String username = uname.getText().toString().toLowerCase();
+        username = uname.getText().toString().toLowerCase();
         String password = pw.getText().toString();
 
         if (!User.find(User.class,"username=?",username).isEmpty()) {
@@ -41,10 +49,13 @@ public class Login extends AppCompatActivity {
                 Toast.makeText(this, "Invalid password", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Welcome Back " + username, Toast.LENGTH_SHORT).show();
+                //on successful login we store the logged in user's username so that the user doesn't have to login everytime
+                    //the app lauches
                 sharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("username",username);
-                editor.commit();
+                editor.apply();
+
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
             }
