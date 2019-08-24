@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.iffath.style_omega.Model.User;
+
 public class Register extends AppCompatActivity {
     EditText uname,passTxt,emailTxt,nameTxt, numberTxt;
 
@@ -24,7 +26,7 @@ public class Register extends AppCompatActivity {
     public void onRegister(View view){
         uname=  findViewById(R.id.regUsername);
         String username = uname.getText().toString().toLowerCase();
-        String name, email, password,number;     //declare string variables to hold registered attributes
+        String name, email, password, number;     //declare string variables to hold registered attributes
         boolean validator = false;
 
         nameTxt = findViewById(R.id.regName);
@@ -60,6 +62,8 @@ public class Register extends AppCompatActivity {
         }
         else {
             Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show();
+            User user = new User(name,username,email,password,number);
+            user.save();
         }
 
         Intent intent = new Intent(this,MainActivity.class);
