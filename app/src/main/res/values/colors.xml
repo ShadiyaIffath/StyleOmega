@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="design_default_color_primary_dark">#800080</color>
+    <color name="design_default_color_primary">#8A2BE2</color>
+    <color name="thirstle">#D8BFD8</color>
+    <color name="mediumpurple">#9370DB</color>
+    <color name="indigo">#4B0082</color>
+    <color name="midnightblue">#191970</color>
+    <color name="pink_glass">#D3BECF</color>
+    <color name="sea_urchin">#9F5F9F</color>
+</resources>
