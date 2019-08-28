@@ -13,16 +13,13 @@
         android:layout_height="278dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="224dp"
         android:src="@drawable/rectangle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.315" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/usernametxt"
@@ -33,7 +30,7 @@
         android:layout_marginTop="45dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:background="@android:color/background_light"
+        android:background="@drawable/logintext"
         android:ems="10"
         android:gravity="center"
         android:hint="Username"
@@ -55,7 +52,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:background="@android:color/background_light"
+        android:background="@drawable/logintext"
         android:ems="10"
         android:gravity="center"
         android:hint="Password"
@@ -70,13 +67,14 @@
 
     <Button
         android:id="@+id/signIn"
-        android:layout_width="78dp"
-        android:layout_height="30dp"
+        android:layout_width="84dp"
+        android:layout_height="34dp"
         android:layout_marginTop="16dp"
-        android:background="@color/midnightblue"
+        android:background="@drawable/loginbuttons"
         android:onClick="onClick"
-        android:text="Sign In"
-        android:textColor="@color/mediumpurple"
+        android:text="Login"
+        android:focusable="true"
+        android:textColor="@color/midnightblue"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pwtxt" />
@@ -88,6 +86,7 @@
         android:layout_marginTop="32dp"
         android:clickable="true"
         android:onClick="getRegistered"
+        android:focusable="true"
         android:text="No account? Register"
         android:textColor="@color/midnightblue"
         app:layout_constraintEnd_toEndOf="parent"
@@ -95,35 +94,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signIn" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        app:srcCompat="@drawable/wings" />
-
     <TextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="244dp"
+        android:layout_height="52dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:text="Style Omega"
-        android:textColor="@color/indigo"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:text="Welcome Back!"
+        android:textColor="@color/midnightblue"
         android:textSize="36sp"
         app:fontFamily="cursive"
+        app:layout_constraintBottom_toTopOf="@+id/regContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.398" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,6 +17,7 @@ public class Register extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(R.style.HiddenTitleTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
     }
@@ -29,7 +30,10 @@ public class Register extends AppCompatActivity {
         uname=  findViewById(R.id.regUsername);
         String username = uname.getText().toString().toLowerCase();
         String name, email, password, number;     //declare string variables to hold registered attributes
-        boolean validator = false;
+
+        if (!username.isEmpty() && !User.find(User.class,"username=?",username).isEmpty()) {
+            uname.setError("Username is already in use");
+        }
 
         nameTxt = findViewById(R.id.regName);
         name = nameTxt.getText().toString();
@@ -44,7 +48,7 @@ public class Register extends AppCompatActivity {
         password = passTxt.getText().toString();
 
 
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty()|| number.isEmpty() ||validator == true) {
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty()|| number.isEmpty() ||username.isEmpty()) {
             if (name.isEmpty()) {
                 nameTxt.setError("Name cannot be blank");
             }
@@ -63,13 +67,16 @@ public class Register extends AppCompatActivity {
             Toast.makeText(this, "Registration failed", Toast.LENGTH_SHORT).show();
         }
         else {
-            Toast.makeText(this, "Registration successful", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Welcome "+username, Toast.LENGTH_SHORT).show();
             User user = new User(name,username,email,password,number);
             user.save();
+
+            //once successfully registered the username is stored to prevent the user having to login again unless they logout
             SharedPreferences sharedPreferences  = getSharedPreferences("preferences", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("username",username);
             editor.apply();
+
             Intent intent = new Intent(this,home.class);
             startActivity(intent);
 

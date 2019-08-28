@@ -22,18 +22,8 @@ public class Login extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
-        //if user has logged in then the username will be retrieved
-        sharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
-        username = sharedPreferences.getString("username",null);
-
-        if(!username.isEmpty()){//the user will be directed to the home page directly
-            Toast.makeText(this, "Welcome Back " + username, Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, home.class);
-            startActivity(intent);
-        }
-        super.onCreate(savedInstanceState); //the user has not logged in hence will be directed to the login page
-
+        setTheme(R.style.HiddenTitleTheme);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
     }
 
