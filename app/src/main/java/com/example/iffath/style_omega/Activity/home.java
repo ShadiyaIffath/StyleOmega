@@ -25,18 +25,18 @@ public class home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-//
-//        hamMenu = findViewById(R.id.btnMenu);
-//        navDrawer = findViewById(R.id.navView);
-//
-//        hamMenu.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                DrawerLayout navDrawer = findViewById(R.id.home_drawer);
-//                // If the navigation drawer is not open then open it, if its already open then close it.
-//                if(!navDrawer.isDrawerOpen(GravityCompat.START)) navDrawer.openDrawer(GravityCompat.START);
-//                else navDrawer.closeDrawer(GravityCompat.START, false);
-//            }
-//        });
+
+        hamMenu = findViewById(R.id.btnMenu);
+        navDrawer = findViewById(R.id.navView);
+
+        hamMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DrawerLayout navDrawer = findViewById(R.id.home_drawer);
+                // If the navigation drawer is not open then open it, if its already open then close it.
+                if(!navDrawer.isDrawerOpen(GravityCompat.START)) navDrawer.openDrawer(GravityCompat.START);
+                else navDrawer.closeDrawer(GravityCompat.START, false);
+            }
+        });
     }
 }
