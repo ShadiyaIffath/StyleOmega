@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.example.iffath.style_omega.R;
 
-public class homeS extends AppCompatActivity {
+public class Launcher extends AppCompatActivity {
     String username;
     SharedPreferences sharedPreferences;
     @Override
@@ -27,7 +27,7 @@ public class homeS extends AppCompatActivity {
 //        else {
             setTheme(R.style.HiddenTitleTheme);
             super.onCreate(savedInstanceState); //the user has not logged in hence will be directed to the login page
-            setContentView(R.layout.activity_home_s);
+            setContentView(R.layout.activity_launcher);
         //}
     }
 

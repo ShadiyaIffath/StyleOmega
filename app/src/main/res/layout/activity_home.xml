@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.home">
+    android:background="@android:color/background_light"
+    tools:openDrawer="start">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <include
+        layout="@layout/home_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <androidx.navigationview.widget.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:headerLayout="@layout/nav_header"
+        app:menu="@menu/menu"
+        android:layout_gravity="start"
+        android:id="@+id/navView">
+
+    </androidx.navigationview.widget.NavigationView>
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
