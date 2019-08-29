@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Style Omega</string>
+    <string name="reg">Register</string>
+    <string name="login">Login</string>
+    <string name="cart">My Cart</string>
+    <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
+    <string name="history">History</string>
 </resources>

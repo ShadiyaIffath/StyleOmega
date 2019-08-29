@@ -81,8 +81,8 @@ public class Register extends AppCompatActivity {
             startActivity(intent);
 
         }
-
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
+//
+//        Intent intent = new Intent(this,MainActivity.class);
+//        startActivity(intent);
     }
 }

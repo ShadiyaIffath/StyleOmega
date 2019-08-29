@@ -26,8 +26,8 @@
 
     <Button
         android:id="@+id/regButton"
-        android:layout_width="90dp"
-        android:layout_height="30dp"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="32dp"
@@ -37,17 +37,18 @@
         android:background="@drawable/loginbuttons"
         android:focusable="true"
         android:onClick="onRegister"
-        android:text="Register"
-        android:textColor="@color/midnightblue"
+        android:text="@string/reg"
+        android:textColor="@android:color/background_light"
         app:layout_constraintBottom_toTopOf="@+id/loginLink"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/regPw" />
+        app:layout_constraintTop_toBottomOf="@+id/regPw"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
         android:id="@+id/regEmail"
-        android:layout_width="245dp"
+        android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
@@ -70,7 +71,7 @@
 
     <EditText
         android:id="@+id/regPw"
-        android:layout_width="245dp"
+        android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
@@ -93,7 +94,7 @@
 
     <EditText
         android:id="@+id/regUsername"
-        android:layout_width="245dp"
+        android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
@@ -116,7 +117,7 @@
 
     <EditText
         android:id="@+id/regName"
-        android:layout_width="245dp"
+        android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
@@ -140,7 +141,7 @@
 
     <EditText
         android:id="@+id/regNumber"
-        android:layout_width="245dp"
+        android:layout_width="300dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
@@ -148,14 +149,14 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:background="@drawable/logintext"
-        android:textColor="@color/midnightblue"
-        android:textColorHighlight="@color/midnightblue"
-        android:textColorLink="@color/design_default_color_primary_dark"
-        android:textCursorDrawable="@color/midnightblue"
         android:ems="10"
         android:gravity="center"
         android:hint="Contact Number"
         android:inputType="phone"
+        android:textColor="@color/midnightblue"
+        android:textColorHighlight="@color/midnightblue"
+        android:textColorLink="@color/design_default_color_primary_dark"
+        android:textCursorDrawable="@color/midnightblue"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.507"
@@ -187,16 +188,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="72dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:text="Create An Account"
         android:textAllCaps="false"
-        android:textColor="@color/midnightblue"
+        android:textColor="@android:color/background_light"
         android:textSize="36sp"
         app:fontFamily="cursive"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
