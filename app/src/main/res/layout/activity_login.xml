@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/custom_half_screen"
-    tools:context=".Login">
+    tools:context=".Activity.Login">
 
     <ImageView
         android:id="@+id/regContainer"

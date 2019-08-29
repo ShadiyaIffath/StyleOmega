@@ -1,4 +1,4 @@
-package com.example.iffath.style_omega;
+package com.example.iffath.style_omega.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,8 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.iffath.style_omega.Model.User;
-
-import java.util.List;
+import com.example.iffath.style_omega.R;
 
 public class Login extends AppCompatActivity {
     EditText pw;
@@ -47,10 +46,10 @@ public class Login extends AppCompatActivity {
 
                 //on successful login we store the logged in user's username so that the user doesn't have to login everytime
                     //the app launches
-                sharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("username",username);
-                editor.apply();
+//                sharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sharedPreferences.edit();
+//                editor.putString("username",username);
+//                editor.apply();
 
                 Intent intent = new Intent(this, home.class);
                 startActivity(intent);

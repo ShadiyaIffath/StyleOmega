@@ -1,8 +1,10 @@
-package com.example.iffath.style_omega;
+package com.example.iffath.style_omega.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.iffath.style_omega.R;
 
 public class home extends AppCompatActivity {
 

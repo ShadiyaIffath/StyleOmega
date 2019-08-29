@@ -1,4 +1,4 @@
-package com.example.iffath.style_omega;
+package com.example.iffath.style_omega.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.iffath.style_omega.Model.User;
+import com.example.iffath.style_omega.R;
 
 public class Register extends AppCompatActivity {
     EditText uname,passTxt,emailTxt,nameTxt, numberTxt;
@@ -81,8 +82,6 @@ public class Register extends AppCompatActivity {
             startActivity(intent);
 
         }
-//
-//        Intent intent = new Intent(this,MainActivity.class);
-//        startActivity(intent);
+
     }
 }
