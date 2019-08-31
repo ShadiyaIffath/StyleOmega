@@ -13,6 +13,9 @@ import android.widget.Toast;
 import com.example.iffath.style_omega.Model.User;
 import com.example.iffath.style_omega.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Login extends AppCompatActivity {
     EditText pw;
     EditText uname;
@@ -35,8 +38,8 @@ public class Login extends AppCompatActivity {
         if (!User.find(User.class,"username=?",username).isEmpty()) {
 
             String[] login = {username, password};
-
-            if (User.find(User.class, "username=? and password=?", login).isEmpty()) {
+            List<User> users =User.find(User.class, "username=? and password=?", login);
+            if (users.isEmpty()) {
 
                 pw.setError("Invalid Password");
                 Toast.makeText(this, "Invalid password", Toast.LENGTH_SHORT).show();
@@ -44,12 +47,12 @@ public class Login extends AppCompatActivity {
 
                 Toast.makeText(this, "Welcome Back " + username, Toast.LENGTH_SHORT).show();
 
-                //on successful login we store the logged in user's username so that the user doesn't have to login everytime
-                    //the app launches
-//                sharedPreferences = getSharedPreferences("preferences", Context.MODE_PRIVATE);
-//                SharedPreferences.Editor editor = sharedPreferences.edit();
-//                editor.putString("username",username);
-//                editor.apply();
+//                on successful login we store the logged in user's username so that the user doesn't have to login everytime
+//                    the app launches
+                sharedPreferences = getSharedPreferences(Launcher.keyPreference, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("username",username);
+                editor.apply();
 
                 Intent intent = new Intent(this, home.class);
                 startActivity(intent);

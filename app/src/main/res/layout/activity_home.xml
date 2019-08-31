@@ -7,10 +7,25 @@
     android:background="@android:color/background_light"
     tools:openDrawer="start">
 
-    <include
-        layout="@layout/home_app_bar"
+    <!-- This LinearLayout represents the contents of the screen  -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <!-- The ActionBar displayed at the top -->
+    <include
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <!-- Location where fragments are loaded -->
+    <FrameLayout
+        android:id="@+id/display_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"
@@ -18,7 +33,7 @@
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/menu"
         android:layout_gravity="start"
-        android:id="@+id/navView">
+        android:id="@+id/navigationHome">
 
     </com.google.android.material.navigation.NavigationView>
 

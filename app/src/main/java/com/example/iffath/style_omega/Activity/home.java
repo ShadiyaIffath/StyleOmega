@@ -4,39 +4,152 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.example.iffath.style_omega.Fragment.ViewCart;
+import com.example.iffath.style_omega.Fragment.home_page;
+import com.example.iffath.style_omega.Model.User;
 import com.example.iffath.style_omega.R;
 import com.google.android.material.navigation.NavigationView;
 
-public class home extends AppCompatActivity {
-    private DrawerLayout drawerLayout;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
-    private boolean drawer_state;
-    private NavigationView navDrawer;
-    ImageButton hamMenu;
+import org.jetbrains.annotations.NotNull;
 
+public class home extends AppCompatActivity {
+    private DrawerLayout drawer;
+    private ActionBarDrawerToggle drawerToggle;
+    private Toolbar toolbar;
+    FragmentManager fragmentManager;
+    private NavigationView navDrawer;
+    private View navigationHeader;
+    TextView nametxt;
+    String username;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        hamMenu = findViewById(R.id.btnMenu);
-        navDrawer = findViewById(R.id.navView);
+        //display home fragment as the default for the home screen
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.display_screen, new home_page()).commit();
+        //option 2
+//            home_page homeFragment = new home_page();
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id.display_screen,homeFragment)
+//                    .commit();
 
-        hamMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DrawerLayout navDrawer = findViewById(R.id.home_drawer);
-                // If the navigation drawer is not open then open it, if its already open then close it.
-                if(!navDrawer.isDrawerOpen(GravityCompat.START)) navDrawer.openDrawer(GravityCompat.START);
-                else navDrawer.closeDrawer(GravityCompat.START, false);
-            }
-        });
+        //retrieve username
+          sharedPreferences = getSharedPreferences(Launcher.keyPreference, Context.MODE_PRIVATE);
+          username = sharedPreferences.getString("username",null);
+        // The custom toolbar replaces the action bar
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        drawer = findViewById(R.id.home_drawer);
+        drawerToggle = setupDrawerToggle();
+        drawerToggle.setDrawerIndicatorEnabled(true);
+        drawerToggle.syncState();
+
+        navDrawer = findViewById(R.id.navigationHome);
+        navigationHeader = navDrawer.getHeaderView(0);
+        nametxt = navigationHeader.findViewById(R.id.navigation_user);
+        nametxt.setText(username); //ser username
+        setupDrawerContent(navDrawer);
+
     }
+
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(this, drawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
+    }
+
+    //method which doesn't change activity when user clicks back button when the drawer is open
+    @Override
+    public void onBackPressed() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up action should open or close the drawer.
+
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void setupDrawerContent(@NotNull NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NotNull MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
+    }
+
+    public void selectDrawerItem(@NotNull MenuItem menuItem) {       //fragment navigation click event logic
+        Fragment fragment = null;
+        Class fragmentLogic;
+        int id =menuItem.getItemId();
+
+        switch(id){
+            case R.id.nav_homepage:
+                fragmentLogic = home_page.class;
+                break;
+//            case R.id.nav_history:
+//                fragmentLogic = History.class;
+//                break;
+            case R.id.nav_viewCart:
+                fragmentLogic = ViewCart.class;
+                break;
+
+            case R.id.nav_logout:
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                this.finish();
+
+                default:
+                    fragmentLogic = home_page.class;
+        }
+        try {
+            fragment = (Fragment) fragmentLogic.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.display_screen, fragment);
+        fragmentTransaction.commit();//replaces existing fragment with the selected menu item
+
+        menuItem.setChecked(true); //this highlights to show what the current fragment is
+
+        setTitle(menuItem.getTitle()); //the selected option title is displayed on the toolbar
+
+        drawer.closeDrawer(GravityCompat.START); //close the drawer
+
+    }
+
+
+
 }
