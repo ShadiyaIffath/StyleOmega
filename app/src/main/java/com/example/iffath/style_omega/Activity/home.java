@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.iffath.style_omega.Fragment.Profile;
 import com.example.iffath.style_omega.Fragment.ViewCart;
 import com.example.iffath.style_omega.Fragment.home_page;
 import com.example.iffath.style_omega.Model.User;
@@ -74,13 +75,6 @@ public class home extends AppCompatActivity {
         setupDrawerContent(navDrawer);
     }
 
-    private void homeFragment(){
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.display_screen, home_page.getInstance())
-                .commit();
-    }
-
-
     private ActionBarDrawerToggle setupDrawerToggle() {
         return new ActionBarDrawerToggle(this, drawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
     }
@@ -119,20 +113,24 @@ public class home extends AppCompatActivity {
     public void selectDrawerItem(@NotNull MenuItem menuItem) {       //fragment navigation click event logic
 
         Fragment fragment = null;
-        Class fragmentLogic;
         int id =menuItem.getItemId(); //id of the menu item selected
 
         switch(id){
             case R.id.nav_homepage:
                 Toast.makeText(this,"Home",Toast.LENGTH_SHORT).show();
-                //fragmentLogic = home_page.class;
+                fragment = new home_page();
                 break;
 //            case R.id.nav_history:
 //                fragmentLogic = History.class;
 //                break;
             case R.id.nav_viewCart:
                 Toast.makeText(this,"My Cart",Toast.LENGTH_SHORT).show();
-                fragmentLogic = ViewCart.class;
+                fragment = new ViewCart();
+                break;
+
+            case R.id.nav_editprofile:
+                Toast.makeText(this,"View Profile",Toast.LENGTH_SHORT).show();
+                fragment = new Profile();
                 break;
 
             case R.id.nav_logout:
@@ -143,13 +141,14 @@ public class home extends AppCompatActivity {
                 startActivity(intent);
 
                 default:
-                    fragmentLogic = home_page.class;
+                    fragment = new home_page();
         }
-        try {
-            //fragment = (Fragment) fragmentLogic.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.display_screen, fragment)
+                .commit();
 //
 //        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 //        fragmentTransaction.replace(R.id.display_screen, fragment);
