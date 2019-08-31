@@ -25,6 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -36,7 +37,5 @@
         android:id="@+id/navigationHome">
 
     </com.google.android.material.navigation.NavigationView>
-
-
 
 </androidx.drawerlayout.widget.DrawerLayout>

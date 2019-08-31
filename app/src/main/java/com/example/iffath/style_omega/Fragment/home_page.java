@@ -35,7 +35,9 @@ public class home_page extends Fragment {
     public home_page() {
         // Required empty public constructor
     }
-
+    public static home_page getInstance(){
+        return new home_page();
+    }
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.

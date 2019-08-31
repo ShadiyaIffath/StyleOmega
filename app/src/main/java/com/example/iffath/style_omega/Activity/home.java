@@ -11,11 +11,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -26,6 +25,7 @@ import com.example.iffath.style_omega.R;
 import com.google.android.material.navigation.NavigationView;
 
 import org.jetbrains.annotations.NotNull;
+import butterknife.ButterKnife;
 
 public class home extends AppCompatActivity {
     private DrawerLayout drawer;
@@ -44,34 +44,36 @@ public class home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         //display home fragment as the default for the home screen
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.display_screen, new home_page()).commit();
-        //option 2
-//            home_page homeFragment = new home_page();
-//            getSupportFragmentManager().beginTransaction()
-//                    .add(R.id.display_screen,homeFragment)
-//                    .commit();
+          //homeFragment(); //fail
 
-        //retrieve username
+        //retrieve logged user's username
           sharedPreferences = getSharedPreferences(Launcher.keyPreference, Context.MODE_PRIVATE);
           username = sharedPreferences.getString("username",null);
+
         // The custom toolbar replaces the action bar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        drawer = findViewById(R.id.home_drawer);
+        drawer = findViewById(R.id.home_drawer); //drawer state is settled
         drawerToggle = setupDrawerToggle();
         drawerToggle.setDrawerIndicatorEnabled(true);
         drawerToggle.syncState();
 
+        //navigation view is settled along with the header text field value
         navDrawer = findViewById(R.id.navigationHome);
         navigationHeader = navDrawer.getHeaderView(0);
-        nametxt = navigationHeader.findViewById(R.id.navigation_user);
-        nametxt.setText(username); //ser username
+        nametxt = ButterKnife.findById(navigationHeader,R.id.navigation_user);
+        nametxt.setText(username); //set username in the navigation header
         setupDrawerContent(navDrawer);
-
     }
+
+    private void homeFragment(){
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.display_screen, home_page.getInstance())
+                .commit();
+    }
+
 
     private ActionBarDrawerToggle setupDrawerToggle() {
         return new ActionBarDrawerToggle(this, drawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
@@ -109,38 +111,43 @@ public class home extends AppCompatActivity {
     }
 
     public void selectDrawerItem(@NotNull MenuItem menuItem) {       //fragment navigation click event logic
+
         Fragment fragment = null;
         Class fragmentLogic;
-        int id =menuItem.getItemId();
+        int id =menuItem.getItemId(); //id of the menu item selected
 
         switch(id){
             case R.id.nav_homepage:
-                fragmentLogic = home_page.class;
+                Toast.makeText(this,"Home",Toast.LENGTH_SHORT).show();
+                //fragmentLogic = home_page.class;
                 break;
 //            case R.id.nav_history:
 //                fragmentLogic = History.class;
 //                break;
             case R.id.nav_viewCart:
+                Toast.makeText(this,"My Cart",Toast.LENGTH_SHORT).show();
                 fragmentLogic = ViewCart.class;
                 break;
 
             case R.id.nav_logout:
+                Toast.makeText(this,"Logged Out",Toast.LENGTH_SHORT).show();
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();
-                this.finish();
+                Intent intent = new Intent(this,Launcher.class);
+                startActivity(intent);
 
                 default:
                     fragmentLogic = home_page.class;
         }
         try {
-            fragment = (Fragment) fragmentLogic.newInstance();
+            //fragment = (Fragment) fragmentLogic.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.display_screen, fragment);
-        fragmentTransaction.commit();//replaces existing fragment with the selected menu item
+//
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.display_screen, fragment);
+//        fragmentTransaction.commit();//replaces existing fragment with the selected menu item
 
         menuItem.setChecked(true); //this highlights to show what the current fragment is
 
