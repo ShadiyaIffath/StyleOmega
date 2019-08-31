@@ -45,6 +45,12 @@ public class home extends AppCompatActivity {
 
         //display home fragment as the default for the home screen
           //homeFragment(); //fail
+        if(savedInstanceState == null){
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.display_screen, home_page.getInstance())
+                    .commit();
+        }
 
         //retrieve logged user's username
           sharedPreferences = getSharedPreferences(Launcher.keyPreference, Context.MODE_PRIVATE);

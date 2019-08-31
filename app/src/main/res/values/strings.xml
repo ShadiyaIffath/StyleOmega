@@ -11,9 +11,14 @@
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
     <string name="menu_nav">burger</string>
+    <string name="men">Men</string>
+    <string name="women">Women</string>
+    <string name="kids">Kids</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="homeF">iffath.home.fragment</string>
+    <string name="edit">Edit</string>
+    <string name="confirm">Confirm</string>
 </resources>
