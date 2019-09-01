@@ -3,7 +3,7 @@ package com.example.iffath.style_omega.Model;
 import com.orm.SugarRecord;
 
 public class User extends SugarRecord {
-    private String name,username,email,password,contactNumber;
+    public String name,username,email,password,contactNumber;
 
     public User(){
 

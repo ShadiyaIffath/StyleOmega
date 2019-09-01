@@ -7,23 +7,37 @@
     android:background="@drawable/custom_half_screen"
     tools:context=".Fragment.Profile">
 
+    <ImageView
+        android:id="@+id/regContainer"
+        android:layout_width="359dp"
+        android:layout_height="390dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="100dp"
+        android:src="@drawable/rectangle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/profileUsername"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="190dp"
+        android:layout_height="64dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="80dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="75dp"
+        android:gravity="center"
         android:text="Username"
-        android:textColor="@android:color/background_dark"
-        android:textSize="50sp"
+        android:textColor="@android:color/background_light"
+        android:textSize="45sp"
         app:fontFamily="cursive"
+        app:layout_constraintBottom_toTopOf="@+id/regContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/profileName"
@@ -34,12 +48,15 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@color/thirstle"
+        android:background="@drawable/logintext"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:gravity="center"
         android:text="Name"
         android:textColor="@color/midnightblue"
         app:layout_constraintBottom_toTopOf="@+id/emailProfile"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -51,12 +68,14 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@color/thirstle"
+        android:background="@drawable/logintext"
+        android:focusableInTouchMode="false"
         android:gravity="center"
         android:text="email address"
         android:textColor="@color/midnightblue"
         app:layout_constraintBottom_toTopOf="@+id/contactProfile"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -68,12 +87,14 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@color/thirstle"
+        android:background="@drawable/logintext"
+        android:focusableInTouchMode="false"
         android:gravity="center"
         android:text="contact number"
         android:textColor="@color/midnightblue"
         app:layout_constraintBottom_toTopOf="@+id/passwordProfile"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -84,12 +105,12 @@
         android:layout_marginLeft="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/loginbuttons"
         android:text="@string/edit"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/regContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.474"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -100,12 +121,16 @@
         android:layout_marginLeft="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="75dp"
-        android:background="@color/thirstle"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/logintext"
         android:ems="10"
+        android:focusableInTouchMode="false"
+        android:gravity="center"
         android:inputType="textPassword"
         android:textColor="@color/midnightblue"
         app:layout_constraintBottom_toTopOf="@+id/profileButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:passwordToggleEnabled="true" />
 </androidx.constraintlayout.widget.ConstraintLayout>

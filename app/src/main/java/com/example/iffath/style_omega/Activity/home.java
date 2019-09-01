@@ -38,6 +38,7 @@ public class home extends AppCompatActivity {
     TextView nametxt;
     String username;
     SharedPreferences sharedPreferences;
+    public static String loggedUser= null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +57,7 @@ public class home extends AppCompatActivity {
         //retrieve logged user's username
           sharedPreferences = getSharedPreferences(Launcher.keyPreference, Context.MODE_PRIVATE);
           username = sharedPreferences.getString("username",null);
+          loggedUser = username;
 
         // The custom toolbar replaces the action bar
         toolbar = findViewById(R.id.toolbar);
