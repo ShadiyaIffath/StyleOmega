@@ -44,7 +44,7 @@ public class home extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        setTitle("Select Type");
         //display home fragment as the default for the home screen
           //homeFragment(); //fail
         if(savedInstanceState == null){

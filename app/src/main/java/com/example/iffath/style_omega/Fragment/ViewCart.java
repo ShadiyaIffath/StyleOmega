@@ -15,6 +15,9 @@ import com.example.iffath.style_omega.R;
 
 public class ViewCart extends Fragment {
 
+    public ViewCart(){
+        // Required empty public constructor
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

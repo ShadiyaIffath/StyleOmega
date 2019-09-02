@@ -10,47 +10,53 @@
         android:id="@+id/ll1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" >
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/womensImg"
             android:layout_width="match_parent"
-            android:layout_height="248dp"
+            android:layout_height="240dp"
             android:background="@drawable/women"
+            android:text="@string/women"
             android:textColor="@android:color/background_light"
             android:textSize="30sp"
-            tools:text="@string/women" />
+            android:scaleType="centerCrop"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll3"
         android:layout_width="match_parent"
         android:layout_height="249dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/mensImage"
             android:layout_width="match_parent"
-            android:layout_height="298dp"
+            android:layout_height="248dp"
             android:background="@drawable/men"
+            android:text="@string/men"
             android:textColor="@android:color/background_light"
             android:textSize="30sp"
-            tools:text="@string/men" />
+            android:scaleType="centerCrop"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1" >
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/kidsImage"
             android:layout_width="match_parent"
-            android:layout_height="254dp"
+            android:layout_height="240dp"
             android:background="@drawable/kids"
+            android:text="@string/kids"
             android:textColor="@android:color/background_light"
             android:textSize="30sp"
-            tools:text="@string/kids" />
+            android:scaleType="centerCrop"/>
     </LinearLayout>
 </LinearLayout>

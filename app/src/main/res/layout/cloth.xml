@@ -15,7 +15,7 @@
         <Button
             android:id="@+id/womensImg"
             android:layout_width="match_parent"
-            android:layout_height="198dp"
+            android:layout_height="245dp"
             android:background="@drawable/women"
             android:textColor="@android:color/background_light"
             android:textSize="30sp"
@@ -31,7 +31,7 @@
         <Button
             android:id="@+id/mensImage"
             android:layout_width="match_parent"
-            android:layout_height="357dp"
+            android:layout_height="245dp"
             android:background="@drawable/men"
             android:textColor="@android:color/background_light"
             android:textSize="30sp"
@@ -47,7 +47,7 @@
         <Button
             android:id="@+id/kidsImage"
             android:layout_width="match_parent"
-            android:layout_height="254dp"
+            android:layout_height="245dp"
             android:background="@drawable/kids"
             android:textColor="@android:color/background_light"
             android:textSize="30sp"
