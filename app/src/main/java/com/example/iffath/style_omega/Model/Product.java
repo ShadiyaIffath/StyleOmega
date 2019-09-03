@@ -1,10 +1,12 @@
 package com.example.iffath.style_omega.Model;
 
 import android.media.Image;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.util.ArrayList;
 
-public class Product {
+public class Product implements Parcelable {
     private String title;
     private String description;
     private String type;
@@ -20,7 +22,21 @@ public class Product {
     public Product(){
 
     }
-    public Product(String title, String description, String type, String customer, int quantity, double price,int thumbnail) {
+
+    public Product(String title, String description, String type, String customer, int quantity, double price, int thumbnail, ArrayList<String> colors, ArrayList<Integer> sizes, ArrayList<Image> images) {
+        this.title = title;
+        this.description = description;
+        this.type = type;
+        this.customer = customer;
+        this.quantity = quantity;
+        this.price = price;
+        this.thumbnail = thumbnail;
+        this.colors = colors;
+        this.sizes = sizes;
+        this.images = images;
+    }
+
+    public Product(String title, String description, String type, String customer, int quantity, double price, int thumbnail) {
         this.title = title;
         this.thumbnail = thumbnail;
         this.description = description;
@@ -111,5 +127,15 @@ public class Product {
 
     public void setImages(ArrayList<Image> images) {
         this.images = images;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
     }
 }

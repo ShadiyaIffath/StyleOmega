@@ -38,6 +38,22 @@ public class TypeHome extends Fragment {
         products.add(new Product("Polyester Red Solid","Fabric: Polyester\n" +
                 "Sleeves are included\n" +
                 "Length up to 35 inch","Dress","Women",50,1500,R.drawable.dress3));
+        products.add(new Product("Frill Bardot Jungle Print Dress","Pattern Type : Tropical\n" +
+                "Neckline : Off the Shoulder\n"+
+                "Details : Frill","Dress","Women",50,12000,R.drawable.dress));
+        products.add(new Product("Maxi long Dress","Prestige Boat Neck Full Sleeves",
+                "Dress","Women",50,12250,R.drawable.dress2));
+        products.add(new Product("Polyester Red Solid","Fabric: Polyester\n" +
+                "Sleeves are included\n" +
+                "Length up to 35 inch","Dress","Women",50,1500,R.drawable.dress3));
+        products.add(new Product("Frill Bardot Jungle Print Dress","Pattern Type : Tropical\n" +
+                "Neckline : Off the Shoulder\n"+
+                "Details : Frill","Dress","Women",50,12000,R.drawable.dress));
+        products.add(new Product("Maxi long Dress","Prestige Boat Neck Full Sleeves",
+                "Dress","Women",50,12250,R.drawable.dress2));
+        products.add(new Product("Polyester Red Solid","Fabric: Polyester\n" +
+                "Sleeves are included\n" +
+                "Length up to 35 inch","Dress","Women",50,1500,R.drawable.dress3));
         RecyclerView myview = view.findViewById(R.id.item_list_recycle); //inside type home fragment
         RecyclerViewAdapter myAdapter= new RecyclerViewAdapter(this.getContext(),products);
         myview.setLayoutManager(new GridLayoutManager(this.getContext(),2));
