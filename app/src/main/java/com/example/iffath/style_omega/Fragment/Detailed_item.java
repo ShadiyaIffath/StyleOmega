@@ -3,6 +3,7 @@ package com.example.iffath.style_omega.Fragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -34,6 +35,7 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
     ImageView thumbnail;
     TextView quantity;
     TextView priceTag;
+    TextView shareButton;
     Button add;
     Button sub;
     Button addToCart;
@@ -59,10 +61,12 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
         addToCart = view.findViewById(R.id.add_cart_btn);
         quantity = view.findViewById(R.id.txtQuantity);
         priceTag = view.findViewById(R.id.priceTag);
+        shareButton = view.findViewById(R.id.share_button);
 
         add.setOnClickListener(this);
         sub.setOnClickListener(this);
         addToCart.setOnClickListener(this);
+        shareButton.setOnClickListener(this);
 
         Bundle bundle = this.getArguments();
         if(bundle != null){
@@ -97,6 +101,10 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
 
                 case R.id.add_cart_btn:
                     addToCart();
+                    break;
+
+                case R.id.share_button:
+                    shareItem();
                     break;
             }
     }
@@ -140,8 +148,8 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
     public void showPopupDialog(){    //method which shows a dialog for confirmation when customer clicks add to cart
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Confirm add to cart");
-        builder.setMessage("You are about to place an order for "+
-                product.getTitle()+". The total price is Rs."+ priceTag.getText().toString()+"\n Press 'Yes' to confirm");
+        builder.setMessage("\tYou are about to place an order for \n\t"+
+                product.getTitle()+".\n\tThe total price is Rs."+ priceTag.getText().toString()+"\n\t Press 'Yes' to confirm");
         builder.setCancelable(false);
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
@@ -163,6 +171,15 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
     public void placeOrder(){   //method which creates/ update an existing cart
 
 
+    }
+    public void shareItem(){
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        String shareBody = "Item "+product.getTitle()+" Price: Rs."+product.getPrice()+" Type: "+product.getType();
+        String subject = "Style Omega Clothing Shop";
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT,subject);
+        shareIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
+        startActivity(Intent.createChooser(shareIntent,"Share Using..."));
     }
 
 
