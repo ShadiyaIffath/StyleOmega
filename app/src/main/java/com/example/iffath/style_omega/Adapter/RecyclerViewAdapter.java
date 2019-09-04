@@ -29,6 +29,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.context = context;
         this.productList = productList;
     }
+    public void setProductList(List<Product> products){
+        productList = products;
+    }
 
     @NonNull
     @Override
@@ -42,7 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) { //set the values of a single card
-        final Product product =productList.get(position);
+        final Product product =productList.get(position); //get a specific product
 
         holder.title.setText(product.getTitle());
         holder.product_thumbnail.setImageResource(product.getThumbnail());

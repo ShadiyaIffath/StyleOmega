@@ -15,7 +15,7 @@ public class Product implements Parcelable {
     private double price;
     private int thumbnail;
     private ArrayList<String> colors;
-    private ArrayList<Integer> sizes;
+    private ArrayList<String> sizes;
     private ArrayList<Image> images;
 
 
@@ -23,7 +23,7 @@ public class Product implements Parcelable {
 
     }
 
-    public Product(String title, String description, String type, String customer, int quantity, double price, int thumbnail, ArrayList<String> colors, ArrayList<Integer> sizes, ArrayList<Image> images) {
+    public Product(String title, String description, String type, String customer, int quantity, double price, int thumbnail, ArrayList<String> colors, ArrayList<String> sizes, ArrayList<Image> images) {
         this.title = title;
         this.description = description;
         this.type = type;
@@ -36,7 +36,7 @@ public class Product implements Parcelable {
         this.images = images;
     }
 
-    public Product(String title, String description, String type, String customer, int quantity, double price, int thumbnail) {
+    public Product(String title, String description, String type, String customer, int quantity, double price, int thumbnail,ArrayList<String> colors, ArrayList<String> sizes) {
         this.title = title;
         this.thumbnail = thumbnail;
         this.description = description;
@@ -44,10 +44,34 @@ public class Product implements Parcelable {
         this.customer = customer;
         this.quantity = quantity;
         this.price = price;
-        colors = new ArrayList<>();
-        sizes = new ArrayList<>();
+        this.colors = colors;
+        this.sizes = sizes;
         images = new ArrayList<>();
     }
+
+    protected Product(Parcel in) {
+        title = in.readString();
+        description = in.readString();
+        type = in.readString();
+        customer = in.readString();
+        quantity = in.readInt();
+        price = in.readDouble();
+        thumbnail = in.readInt();
+        colors = in.createStringArrayList();
+        sizes = in.createStringArrayList();
+    }
+
+    public static final Creator<Product> CREATOR = new Creator<Product>() {
+        @Override
+        public Product createFromParcel(Parcel in) {
+            return new Product(in);
+        }
+
+        @Override
+        public Product[] newArray(int size) {
+            return new Product[size];
+        }
+    };
 
     public String getTitle() {
         return title;
@@ -113,11 +137,11 @@ public class Product implements Parcelable {
         this.colors = colors;
     }
 
-    public ArrayList<Integer> getSizes() {
+    public ArrayList<String> getSizes() {
         return sizes;
     }
 
-    public void setSizes(ArrayList<Integer> sizes) {
+    public void setSizes(ArrayList<String> sizes) {
         this.sizes = sizes;
     }
 
@@ -129,6 +153,22 @@ public class Product implements Parcelable {
         this.images = images;
     }
 
+    public String allColors(){
+        String color="";
+        for (String s: colors) {
+            color=s+", "+color;
+        }
+        return color;
+    }
+
+    public String allSizes(){
+        String size = "";
+        for(String s: sizes){
+            size= s+", "+size;
+        }
+        return size;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -136,6 +176,14 @@ public class Product implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-
+        parcel.writeString(title);
+        parcel.writeString(description);
+        parcel.writeString(type);
+        parcel.writeString(customer);
+        parcel.writeInt(quantity);
+        parcel.writeDouble(price);
+        parcel.writeInt(thumbnail);
+        parcel.writeStringList(colors);
+        parcel.writeStringList(sizes);
     }
 }

@@ -59,10 +59,12 @@ public class home_page extends Fragment implements View.OnClickListener{
                 type="Kids";
                 break;
         }
-        fragment = new TypeHome();
+        fragment = new TypeHome(type);
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.display_screen, fragment).addToBackStack(null)
+        transaction.replace(R.id.display_screen, fragment).addToBackStack(type)
                 .commit();
         getActivity().setTitle(type);
     }
+
+
 }

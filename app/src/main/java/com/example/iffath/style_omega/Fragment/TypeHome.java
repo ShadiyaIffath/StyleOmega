@@ -9,20 +9,33 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
+import com.example.iffath.style_omega.Adapter.ButtonListAdapter;
 import com.example.iffath.style_omega.Adapter.RecyclerViewAdapter;
+import com.example.iffath.style_omega.Model.BtnClickListener;
 import com.example.iffath.style_omega.Model.Product;
+import com.example.iffath.style_omega.Model.SingletonProduct;
 import com.example.iffath.style_omega.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TypeHome extends Fragment {
+public class TypeHome extends Fragment implements BtnClickListener{
     List<Product> products;
+    String[] types;
+    private String consumerType = null;
+    ListView listView;
     public TypeHome() {
         // Required empty public constructor
     }
-
+    public TypeHome(String customer){
+        this.consumerType = customer;
+    }
+    public void setConsumerType(String consumerType){
+        this.consumerType = consumerType;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,36 +43,67 @@ public class TypeHome extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_type_home, container, false);
         products = new ArrayList<>();
-        products.add(new Product("Frill Bardot Jungle Print Dress","Pattern Type : Tropical\n" +
-                "Neckline : Off the Shoulder\n"+
-                "Details : Frill","Dress","Women",50,12000,R.drawable.dress));
-        products.add(new Product("Maxi long Dress","Prestige Boat Neck Full Sleeves",
-                "Dress","Women",50,12250,R.drawable.dress2));
-        products.add(new Product("Polyester Red Solid","Fabric: Polyester\n" +
-                "Sleeves are included\n" +
-                "Length up to 35 inch","Dress","Women",50,1500,R.drawable.dress3));
-        products.add(new Product("Frill Bardot Jungle Print Dress","Pattern Type : Tropical\n" +
-                "Neckline : Off the Shoulder\n"+
-                "Details : Frill","Dress","Women",50,12000,R.drawable.dress));
-        products.add(new Product("Maxi long Dress","Prestige Boat Neck Full Sleeves",
-                "Dress","Women",50,12250,R.drawable.dress2));
-        products.add(new Product("Polyester Red Solid","Fabric: Polyester\n" +
-                "Sleeves are included\n" +
-                "Length up to 35 inch","Dress","Women",50,1500,R.drawable.dress3));
-        products.add(new Product("Frill Bardot Jungle Print Dress","Pattern Type : Tropical\n" +
-                "Neckline : Off the Shoulder\n"+
-                "Details : Frill","Dress","Women",50,12000,R.drawable.dress));
-        products.add(new Product("Maxi long Dress","Prestige Boat Neck Full Sleeves",
-                "Dress","Women",50,12250,R.drawable.dress2));
-        products.add(new Product("Polyester Red Solid","Fabric: Polyester\n" +
-                "Sleeves are included\n" +
-                "Length up to 35 inch","Dress","Women",50,1500,R.drawable.dress3));
-        RecyclerView myview = view.findViewById(R.id.item_list_recycle); //inside type home fragment
-        RecyclerViewAdapter myAdapter= new RecyclerViewAdapter(this.getContext(),products);
-        myview.setLayoutManager(new GridLayoutManager(this.getContext(),2));
-        myview.setAdapter(myAdapter);
+//        if(products != null){
+//
+//        }
+//        else {
+            products = getConsumerItems(consumerType);
+            types = getTypes();
+//        }
 
+        //inside type home fragment
+        //this is to get the list of items
+        final RecyclerView productGrid = view.findViewById(R.id.item_list_recycle);
+        final RecyclerViewAdapter myAdapter= new RecyclerViewAdapter(this.getContext(),products);
+        productGrid.setLayoutManager(new GridLayoutManager(this.getContext(),2));
+        productGrid.setAdapter(myAdapter);
+
+        //this is for the list of item types
+        listView = view.findViewById(R.id.type_list);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                consumerType = types[i];
+                myAdapter.setProductList(getConsumerItems(consumerType));
+                productGrid.setAdapter(myAdapter);
+            }
+        });
+
+        ButtonListAdapter buttons = new ButtonListAdapter(types, this.getContext());
+        listView.setAdapter(buttons);
         return view;
     }
 
+    //method which gets the list of types for the user according to the type selected
+    public String[] getTypes(){
+
+        switch(consumerType){
+            case "Women":
+                types = new String[]{"Top","Bottom","Dress","Shalwar","Jacket"};
+                break;
+            case "Men":
+                types = new String[]{"T-Shirt","Shirt","Bottom","Jean","Suit"};
+                break;
+            case "Kids":
+                types=new String[]{"Top","Frock","Babysuit","Pant"};
+                break;
+        }
+        return types;
+    }
+
+    public List<Product> getConsumerItems(String selector){
+        List<Product> allProducts = SingletonProduct.getProducts();
+
+        for (Product x:allProducts) {
+            if(x.getCustomer().equals(selector)){
+                products.add(x);
+            }
+        }
+        return products;
+    }
+
+    @Override
+    public void onBtnClick(int position) {
+
+    }
 }

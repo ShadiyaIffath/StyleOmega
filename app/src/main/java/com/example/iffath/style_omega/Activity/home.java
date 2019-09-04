@@ -75,6 +75,7 @@ public class home extends AppCompatActivity {
         nametxt = ButterKnife.findById(navigationHeader,R.id.navigation_user);
         nametxt.setText(username); //set username in the navigation header
         setupDrawerContent(navDrawer);
+
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
@@ -115,7 +116,7 @@ public class home extends AppCompatActivity {
     public void selectDrawerItem(@NotNull MenuItem menuItem) {       //fragment navigation click event logic
 
         Fragment fragment = null;
-        int id =menuItem.getItemId(); //id of the menu item selected
+        int id = menuItem.getItemId(); //id of the menu item selected
 
         switch(id){
             case R.id.nav_homepage:
@@ -163,7 +164,4 @@ public class home extends AppCompatActivity {
         drawer.closeDrawer(GravityCompat.START); //close the drawer
 
     }
-
-
-
 }

@@ -4,54 +4,165 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lavender"
+    android:orientation="vertical"
     tools:context=".Fragment.Detailed_item">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginTop="10dp"
+        android:layout_weight="2"
         android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/cardview_light_background"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <ImageView
+                android:id="@+id/thumbnail_item"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:background="#2d2d2d"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/product_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Product Title"
+                android:textColor="@color/midnightblue"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/product_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="#edecec"
+                android:padding="8dp"
+                android:text="Category"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/product_price"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Rs. "
+                android:textColor="@color/colorAccent"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/product_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Sizes: "
+                android:textColor="@android:color/background_dark"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/product_color"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Colors: "
+                android:textColor="@android:color/background_dark"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/product_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Description"
+                android:textColor="@android:color/background_dark"
+                android:textSize="18sp" />
+
+
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center">
-
-    <ImageView
-        android:layout_width="125dp"
-        android:layout_height="170dp"
-        android:background="#2d2d2d"
-        android:scaleType="centerCrop"
-        android:id="@+id/thumbnail_item"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/product_title"
+            android:id="@+id/priceTag"
+            android:textColor="@color/midnightblue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Product Title"
-            android:layout_marginTop="10dp"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:layout_weight="2"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="" />
 
-        <TextView
-            android:id="@+id/product_category"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Category"
-            android:background="#edecec"
-            android:padding="8dp"
-            android:layout_marginTop="10dp"/>
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:gravity="center">
 
-        <TextView
-            android:id="@+id/product_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_marginTop="10dp"
-            android:text="Description"/>
+            <Button
+                android:id="@+id/btnSub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/thirstle"
+                android:text="-"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtQuantity"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@android:color/darker_gray"
+                android:gravity="center"
+                android:text="0"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/thirstle"
+                android:text="+"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/add_cart_btn"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_weight="1"
+            android:background="@drawable/loginbuttons"
+            android:text="@string/add_cart"
+            android:textColor="@color/cardview_light_background"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_margin="10dp"/>
 
     </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

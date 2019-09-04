@@ -6,14 +6,8 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/ll1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
         <Button
+            android:layout_weight="1"
             android:id="@+id/womensImg"
             android:layout_width="match_parent"
             android:layout_height="240dp"
@@ -22,16 +16,9 @@
             android:textColor="@android:color/background_light"
             android:textSize="30sp"
             android:scaleType="centerCrop"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll3"
-        android:layout_width="match_parent"
-        android:layout_height="249dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
 
         <Button
+            android:layout_weight="1"
             android:id="@+id/mensImage"
             android:layout_width="match_parent"
             android:layout_height="248dp"
@@ -40,16 +27,9 @@
             android:textColor="@android:color/background_light"
             android:textSize="30sp"
             android:scaleType="centerCrop"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll4"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal">
 
         <Button
+            android:layout_weight="1"
             android:id="@+id/kidsImage"
             android:layout_width="match_parent"
             android:layout_height="240dp"
@@ -58,5 +38,5 @@
             android:textColor="@android:color/background_light"
             android:textSize="30sp"
             android:scaleType="centerCrop"/>
-    </LinearLayout>
+
 </LinearLayout>
