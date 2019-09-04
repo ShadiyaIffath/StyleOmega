@@ -36,7 +36,6 @@ public class home extends AppCompatActivity {
     private DrawerLayout drawer;
     private ActionBarDrawerToggle drawerToggle;
     private Toolbar toolbar;
-    FragmentManager fragmentManager;
     private NavigationView navDrawer;
     private View navigationHeader;
     TextView nametxt;
@@ -171,7 +170,6 @@ public class home extends AppCompatActivity {
 
         Fragment fragment = null;
         int id = menuItem.getItemId(); //id of the menu item selected
-        String type = "Home";
         switch(id){
             case R.id.nav_homepage:
                 Toast.makeText(this,"Home",Toast.LENGTH_SHORT).show();
@@ -194,8 +192,8 @@ public class home extends AppCompatActivity {
                 Toast.makeText(this,"Logged Out",Toast.LENGTH_SHORT).show();
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();
-                Intent intent = new Intent(this,Launcher.class);
-                startActivity(intent);
+                editor.commit();
+                finish();
                 break;
 
                 default:

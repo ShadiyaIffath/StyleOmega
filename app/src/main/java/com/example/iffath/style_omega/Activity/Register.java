@@ -72,6 +72,7 @@ public class Register extends AppCompatActivity {
             User user = new User(name,username,email,password,number);
             user.save();
 
+
             //once successfully registered the username is stored to prevent the user having to login again unless they logout
             SharedPreferences sharedPreferences  = getSharedPreferences(Launcher.keyPreference, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
