@@ -27,12 +27,14 @@ public class TypeHome extends Fragment implements BtnClickListener{
     String[] types;
     private String consumerType = null;
     ListView listView;
+
     public TypeHome() {
         // Required empty public constructor
     }
     public TypeHome(String customer){
         this.consumerType = customer;
     }
+
     public void setConsumerType(String consumerType){
         this.consumerType = consumerType;
     }
@@ -40,8 +42,9 @@ public class TypeHome extends Fragment implements BtnClickListener{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_type_home, container, false);
+        getActivity().setTitle(consumerType);
+
         products = new ArrayList<>();
 //        if(products != null){
 //
@@ -53,8 +56,8 @@ public class TypeHome extends Fragment implements BtnClickListener{
 
         //inside type home fragment
         //this is to get the list of items
-        final RecyclerView productGrid = view.findViewById(R.id.item_list_recycle);
-        final RecyclerViewAdapter myAdapter= new RecyclerViewAdapter(this.getContext(),products);
+        RecyclerView productGrid = view.findViewById(R.id.item_list_recycle);
+        RecyclerViewAdapter myAdapter= new RecyclerViewAdapter(this.getContext(),products);
         productGrid.setLayoutManager(new GridLayoutManager(this.getContext(),2));
         productGrid.setAdapter(myAdapter);
 
@@ -63,9 +66,9 @@ public class TypeHome extends Fragment implements BtnClickListener{
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                consumerType = types[i];
-                myAdapter.setProductList(getConsumerItems(consumerType));
-                productGrid.setAdapter(myAdapter);
+//                consumerType = types[i];
+//                myAdapter.setProductList(getConsumerItems(consumerType));
+//                productGrid.setAdapter(myAdapter);
             }
         });
 
@@ -95,7 +98,7 @@ public class TypeHome extends Fragment implements BtnClickListener{
         List<Product> allProducts = SingletonProduct.getProducts();
 
         for (Product x:allProducts) {
-            if(x.getCustomer().equals(selector)){
+            if(x.getConsumer().equals(selector)){
                 products.add(x);
             }
         }

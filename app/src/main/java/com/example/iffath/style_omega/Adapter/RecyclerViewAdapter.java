@@ -24,6 +24,7 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private Context context;
     private List<Product> productList;
+    private static String consumer;
 
     public RecyclerViewAdapter(Context context, List<Product> productList) {
         this.context = context;
@@ -32,6 +33,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void setProductList(List<Product> products){
         productList = products;
     }
+//    public static void setConsumer(String consumerType){
+//        consumer = consumerType;
+//    }
 
     @NonNull
     @Override
@@ -64,8 +68,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 detailed_fragment.setArguments(args);
 
                 FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.display_screen, detailed_fragment)
-                        .addToBackStack(null)
+                transaction.replace(R.id.display_screen, detailed_fragment,product.getConsumer())
+                        .addToBackStack(product.getConsumer())
                         .commit();
                 activity.setTitle(holder.title.getText().toString());
 

@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -18,7 +19,10 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.iffath.style_omega.Fragment.ContactUs;
+import com.example.iffath.style_omega.Fragment.Detailed_item;
 import com.example.iffath.style_omega.Fragment.Profile;
+import com.example.iffath.style_omega.Fragment.TypeHome;
 import com.example.iffath.style_omega.Fragment.ViewCart;
 import com.example.iffath.style_omega.Fragment.home_page;
 import com.example.iffath.style_omega.Model.User;
@@ -50,7 +54,7 @@ public class home extends AppCompatActivity {
         if(savedInstanceState == null){
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.display_screen, home_page.getInstance())
+                    .replace(R.id.display_screen, home_page.getInstance(),"Home")
                     .commit();
         }
 
@@ -87,10 +91,60 @@ public class home extends AppCompatActivity {
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else {
+        }
+        else {
             super.onBackPressed();
         }
     }
+//            int framentCount = this.getSupportFragmentManager().getBackStackEntryCount();
+//            if(framentCount != 0)
+//            {
+//                FragmentManager.BackStackEntry backEntry= getSupportFragmentManager().getBackStackEntryAt(framentCount-1);
+//                String title = backEntry.getName();
+//                Fragment fragment =null;
+//
+//                if(title.equals("Home")){ //navigation bar back handle
+//                    fragment = getSupportFragmentManager().findFragmentByTag("Home");
+//                    if(fragment instanceof home_page){
+//                        setTitle("Select Type");
+//                    }
+//                    else if(fragment instanceof Profile){
+//                        setTitle("View Profile");
+//                    }
+//                    else if(fragment instanceof ContactUs){
+//                        setTitle("Contact Us");
+//                    }
+//                }
+//                else if(title.equals("Women")){
+//                    setTitle(title);
+//                }
+//            }
+
+//        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+//             super.onBackPressed();
+////             FragmentManager fragmentManager = getSupportFragmentManager();
+//////             Log.i("MainActivity", "popping backstack");
+////             fragmentManager.popBackStack();
+//            Fragment fragment = getSupportFragmentManager().findFragmentByTag("Home");
+//////
+//            if(fragment!=null) {
+//                if (fragment instanceof home_page) {
+//                    setTitle("Select Type");
+//                } else if (fragment instanceof Profile) {
+//                    setTitle("Edit Profile");
+//                }
+//            }
+//            else{
+//                fragment = getSupportFragmentManager().findFragmentById(R.id.type_home);
+//                setTitle(fragment.getTag());
+//            }
+//
+//
+//////             else if(fragment instanceof TypeHome){
+//////                 setTitle("");
+//////             }
+//        }
+//        super.onBackPressed();
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -117,7 +171,7 @@ public class home extends AppCompatActivity {
 
         Fragment fragment = null;
         int id = menuItem.getItemId(); //id of the menu item selected
-
+        String type = "Home";
         switch(id){
             case R.id.nav_homepage:
                 Toast.makeText(this,"Home",Toast.LENGTH_SHORT).show();
@@ -142,6 +196,7 @@ public class home extends AppCompatActivity {
                 editor.clear();
                 Intent intent = new Intent(this,Launcher.class);
                 startActivity(intent);
+                break;
 
                 default:
                     fragment = new home_page();
@@ -150,12 +205,9 @@ public class home extends AppCompatActivity {
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.display_screen, fragment)
+                .replace(R.id.display_screen, fragment,"Home")
+                .addToBackStack("Home")
                 .commit();
-//
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//        fragmentTransaction.replace(R.id.display_screen, fragment);
-//        fragmentTransaction.commit();//replaces existing fragment with the selected menu item
 
         menuItem.setChecked(true); //this highlights to show what the current fragment is
 
@@ -164,4 +216,5 @@ public class home extends AppCompatActivity {
         drawer.closeDrawer(GravityCompat.START); //close the drawer
 
     }
+
 }

@@ -46,8 +46,8 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_detailed_item, container, false);
         product = null;
-        title = view.findViewById(R.id.product_title);
 
+        title = view.findViewById(R.id.product_title);
         description = view.findViewById(R.id.product_desc);
         category = view.findViewById(R.id.product_category);
         thumbnail = view.findViewById(R.id.thumbnail_item);
@@ -133,27 +133,36 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
             Toast.makeText(getActivity(), "You cannot place the order", Toast.LENGTH_SHORT).show();
         }
         else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle("Confirm add to cart");
-            builder.setMessage("You are about to place an order for "+
-                    product.getTitle()+". The total price is Rs."+ priceTag.getText().toString()+"\n Press 'Yes' to confirm");
-            builder.setCancelable(false);
-            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Toast.makeText(getActivity(),"Order successfully placed",Toast.LENGTH_SHORT).show();
-                    quantity.setText("0");
-                    priceTag.setText("");
-                }
-            });
-            builder.setNegativeButton("No", new DialogInterface.OnClickListener(){
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(getContext(), "Order wasn't placed", Toast.LENGTH_SHORT).show();
-                }
-            });
-            builder.show();
+            showPopupDialog();
         }
+    }
+
+    public void showPopupDialog(){    //method which shows a dialog for confirmation when customer clicks add to cart
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Confirm add to cart");
+        builder.setMessage("You are about to place an order for "+
+                product.getTitle()+". The total price is Rs."+ priceTag.getText().toString()+"\n Press 'Yes' to confirm");
+        builder.setCancelable(false);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getActivity(),"Order successfully placed",Toast.LENGTH_SHORT).show();
+                quantity.setText("0");
+                priceTag.setText("");
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener(){
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(getContext(), "Order wasn't placed", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.show();
+    }
+
+    public void placeOrder(){   //method which creates/ update an existing cart
+
+
     }
 
 

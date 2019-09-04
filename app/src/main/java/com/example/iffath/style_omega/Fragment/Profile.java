@@ -22,14 +22,9 @@ import com.example.iffath.style_omega.R;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 
 public class Profile extends Fragment {
-    //@BindView(R.id.profileName)
     EditText name;
-    //@BindView(R.id.profileUsername)
     TextView uname;
     EditText contactNumber;
     EditText email;

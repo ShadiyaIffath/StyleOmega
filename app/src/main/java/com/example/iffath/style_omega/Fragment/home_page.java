@@ -35,6 +35,8 @@ public class home_page extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_home_page, container, false);
+        getActivity().setTitle("Select Type");
+
         women = view.findViewById(R.id.womensImg);
         men = view.findViewById(R.id.mensImage);
         kids = view.findViewById(R.id.kidsImage);
@@ -61,10 +63,10 @@ public class home_page extends Fragment implements View.OnClickListener{
         }
         fragment = new TypeHome(type);
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.display_screen, fragment).addToBackStack(type)
+        transaction.replace(R.id.display_screen, fragment,type)
+                .addToBackStack(type)
                 .commit();
         getActivity().setTitle(type);
     }
-
 
 }

@@ -10,7 +10,7 @@ public class Product implements Parcelable {
     private String title;
     private String description;
     private String type;
-    private String customer;
+    private String consumer;
     private int quantity;
     private double price;
     private int thumbnail;
@@ -27,7 +27,7 @@ public class Product implements Parcelable {
         this.title = title;
         this.description = description;
         this.type = type;
-        this.customer = customer;
+        this.consumer = customer;
         this.quantity = quantity;
         this.price = price;
         this.thumbnail = thumbnail;
@@ -41,7 +41,7 @@ public class Product implements Parcelable {
         this.thumbnail = thumbnail;
         this.description = description;
         this.type = type;
-        this.customer = customer;
+        this.consumer = customer;
         this.quantity = quantity;
         this.price = price;
         this.colors = colors;
@@ -53,7 +53,7 @@ public class Product implements Parcelable {
         title = in.readString();
         description = in.readString();
         type = in.readString();
-        customer = in.readString();
+        consumer = in.readString();
         quantity = in.readInt();
         price = in.readDouble();
         thumbnail = in.readInt();
@@ -105,12 +105,12 @@ public class Product implements Parcelable {
         this.type = type;
     }
 
-    public String getCustomer() {
-        return customer;
+    public String getConsumer() {
+        return consumer;
     }
 
-    public void setCustomer(String customer) {
-        this.customer = customer;
+    public void setConsumer(String consumer) {
+        this.consumer = consumer;
     }
 
     public int getQuantity() {
@@ -179,7 +179,7 @@ public class Product implements Parcelable {
         parcel.writeString(title);
         parcel.writeString(description);
         parcel.writeString(type);
-        parcel.writeString(customer);
+        parcel.writeString(consumer);
         parcel.writeInt(quantity);
         parcel.writeDouble(price);
         parcel.writeInt(thumbnail);
