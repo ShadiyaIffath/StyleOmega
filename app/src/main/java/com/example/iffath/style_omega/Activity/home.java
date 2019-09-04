@@ -192,7 +192,7 @@ public class home extends AppCompatActivity {
                 Toast.makeText(this,"Logged Out",Toast.LENGTH_SHORT).show();
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();
-                editor.commit();
+                editor.apply();
                 finish();
                 break;
 
