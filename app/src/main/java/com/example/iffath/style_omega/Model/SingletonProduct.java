@@ -50,23 +50,23 @@ public class SingletonProduct {
                 "Bottoms","Women",50,12250,R.drawable.dress2,colors,sizes));
         products.add(new Product("Polyester Red Solid","Fabric: Polyester\n" +
                 "Sleeves are included\n" +
-                "Length up to 35 inch","Dress","Men",50,1500,R.drawable.dress3,colors,sizes));
+                "Length up to 35 inch","Dresses","Men",50,1500,R.drawable.dress3,colors,sizes));
         products.add(new Product("Frill Bardot Jungle Print Dress","Pattern Type : Tropical\n" +
                 "Neckline : Off the Shoulder\n"+
-                "Details : Frill","Jumpsuit","Kids",50,12000,R.drawable.dress,colors,sizes));
+                "Details : Frill","Jumpsuits","Kids",50,12000,R.drawable.dress,colors,sizes));
         products.add(new Product("Maxi long Dress","Prestige Boat Neck Full Sleeves",
-                "Jacket","Women",50,12250,R.drawable.dress2,colors,sizes));
+                "Jackets","Women",50,12250,R.drawable.dress2,colors,sizes));
         products.add(new Product("Polyester Red Solid","Fabric: Polyester\n" +
                 "Sleeves are included\n" +
-                "Length up to 35 inch","Dress","Women",50,1500,R.drawable.dress3,colors,sizes));
+                "Length up to 35 inch","Dresses","Women",50,1500,R.drawable.dress3,colors,sizes));
         products.add(new Product("Frill Bardot Jungle Print Dress","Pattern Type : Tropical\n" +
                 "Neckline : Off the Shoulder\n"+
-                "Details : Frill","Dress","Men",50,12000,R.drawable.dress,colors,sizes));
+                "Details : Frill","Dresses","Men",50,12000,R.drawable.dress,colors,sizes));
         products.add(new Product("Maxi long Dress","Prestige Boat Neck Full Sleeves",
-                "Dress","Women",50,12250,R.drawable.dress2,colors,sizes));
+                "Dresses","Women",50,12250,R.drawable.dress2,colors,sizes));
         products.add(new Product("Polyester Red Solid","Fabric: Polyester\n" +
                 "Sleeves are included\n" +
-                "Length up to 35 inch","Dress","Kids",50,1500, R.drawable.dress3,colors,sizes));
+                "Length up to 35 inch","Dresses","Kids",50,1500, R.drawable.dress3,colors,sizes));
 
     }
 

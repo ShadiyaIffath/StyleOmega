@@ -8,8 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.example.iffath.style_omega.Fragment.TypeHome;
-import com.example.iffath.style_omega.Model.BtnClickListener;
 import com.example.iffath.style_omega.R;
 
 public class ButtonListAdapter extends ArrayAdapter<String> {
@@ -21,41 +19,20 @@ public class ButtonListAdapter extends ArrayAdapter<String> {
             this.context = context;
     }
 
-
-    public static class ViewHolder{
-        Button type;
-
-    }
-
     public View getView(final int position, View convertView, ViewGroup parent){
 
         String clothType = getItem(position);
-
+        Button type;
         final View result;
-
-        final ViewHolder holder;
 
         // Check if an existing view is being reused, otherwise inflate the view
         if(convertView == null){
-            holder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(context);
             convertView = inflater.inflate(R.layout.cloth_type_buttons,parent,false);
-            holder.type = convertView.findViewById(R.id.type_button);
-            result = convertView;
-            convertView.setTag(holder);
         }
-        else{
-                holder = (ViewHolder) convertView.getTag();
-                result = convertView;
-        }
-        holder.type.setText(clothType);
-//
-        holder.type.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((ListView) v.getParent()).performItemClick(v, position, 0);
-            }
-        } );
+        result = convertView;
+        type = convertView.findViewById(R.id.type_button);
+        type.setText(clothType);
 
         return result;
     }

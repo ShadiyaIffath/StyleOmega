@@ -11,10 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.iffath.style_omega.Adapter.ButtonListAdapter;
 import com.example.iffath.style_omega.Adapter.RecyclerViewAdapter;
-import com.example.iffath.style_omega.Model.BtnClickListener;
 import com.example.iffath.style_omega.Model.Product;
 import com.example.iffath.style_omega.Model.SingletonProduct;
 import com.example.iffath.style_omega.R;
@@ -22,20 +22,24 @@ import com.example.iffath.style_omega.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TypeHome extends Fragment implements BtnClickListener{
+public class TypeHome extends Fragment {
     List<Product> products;
     String[] types;
     private String consumerType = null;
     ListView listView;
+    RecyclerViewAdapter myAdapter;
 
     public TypeHome() {
         // Required empty public constructor
     }
+
     public TypeHome(String customer){
+
         this.consumerType = customer;
     }
 
     public void setConsumerType(String consumerType){
+
         this.consumerType = consumerType;
     }
 
@@ -57,23 +61,25 @@ public class TypeHome extends Fragment implements BtnClickListener{
         //inside type home fragment
         //this is to get the list of items
         RecyclerView productGrid = view.findViewById(R.id.item_list_recycle);
-        RecyclerViewAdapter myAdapter= new RecyclerViewAdapter(this.getContext(),products);
+        myAdapter= new RecyclerViewAdapter(this.getContext(),products);
         productGrid.setLayoutManager(new GridLayoutManager(this.getContext(),2));
         productGrid.setAdapter(myAdapter);
 
         //this is for the list of item types
         listView = view.findViewById(R.id.type_list);
+        ButtonListAdapter buttons = new ButtonListAdapter(types, this.getContext());
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                consumerType = types[i];
-//                myAdapter.setProductList(getConsumerItems(consumerType));
-//                productGrid.setAdapter(myAdapter);
+                String selection = types[i];
+                  Toast.makeText(getActivity(), selection, Toast.LENGTH_SHORT).show();
+                  myAdapter.refreshView(selection);
+                  myAdapter.notifyDataSetChanged();
             }
         });
-
-        ButtonListAdapter buttons = new ButtonListAdapter(types, this.getContext());
         listView.setAdapter(buttons);
+
         return view;
     }
 
@@ -82,18 +88,19 @@ public class TypeHome extends Fragment implements BtnClickListener{
 
         switch(consumerType){
             case "Women":
-                types = new String[]{"Top","Bottom","Dress","Shalwar","Jacket"};
+                types = new String[]{"Tops","Bottoms","Dresses","Shalwars","Jackets"};
                 break;
             case "Men":
-                types = new String[]{"T-Shirt","Shirt","Bottom","Jean","Suit"};
+                types = new String[]{"T-Shirts","Shirts","Jeans","Blazers","Suits"};
                 break;
             case "Kids":
-                types=new String[]{"Top","Frock","Babysuit","Pant"};
+                types=new String[]{"Tops","Frocks","Babysuits","Pants"};
                 break;
         }
         return types;
     }
 
+    //clothing items according to consumer type(women,men,kids)
     public List<Product> getConsumerItems(String selector){
         List<Product> allProducts = SingletonProduct.getProducts();
 
@@ -105,8 +112,14 @@ public class TypeHome extends Fragment implements BtnClickListener{
         return products;
     }
 
-    @Override
-    public void onBtnClick(int position) {
+    //list of the products of a specific type is updated
+    public void updateProductType(String selectedType){
 
+        for(Product temp: products){
+            if(temp.getType().equalsIgnoreCase(selectedType)){
+                products.add(temp);
+            }
+        }
     }
+
 }

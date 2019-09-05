@@ -19,23 +19,19 @@ import com.example.iffath.style_omega.Fragment.Detailed_item;
 import com.example.iffath.style_omega.Model.Product;
 import com.example.iffath.style_omega.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private Context context;
     private List<Product> productList;
-    private static String consumer;
+    private final  List<Product> allProducts;
 
-    public RecyclerViewAdapter(Context context, List<Product> productList) {
+    public RecyclerViewAdapter(Context context, List<Product> products) {
         this.context = context;
-        this.productList = productList;
+        this.productList = products;
+        allProducts = products;
     }
-    public void setProductList(List<Product> products){
-        productList = products;
-    }
-//    public static void setConsumer(String consumerType){
-//        consumer = consumerType;
-//    }
 
     @NonNull
     @Override
@@ -49,7 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) { //set the values of a single card
-        final Product product =productList.get(position); //get a specific product
+        final Product product = productList.get(position); //get a specific product
 
         holder.title.setText(product.getTitle());
         holder.product_thumbnail.setImageResource(product.getThumbnail());
@@ -75,6 +71,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
             }
         });
+    }
+    //update the arraylist in the grid view and display the updated version
+    public void refreshView(String selection){
+        List<Product> newList = new ArrayList<>();
+        for (Product x:this.allProducts) {
+            if(selection.equals(x.getType())){
+                    newList.add(x);
+                //productList.remove(x);
+            }
+        }
+        this.productList.clear();
+        this.productList.addAll(newList);
     }
 
     @Override
