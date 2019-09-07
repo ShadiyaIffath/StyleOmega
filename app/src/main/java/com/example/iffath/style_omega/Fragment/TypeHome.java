@@ -28,6 +28,7 @@ public class TypeHome extends Fragment {
     private String consumerType = null;
     ListView listView;
     RecyclerViewAdapter myAdapter;
+    RecyclerView productGrid;
 
     public TypeHome() {
         // Required empty public constructor
@@ -60,7 +61,7 @@ public class TypeHome extends Fragment {
 
         //inside type home fragment
         //this is to get the list of items
-        RecyclerView productGrid = view.findViewById(R.id.item_list_recycle);
+        productGrid = view.findViewById(R.id.item_list_recycle);
         myAdapter= new RecyclerViewAdapter(this.getContext(),products);
         productGrid.setLayoutManager(new GridLayoutManager(this.getContext(),2));
         productGrid.setAdapter(myAdapter);
@@ -74,8 +75,8 @@ public class TypeHome extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String selection = types[i];
                   Toast.makeText(getActivity(), selection, Toast.LENGTH_SHORT).show();
-                  myAdapter.refreshView(selection);
-                  myAdapter.notifyDataSetChanged();
+                  updateProductType(selection);
+              //    myAdapter.refreshView(selection);  this is correct way to go
             }
         });
         listView.setAdapter(buttons);
@@ -114,12 +115,15 @@ public class TypeHome extends Fragment {
 
     //list of the products of a specific type is updated
     public void updateProductType(String selectedType){
-
+        List<Product> tempProducts = new ArrayList<>();
         for(Product temp: products){
             if(temp.getType().equalsIgnoreCase(selectedType)){
-                products.add(temp);
+                tempProducts.add(temp);
             }
         }
+        myAdapter = new RecyclerViewAdapter(this.getContext(),tempProducts);
+        productGrid.setAdapter(myAdapter);
+
     }
 
 }

@@ -1,30 +1,33 @@
 package com.example.iffath.style_omega.Model;
 
+import com.orm.SugarRecord;
+
 import java.util.Date;
 
-public class Cart {
+public class Cart extends SugarRecord {
     private long userId;
     private double price;
     private boolean status;
-    private String delivery;
-    private Date updated;
-    private Date created;
+    private String deliveryAddress;
+    private String updated;
+    private String created;
 
     public Cart(){
 
     }
 
-    public Cart(long userId, boolean status,Date created){
+    public Cart(long userId,String created){  //the first time
         this.userId = userId;
-        this.userId = userId;
+        status = false;
         this.created = created;
+        this.updated = created;
     }
 
-    public Cart(long userId, double price, boolean status, String delivery, Date updated, Date created) {
+    public Cart(long userId, double price, boolean status, String delivery, String updated, String created) {
         this.userId = userId;
         this.price = price;
         this.userId = userId;
-        this.delivery = delivery;
+        this.deliveryAddress = delivery;
         this.updated = updated;
         this.created = created;
     }
@@ -53,27 +56,27 @@ public class Cart {
         this.status = status;
     }
 
-    public String getDelivery() {
-        return delivery;
+    public String getDeliveryAddress() {
+        return deliveryAddress;
     }
 
-    public void setDelivery(String delivery) {
-        this.delivery = delivery;
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
     }
 
-    public Date getUpdated() {
+    public String getUpdated() {
         return updated;
     }
 
-    public void setUpdated(Date updated) {
+    public void setUpdated(String updated) {
         this.updated = updated;
     }
 
-    public Date getCreated() {
+    public String getCreated() {
         return created;
     }
 
-    public void setCreated(Date created) {
+    public void setCreated(String created) {
         this.created = created;
     }
 }

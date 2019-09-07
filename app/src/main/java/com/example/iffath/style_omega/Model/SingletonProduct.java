@@ -43,28 +43,28 @@ public class SingletonProduct {
         sizes.add("M");
         sizes.add("XL");
         sizes.add("S");
-        products.add(new Product("Frill Bardot Jungle Print Dress","Pattern Type : Tropical\n" +
+        products.add(new Product(1,"Frill Bardot Jungle Print Dress","Pattern Type : Tropical\n" +
                 "Neckline : Off the Shoulder\n"+
                 "Details : Frill","Tops","Women",50,12000,R.drawable.dress,new ArrayList<String>(),new ArrayList<String>()));
-        products.add(new Product("Maxi long Dress","Prestige Boat Neck Full Sleeves",
+        products.add(new Product(2,"Maxi long Dress","Prestige Boat Neck Full Sleeves",
                 "Bottoms","Women",50,12250,R.drawable.dress2,colors,sizes));
-        products.add(new Product("Polyester Red Solid","Fabric: Polyester\n" +
+        products.add(new Product(3,"Polyester Red Solid","Fabric: Polyester\n" +
                 "Sleeves are included\n" +
                 "Length up to 35 inch","Dresses","Men",50,1500,R.drawable.dress3,colors,sizes));
-        products.add(new Product("Frill Bardot Jungle Print Dress","Pattern Type : Tropical\n" +
+        products.add(new Product(4,"Frill Bardot Jungle Print Dress","Pattern Type : Tropical\n" +
                 "Neckline : Off the Shoulder\n"+
                 "Details : Frill","Jumpsuits","Kids",50,12000,R.drawable.dress,colors,sizes));
-        products.add(new Product("Maxi long Dress","Prestige Boat Neck Full Sleeves",
+        products.add(new Product(5,"Maxi long Dress","Prestige Boat Neck Full Sleeves",
                 "Jackets","Women",50,12250,R.drawable.dress2,colors,sizes));
-        products.add(new Product("Polyester Red Solid","Fabric: Polyester\n" +
+        products.add(new Product(6,"Polyester Red Solid","Fabric: Polyester\n" +
                 "Sleeves are included\n" +
                 "Length up to 35 inch","Dresses","Women",50,1500,R.drawable.dress3,colors,sizes));
-        products.add(new Product("Frill Bardot Jungle Print Dress","Pattern Type : Tropical\n" +
+        products.add(new Product(7,"Frill Bardot Jungle Print Dress","Pattern Type : Tropical\n" +
                 "Neckline : Off the Shoulder\n"+
                 "Details : Frill","Dresses","Men",50,12000,R.drawable.dress,colors,sizes));
-        products.add(new Product("Maxi long Dress","Prestige Boat Neck Full Sleeves",
+        products.add(new Product(8,"Maxi long Dress","Prestige Boat Neck Full Sleeves",
                 "Dresses","Women",50,12250,R.drawable.dress2,colors,sizes));
-        products.add(new Product("Polyester Red Solid","Fabric: Polyester\n" +
+        products.add(new Product(9,"Polyester Red Solid","Fabric: Polyester\n" +
                 "Sleeves are included\n" +
                 "Length up to 35 inch","Dresses","Kids",50,1500, R.drawable.dress3,colors,sizes));
 

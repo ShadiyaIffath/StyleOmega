@@ -2,16 +2,16 @@ package com.example.iffath.style_omega.Model;
 
 public class Cart_Product {
     private long cartId;
-    private String itemTitle;
+    private int itemID;
     private double price;
     private int quantity;
 
     public Cart_Product() {
     }
 
-    public Cart_Product(long cartId, String itemTitle, double price, int quantity) {
+    public Cart_Product(long cartId, int itemID, double price, int quantity) {
         this.cartId = cartId;
-        this.itemTitle = itemTitle;
+        this.itemID = itemID;
         this.price = price;
         this.quantity = quantity;
     }
@@ -24,12 +24,12 @@ public class Cart_Product {
         this.cartId = cartId;
     }
 
-    public String getItemTitle() {
-        return itemTitle;
+    public int getItemID() {
+        return itemID;
     }
 
-    public void setItemTitle(String itemTitle) {
-        this.itemTitle = itemTitle;
+    public void setItemID(int itemID) {
+        this.itemID = itemID;
     }
 
     public double getPrice() {

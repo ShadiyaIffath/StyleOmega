@@ -10,11 +10,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.iffath.style_omega.Model.Cart;
 import com.example.iffath.style_omega.Model.User;
 import com.example.iffath.style_omega.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Login extends AppCompatActivity {
     EditText pw;
@@ -40,11 +44,9 @@ public class Login extends AppCompatActivity {
             String[] login = {username, password};
             List<User> users =User.find(User.class, "username=? and password=?", login);
             if (users.isEmpty()) {
-
                 pw.setError("Invalid Password");
                 Toast.makeText(this, "Invalid password", Toast.LENGTH_SHORT).show();
             } else {
-
                 Toast.makeText(this, "Welcome Back " + username, Toast.LENGTH_SHORT).show();
 
 //                on successful login we store the logged in user's username so that the user doesn't have to login everytime

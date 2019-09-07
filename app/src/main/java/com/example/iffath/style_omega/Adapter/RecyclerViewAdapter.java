@@ -13,11 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.iffath.style_omega.Fragment.Detailed_item;
 import com.example.iffath.style_omega.Model.Product;
+import com.example.iffath.style_omega.Model.SingletonProduct;
 import com.example.iffath.style_omega.R;
+import com.example.iffath.style_omega.Utility.ProductGridDiff;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +33,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public RecyclerViewAdapter(Context context, List<Product> products) {
         this.context = context;
         this.productList = products;
-        allProducts = products;
+        this.allProducts = products;
     }
 
     @NonNull
@@ -78,11 +81,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         for (Product x:this.allProducts) {
             if(selection.equals(x.getType())){
                     newList.add(x);
-                //productList.remove(x);
             }
         }
+       // this.productList = this.allProducts;
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new ProductGridDiff(this.productList,newList));
         this.productList.clear();
         this.productList.addAll(newList);
+        diffResult.dispatchUpdatesTo(this);
+
+
     }
 
     @Override
@@ -105,5 +112,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             item_cardview = itemView.findViewById(R.id.item_card);
         }
     }
+
 
 }

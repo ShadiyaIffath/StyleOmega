@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 public class Product implements Parcelable {
+    private int id;
     private String title;
     private String description;
     private String type;
@@ -23,7 +24,7 @@ public class Product implements Parcelable {
 
     }
 
-    public Product(String title, String description, String type, String customer, int quantity, double price, int thumbnail, ArrayList<String> colors, ArrayList<String> sizes, ArrayList<Image> images) {
+    public Product(int id, String title, String description, String type, String customer, int quantity, double price, int thumbnail, ArrayList<String> colors, ArrayList<String> sizes, ArrayList<Image> images) {
         this.title = title;
         this.description = description;
         this.type = type;
@@ -36,7 +37,7 @@ public class Product implements Parcelable {
         this.images = images;
     }
 
-    public Product(String title, String description, String type, String customer, int quantity, double price, int thumbnail,ArrayList<String> colors, ArrayList<String> sizes) {
+    public Product(int id, String title, String description, String type, String customer, int quantity, double price, int thumbnail,ArrayList<String> colors, ArrayList<String> sizes) {
         this.title = title;
         this.thumbnail = thumbnail;
         this.description = description;
@@ -50,6 +51,7 @@ public class Product implements Parcelable {
     }
 
     protected Product(Parcel in) {
+        id = in.readInt();
         title = in.readString();
         description = in.readString();
         type = in.readString();
@@ -72,6 +74,14 @@ public class Product implements Parcelable {
             return new Product[size];
         }
     };
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;

@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.example.iffath.style_omega.Adapter.RecyclerViewAdapter;
 import com.example.iffath.style_omega.Fragment.TypeHome;
+import com.example.iffath.style_omega.Model.Cart;
 import com.example.iffath.style_omega.Model.Product;
 import com.example.iffath.style_omega.R;
 
@@ -22,12 +23,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(savedInstanceState == null){
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.recycleTest, new TypeHome())
-                    .commit();
-        }
+
+//        if(savedInstanceState == null){
+//            getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.recycleTest, new TypeHome())
+//                    .commit();
+//        }
 //        products = new ArrayList<>();
 //        products.add(new Product("Frill Bardot Jungle Print Dress","Pattern Type : Tropical\n" +
 //                "Neckline : Off the Shoulder\n"+

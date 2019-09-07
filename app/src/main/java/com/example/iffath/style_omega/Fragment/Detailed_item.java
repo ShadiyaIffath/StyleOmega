@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.iffath.style_omega.Model.Cart;
+import com.example.iffath.style_omega.Model.Cart_Product;
 import com.example.iffath.style_omega.Model.Product;
 import com.example.iffath.style_omega.R;
 
@@ -169,9 +171,12 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
     }
 
     public void placeOrder(){   //method which creates/ update an existing cart
-
+       // Cart cart
+       // Cart_Product addedItem = new Cart_Product()
 
     }
+
+
     public void shareItem(){
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");

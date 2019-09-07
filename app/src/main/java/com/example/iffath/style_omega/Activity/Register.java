@@ -10,8 +10,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.iffath.style_omega.Model.Cart;
 import com.example.iffath.style_omega.Model.User;
 import com.example.iffath.style_omega.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class Register extends AppCompatActivity {
     EditText uname,passTxt,emailTxt,nameTxt, numberTxt;
@@ -71,6 +76,9 @@ public class Register extends AppCompatActivity {
             Toast.makeText(this, "Welcome "+username, Toast.LENGTH_SHORT).show();
             User user = new User(name,username,email,password,number);
             user.save();
+            String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+            Cart cart = new Cart(user.getId(), date);
+            cart.save();
 
 
             //once successfully registered the username is stored to prevent the user having to login again unless they logout
