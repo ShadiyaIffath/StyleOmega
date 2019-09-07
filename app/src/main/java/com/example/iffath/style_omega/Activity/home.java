@@ -59,7 +59,10 @@ public class home extends AppCompatActivity {
 
         //retrieve logged user's username
           sharedPreferences = getSharedPreferences(Launcher.keyPreference, Context.MODE_PRIVATE);
-          username = sharedPreferences.getString("username",null);
+          long id = sharedPreferences.getLong("user",0);
+//          username = sharedPreferences.getString("username",null);
+          User user = User.findById(User.class,id);
+          username = user.getUsername();
           loggedUser = username;
 
         // The custom toolbar replaces the action bar

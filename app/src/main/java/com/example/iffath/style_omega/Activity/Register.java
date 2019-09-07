@@ -84,8 +84,10 @@ public class Register extends AppCompatActivity {
             //once successfully registered the username is stored to prevent the user having to login again unless they logout
             SharedPreferences sharedPreferences  = getSharedPreferences(Launcher.keyPreference, Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("username",username);
+            editor.putLong("user",user.getId());
             editor.apply();
+//            editor.putString("username",username);
+//            editor.apply();
 
             Intent intent = new Intent(this,home.class);
             startActivity(intent);

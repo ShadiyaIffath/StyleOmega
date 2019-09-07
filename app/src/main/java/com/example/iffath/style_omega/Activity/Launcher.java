@@ -15,7 +15,7 @@ import com.example.iffath.style_omega.R;
 import java.util.List;
 
 public class Launcher extends AppCompatActivity {
-    String username;
+    String username = null;
     public static String keyPreference = "preferences";
     SharedPreferences sharedPreferences;
     @Override
@@ -23,7 +23,11 @@ public class Launcher extends AppCompatActivity {
 
         //if user has logged in then the username will be retrieved
         sharedPreferences = getSharedPreferences(keyPreference, Context.MODE_PRIVATE);
-        username = sharedPreferences.getString("username",null);
+        long id = sharedPreferences.getLong("user",0);
+        User user = User.findById(User.class,id);
+        if(user!= null) {
+            username = user.getUsername();
+        }
 
         if(username!=null){//the user will be directed to the home page directly
             Toast.makeText(this, "Welcome Back " + username, Toast.LENGTH_SHORT).show();
