@@ -99,7 +99,9 @@ public class ViewCart extends Fragment implements View.OnClickListener {
 
         //static test code
         orderedProducts.add(new Cart_Product(userCart.getId(),1,12000,1));
-        orderedProducts.add(new Cart_Product(userCart.getId(), 3,3000,2));
+        orderedProducts.add(new Cart_Product(userCart.getId(), 3,1500,2));
+        orderedProducts.add(new Cart_Product(userCart.getId(), 4,12000,1));
+        orderedProducts.add(new Cart_Product(userCart.getId(),5,12250,1));
         return orderedProducts;
     }
 }

@@ -26,7 +26,7 @@
             <ImageView
                 android:id="@+id/thumbnail_item"
                 android:layout_width="175dp"
-                android:layout_height="wrap_content"
+                android:layout_height="220dp"
                 android:background="#2d2d2d"
                 android:scaleType="centerCrop" />
 <RelativeLayout

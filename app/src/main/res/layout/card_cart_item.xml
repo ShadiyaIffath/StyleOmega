@@ -75,19 +75,19 @@
 
             <Button
                 android:id="@+id/item_remove"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:background="@drawable/close"
                 android:layout_centerInParent="true"
                 android:layout_gravity="right"
                 android:clickable="true"
-                android:layout_weight="1" />
+                android:layout_weight="0.8" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:padding="10dp"
                 android:gravity="center"
                 android:weightSum="3">

@@ -4,17 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.iffath.style_omega.CustomViewHolder.CartHolder;
-import com.example.iffath.style_omega.Model.Cart;
+
 import com.example.iffath.style_omega.Model.Cart_Product;
 import com.example.iffath.style_omega.Model.Product;
 import com.example.iffath.style_omega.Model.SingletonProduct;
@@ -55,12 +50,12 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> impleme
         Product product = getProduct(productId);
 
         if(product!= null){
-//            Double quantity = selected.getQuantity()* product.getPrice(); //calculate cost
+            Double quantity = selected.getQuantity()* product.getPrice(); //calculate cost
             holder.title.setText(product.getTitle());
             holder.category.setText(product.getType());
             holder.consumer.setText(product.getConsumer());
             holder.thumbnail.setImageResource(product.getThumbnail());
-            holder.cost.setText(Double.toString(selected.getPrice()));
+            holder.cost.setText(Double.toString(quantity));
             holder.quantity.setText(Integer.toString(selected.getQuantity()));
 
             holder.cartItem.setOnClickListener(this);
