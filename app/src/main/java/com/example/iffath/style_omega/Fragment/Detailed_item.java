@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -17,10 +18,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.iffath.style_omega.Activity.Launcher;
 import com.example.iffath.style_omega.Model.Cart;
 import com.example.iffath.style_omega.Model.Cart_Product;
 import com.example.iffath.style_omega.Model.Product;
 import com.example.iffath.style_omega.R;
+import com.orm.query.Condition;
+import com.orm.query.Select;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -156,7 +162,8 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Toast.makeText(getActivity(),"Order successfully placed",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),"Order successfully placed",Toast.LENGTH_SHORT).show();
+                placeOrder();
                 quantity.setText("0");
                 priceTag.setText("");
             }
@@ -171,8 +178,34 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
     }
 
     public void placeOrder(){   //method which creates/ update an existing cart
-       // Cart cart
-       // Cart_Product addedItem = new Cart_Product()
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        Long userid = sharedPreferences.getLong("user",0);
+
+        //retrieve the carts that belong to the user that hasn't been checked out yet
+
+//        List<Cart> pendingCart = Select.from(Cart.class)
+//                        .where(Condition.prop("status").eq(0),
+//                            Condition.prop("userId").eq(userid)).list();
+        if(userid!= null) {
+
+            List<Cart> pendingCart = Cart.find(Cart.class,"status=?","0");
+            for(Cart x: pendingCart){
+                if (x.getUserId()!= userid){
+                    pendingCart.remove(x);
+                }
+            }
+                    //Cart.find(Cart.class,"status=?","0"); this works
+                    //.find(Cart.class, "userId=?", userid.toString()); //doesn't work
+            if (pendingCart != null) {
+                Cart userCart = pendingCart.get(0);
+                Toast.makeText(getActivity(), "Order successfully placed", Toast.LENGTH_SHORT).show();
+                Cart_Product addedItem =
+                        new Cart_Product(userCart.getId(), product.getId(), product.getPrice(), Integer.parseInt(quantity.getText().toString()));
+            }
+        }
+        else{
+            Toast.makeText(getActivity(), "Order failed", Toast.LENGTH_SHORT).show();
+        }
 
     }
 

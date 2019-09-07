@@ -60,7 +60,6 @@ public class home extends AppCompatActivity {
         //retrieve logged user's username
           sharedPreferences = getSharedPreferences(Launcher.keyPreference, Context.MODE_PRIVATE);
           long id = sharedPreferences.getLong("user",0);
-//          username = sharedPreferences.getString("username",null);
           User user = User.findById(User.class,id);
           username = user.getUsername();
           loggedUser = username;
@@ -98,55 +97,6 @@ public class home extends AppCompatActivity {
             super.onBackPressed();
         }
     }
-//            int framentCount = this.getSupportFragmentManager().getBackStackEntryCount();
-//            if(framentCount != 0)
-//            {
-//                FragmentManager.BackStackEntry backEntry= getSupportFragmentManager().getBackStackEntryAt(framentCount-1);
-//                String title = backEntry.getName();
-//                Fragment fragment =null;
-//
-//                if(title.equals("Home")){ //navigation bar back handle
-//                    fragment = getSupportFragmentManager().findFragmentByTag("Home");
-//                    if(fragment instanceof home_page){
-//                        setTitle("Select Type");
-//                    }
-//                    else if(fragment instanceof Profile){
-//                        setTitle("View Profile");
-//                    }
-//                    else if(fragment instanceof ContactUs){
-//                        setTitle("Contact Us");
-//                    }
-//                }
-//                else if(title.equals("Women")){
-//                    setTitle(title);
-//                }
-//            }
-
-//        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-//             super.onBackPressed();
-////             FragmentManager fragmentManager = getSupportFragmentManager();
-//////             Log.i("MainActivity", "popping backstack");
-////             fragmentManager.popBackStack();
-//            Fragment fragment = getSupportFragmentManager().findFragmentByTag("Home");
-//////
-//            if(fragment!=null) {
-//                if (fragment instanceof home_page) {
-//                    setTitle("Select Type");
-//                } else if (fragment instanceof Profile) {
-//                    setTitle("Edit Profile");
-//                }
-//            }
-//            else{
-//                fragment = getSupportFragmentManager().findFragmentById(R.id.type_home);
-//                setTitle(fragment.getTag());
-//            }
-//
-//
-//////             else if(fragment instanceof TypeHome){
-//////                 setTitle("");
-//////             }
-//        }
-//        super.onBackPressed();
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

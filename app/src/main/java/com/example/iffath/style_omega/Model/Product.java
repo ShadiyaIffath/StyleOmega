@@ -25,6 +25,7 @@ public class Product implements Parcelable {
     }
 
     public Product(int id, String title, String description, String type, String customer, int quantity, double price, int thumbnail, ArrayList<String> colors, ArrayList<String> sizes, ArrayList<Image> images) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.type = type;
@@ -38,6 +39,7 @@ public class Product implements Parcelable {
     }
 
     public Product(int id, String title, String description, String type, String customer, int quantity, double price, int thumbnail,ArrayList<String> colors, ArrayList<String> sizes) {
+        this.id = id;
         this.title = title;
         this.thumbnail = thumbnail;
         this.description = description;
@@ -62,6 +64,7 @@ public class Product implements Parcelable {
         colors = in.createStringArrayList();
         sizes = in.createStringArrayList();
     }
+
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
         @Override

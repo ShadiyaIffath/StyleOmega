@@ -51,12 +51,14 @@ public class TypeHome extends Fragment {
         getActivity().setTitle(consumerType);
 
         products = new ArrayList<>();
-//        if(products != null){
+
+        products = getConsumerItems(consumerType);
+        //        if(products != null){
 //
 //        }
 //        else {
-            products = getConsumerItems(consumerType);
-            types = getTypes();
+
+        types = getTypes();
 //        }
 
         //inside type home fragment

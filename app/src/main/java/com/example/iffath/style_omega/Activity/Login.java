@@ -53,8 +53,6 @@ public class Login extends AppCompatActivity {
 //                    the app launches
                 sharedPreferences = getSharedPreferences(Launcher.keyPreference, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
-//                editor.putString("username",username);
-//                editor.apply();
                 long id = users.get(0).getId();
                 editor.putLong("user",id);
                 editor.apply();

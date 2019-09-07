@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/cart_item"
+    android:layout_margin="10dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    app:cardCornerRadius="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="7dp"
+        android:weightSum="3">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="120dp"
+            android:layout_height="160dp"
+            android:id="@+id/cart_item_image"
+            android:layout_weight="0.8"
+            android:scaleType="centerCrop"
+            android:background="#2d2d2d"/>
+
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1.2"
+            android:padding="10sp"
+            android:weightSum="3">
+            <TextView
+                android:gravity="center"
+                android:id="@+id/cart_item_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:textSize="15sp"
+                android:text="Frill Bardot Jungle Print Dress"
+                android:textColor="@color/midnightblue"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cart_item_consumer"
+                android:layout_weight=".5"
+                android:background="@color/cardview_shadow_start_color"
+                android:gravity="center"
+                android:text="Men"
+                android:textColor="@android:color/background_dark" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/cart_item_category"
+                android:gravity="center"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:text="Category"/>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:weightSum="3">
+
+            <Button
+                android:id="@+id/item_remove"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/close"
+                android:layout_centerInParent="true"
+                android:layout_gravity="right"
+                android:clickable="true"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:gravity="center"
+                android:weightSum="3">
+
+                <Button
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/increase"
+                    android:background="@color/mediumpurple"
+                    android:text="-"
+                    android:layout_weight="1"
+                    android:textSize="13sp"
+                    android:textColor="@color/cardview_light_background"/>
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@android:color/darker_gray"
+                    android:gravity="center"
+                    android:id="@+id/cart_item_quantity"
+                    android:text="0"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/mediumpurple" />
+
+
+                <Button
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/decrease"
+                    android:background="@color/mediumpurple"
+                    android:text="+"
+                    android:layout_weight="1"
+                    android:textSize="13sp"
+                    android:textColor="@color/cardview_light_background"/>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:layout_weight="1"
+                android:id="@+id/cart_item_cost"
+                android:text="3000"
+                android:textColor="@color/indigo"
+                android:gravity="center"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</androidx.cardview.widget.CardView>
