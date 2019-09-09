@@ -216,10 +216,19 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
                 Toast.makeText(getActivity(),"New Cart Created",Toast.LENGTH_SHORT).show();
             }
 
+            long existingOrderId = verifyItemExistsInCart(userCart.getId(),product.getId());
+            Cart_Product addedItem = null;
 
-            Cart_Product addedItem =
-                    new Cart_Product(userCart.getId(), product.getId(), product.getPrice(), Integer.parseInt(quantity.getText().toString()));
-            //addedItem.save();
+            if(existingOrderId != -1){ // updates quantity of the existing item
+                addedItem = Cart_Product.findById(Cart_Product.class,existingOrderId);
+                addedItem.setQuantity(addedItem.getQuantity()+Integer.parseInt(quantity.getText().toString()));
+                addedItem.update();
+            }
+            else {  // creates a new item in the cart
+                addedItem =
+                        new Cart_Product(userCart.getId(), product.getId(), product.getPrice(), Integer.parseInt(quantity.getText().toString()));
+                addedItem.save();
+            }
         }
         else{
             Toast.makeText(getActivity(), "Order failed", Toast.LENGTH_SHORT).show();
@@ -228,7 +237,7 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
     }
 
 
-    public void shareItem(){
+    private void shareItem(){
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         String shareBody = "Item "+product.getTitle()+" Price: Rs."+product.getPrice()+" Type: "+product.getType();
@@ -236,6 +245,19 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
         shareIntent.putExtra(Intent.EXTRA_SUBJECT,subject);
         shareIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
         startActivity(Intent.createChooser(shareIntent,"Share Using..."));
+    }
+
+    private long verifyItemExistsInCart(long cartId,long itemId){
+        long valid= -1;
+        List<Cart_Product> allOrders = Cart_Product.listAll(Cart_Product.class);
+
+        for(Cart_Product xOrder: allOrders){
+            if(xOrder.getCartId() == cartId && xOrder.getItemID() == itemId){
+                valid = xOrder.getId();
+                break;
+            }
+        }
+        return valid;
     }
 
 

@@ -1,6 +1,8 @@
 package com.example.iffath.style_omega.Model;
 
-public class Cart_Product {
+import com.orm.SugarRecord;
+
+public class Cart_Product extends SugarRecord {
     private long cartId;
     private int itemID;
     private double price;

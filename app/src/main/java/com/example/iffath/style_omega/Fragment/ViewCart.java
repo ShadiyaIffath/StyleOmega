@@ -56,12 +56,13 @@ public class ViewCart extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_view_cart, container, false);
         getActivity().setTitle("My Cart");
+        totalPrice = view.findViewById(R.id.totalPricetxt);
+        checkout = view.findViewById(R.id.checkout_button);
 
         cartItems = new ArrayList<>();
         cartItems = getProducts();
         if(cartItems!= null){
-            totalPrice = view.findViewById(R.id.totalPricetxt);
-            checkout = view.findViewById(R.id.checkout_button);
+
             checkout.setOnClickListener(this);
 
             recycler_cart = view.findViewById(R.id.recycler_cart);
@@ -108,6 +109,7 @@ public class ViewCart extends Fragment implements View.OnClickListener {
 
         }else{
             Toast.makeText(getActivity(),"No items",Toast.LENGTH_SHORT).show();
+            checkout.setClickable(false);
         }
 
 
@@ -128,6 +130,7 @@ public class ViewCart extends Fragment implements View.OnClickListener {
         long id = sharedPreferences.getLong("user",-1);
 
         if(id != -1){
+            // retrieve existing cart of user
             List<Cart> pendingCart = Cart.find(Cart.class,"status=?","0");
             for(Cart x: pendingCart){
                 if (x.getUserId()!= id){
@@ -138,10 +141,23 @@ public class ViewCart extends Fragment implements View.OnClickListener {
         }
 
         //static test code
-        orderedProducts.add(new Cart_Product(userCart.getId(),1,12000,1));
-        orderedProducts.add(new Cart_Product(userCart.getId(), 3,1500,2));
-        orderedProducts.add(new Cart_Product(userCart.getId(), 4,12000,1));
-        orderedProducts.add(new Cart_Product(userCart.getId(),5,12250,1));
+//        orderedProducts.add(new Cart_Product(userCart.getId(),1,12000,1));
+//        orderedProducts.add(new Cart_Product(userCart.getId(), 3,1500,2));
+//        orderedProducts.add(new Cart_Product(userCart.getId(), 4,12000,1));
+//        orderedProducts.add(new Cart_Product(userCart.getId(),5,12250,1));
+        long cartId = userCart.getId();
+        orderedProducts = Cart_Product.listAll(Cart_Product.class);
+        double sum = 0;
+        for(Cart_Product xProduct: orderedProducts){
+            if(xProduct.getCartId()!= cartId){
+                orderedProducts.remove(xProduct);
+            }
+            else{
+                sum += (xProduct.getQuantity()*xProduct.getPrice());
+            }
+        }
+
+        totalPrice.setText(Double.toString(sum));
         return orderedProducts;
     }
 }
