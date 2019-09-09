@@ -73,4 +73,15 @@ public class SingletonProduct {
     public static List<Product> getProducts(){
         return products;
     }
+
+    public static Product findProduct(int id){
+        Product temp = null;
+        for (Product x:products) {
+                if(x.getId()== id){
+                    temp= x;
+                    break;
+                }
+        }
+        return temp;
+    }
 }

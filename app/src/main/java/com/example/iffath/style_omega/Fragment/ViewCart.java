@@ -24,6 +24,7 @@ import com.example.iffath.style_omega.Interface.CustomItemClickListener;
 import com.example.iffath.style_omega.Model.Cart;
 import com.example.iffath.style_omega.Model.Cart_Product;
 import com.example.iffath.style_omega.Model.Product;
+import com.example.iffath.style_omega.Model.SingletonProduct;
 import com.example.iffath.style_omega.Model.User;
 import com.example.iffath.style_omega.R;
 
@@ -85,12 +86,19 @@ public class ViewCart extends Fragment implements View.OnClickListener {
                             break;
                         case R.id.cart_item:
                             Bundle args = new Bundle();
-                            Product productSelected = null;
+                            Product productSelected = SingletonProduct.findProduct(product.getItemID());
+
+                            //the entire product object is sent by implementing the parceable interface in
+                            //the product model class
                             args.putParcelable("Item",productSelected);
+                            Fragment detailed_fragment = new Detailed_item();
+                            detailed_fragment.setArguments(args);
+
                             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.display_screen,new Detailed_item())
+                            transaction.replace(R.id.display_screen,detailed_fragment)
                                     .addToBackStack(null)
                                     .commit();
+                            getActivity().setTitle(productSelected.getTitle());
                     }
                     totalPrice.setText(Double.toString(cost));
                 }

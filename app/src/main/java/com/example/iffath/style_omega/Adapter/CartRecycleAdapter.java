@@ -62,8 +62,8 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> {
             holder.cost.setText(Double.toString(product.getPrice()));
             holder.quantity.setText(Integer.toString(selected.getQuantity()));
 
-            holder.cartItem.setOnTouchListener(new View.OnTouchListener() {
-
+            holder.cartItem.setOnTouchListener(new View.OnTouchListener() { //handle double tap feature of the card
+                                                                            //which redirects user to a detailed view of the item
                 private GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
                     @Override
                     public boolean onDoubleTap(MotionEvent e){
@@ -80,7 +80,7 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> {
                 }
             });
 
-            holder.increaseButton.setOnClickListener(new View.OnClickListener() {
+            holder.increaseButton.setOnClickListener(new View.OnClickListener() { // item quantity increase function
                 @Override
                 public void onClick(View v) {
                     listener.onItemClick(v,position);
@@ -94,7 +94,7 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> {
             });
             holder.decreaseButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(View v) {       //item quantity decrease function
                     int count = Integer.parseInt(holder.quantity.getText().toString());
                     count--;
                     if(count > 0) {
@@ -109,12 +109,11 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> {
             });
             holder.removeButton.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public boolean onLongClick(View v) {
+                public boolean onLongClick(View v) {        //remove clothing item from cart
                         listener.onItemClick(v, position);
                         return false;
                 }
             });
-//            holder.
 
         }
 

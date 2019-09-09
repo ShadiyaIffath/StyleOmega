@@ -26,7 +26,10 @@ import com.example.iffath.style_omega.R;
 import com.orm.query.Condition;
 import com.orm.query.Select;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,8 +50,13 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
     Button add;
     Button sub;
     Button addToCart;
+    int orderedVal =0;
 
     private Unbinder unbinder;
+
+    public Detailed_item(){
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -117,10 +125,6 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
             }
     }
 
-//    @Override public void onDestroyView() {
-//        super.onDestroyView();
-//        unbinder.unbind();
-//    }
     public void increaseQuantity(){     //increase button
             int sum = Integer.parseInt(quantity.getText().toString());
             sum++;
@@ -162,7 +166,6 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                //Toast.makeText(getActivity(),"Order successfully placed",Toast.LENGTH_SHORT).show();
                 placeOrder();
                 quantity.setText("0");
                 priceTag.setText("");
@@ -177,31 +180,46 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
         builder.show();
     }
 
-    public void placeOrder(){   //method which creates/ update an existing cart
+    public void placeOrder(){   //method which creates/ updates an existing cart
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
         Long userid = sharedPreferences.getLong("user",0);
 
-        //retrieve the carts that belong to the user that hasn't been checked out yet
+        //            String [] values = {"0",Long.toString(userid)};
+//            List<Cart> pendingCart = Cart.find(Cart.class,"status=? and userid=?", values);
+
+//        List<Cart> pendingCart = Cart.findWithQuery(Cart.class,"Select * from Cart where userId = ? ", userid.toString());
 
 //        List<Cart> pendingCart = Select.from(Cart.class)
 //                        .where(Condition.prop("status").eq(0),
 //                            Condition.prop("userId").eq(userid)).list();
-        if(userid!= null) {
 
-            List<Cart> pendingCart = Cart.find(Cart.class,"status=?","0");
+
+        if(userid!= null) {  //retrieve the carts that belong to the user that hasn't been checked out yet
+
+       List<Cart> pendingCart = Cart.find(Cart.class,"status=?","0"); //this works
+
             for(Cart x: pendingCart){
                 if (x.getUserId()!= userid){
                     pendingCart.remove(x);
                 }
             }
-                    //Cart.find(Cart.class,"status=?","0"); this works
-                    //.find(Cart.class, "userId=?", userid.toString()); //doesn't work
-            if (pendingCart != null) {
-                Cart userCart = pendingCart.get(0);
-                Toast.makeText(getActivity(), "Order successfully placed", Toast.LENGTH_SHORT).show();
-                Cart_Product addedItem =
-                        new Cart_Product(userCart.getId(), product.getId(), product.getPrice(), Integer.parseInt(quantity.getText().toString()));
+
+            Cart userCart = null;
+            if (pendingCart != null) {  //use existing cart
+                Toast.makeText(getActivity(), "Item added to cart", Toast.LENGTH_SHORT).show();
+                userCart = pendingCart.get(0);
             }
+            else{   //create new cart for the user if they don't have one
+                String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                userCart = new Cart(userid,product.getPrice(),false,date);
+                userCart.save();
+                Toast.makeText(getActivity(),"New Cart Created",Toast.LENGTH_SHORT).show();
+            }
+
+
+            Cart_Product addedItem =
+                    new Cart_Product(userCart.getId(), product.getId(), product.getPrice(), Integer.parseInt(quantity.getText().toString()));
+            //addedItem.save();
         }
         else{
             Toast.makeText(getActivity(), "Order failed", Toast.LENGTH_SHORT).show();

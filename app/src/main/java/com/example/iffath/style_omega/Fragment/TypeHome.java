@@ -54,7 +54,7 @@ public class TypeHome extends Fragment {
 
         products = getConsumerItems(consumerType);
         if(products == null){
-
+            //show a dialog when there are no items to display
         }
 
         types = getTypes();

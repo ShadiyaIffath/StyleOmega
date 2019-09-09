@@ -25,6 +25,14 @@ public class Cart extends SugarRecord {
         this.created = created;
     }
 
+    public Cart(long userId,double price, boolean status,String created){
+        this.status = status;
+        this.userId = userId;
+        this.price = price;
+        this.created = created;
+        this.updated = created;
+    }
+
     public Cart(long userId,String created){  //the first time
         this.userId = userId;
         status = false;
