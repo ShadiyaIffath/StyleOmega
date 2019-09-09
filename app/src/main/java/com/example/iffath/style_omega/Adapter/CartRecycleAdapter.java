@@ -1,7 +1,9 @@
 package com.example.iffath.style_omega.Adapter;
 
 import android.content.Context;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -10,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.iffath.style_omega.CustomViewHolder.CartHolder;
 
+import com.example.iffath.style_omega.Interface.CustomItemClickListener;
+import com.example.iffath.style_omega.Model.Cart;
 import com.example.iffath.style_omega.Model.Cart_Product;
 import com.example.iffath.style_omega.Model.Product;
 import com.example.iffath.style_omega.Model.SingletonProduct;
@@ -19,16 +23,16 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
-public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> implements View.OnClickListener {
+public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> {
     private Context context;
-
+    CustomItemClickListener listener;
     private List<Cart_Product> orderedProducts;
     private final List<Product> allProducts = SingletonProduct.getProducts();
 
-    public CartRecycleAdapter(Context context, List<Cart_Product> products) {
+    public CartRecycleAdapter(Context context, List<Cart_Product> products, CustomItemClickListener listener) {
         this.context = context;
         this.orderedProducts = products;
-
+        this.listener = listener;
     }
 
 
@@ -42,7 +46,7 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> impleme
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CartHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final CartHolder holder, final int position) {
         Cart_Product selected = orderedProducts.get(position);
 
 //        holder.title
@@ -55,14 +59,61 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> impleme
             holder.category.setText(product.getType());
             holder.consumer.setText(product.getConsumer());
             holder.thumbnail.setImageResource(product.getThumbnail());
-            holder.cost.setText(Double.toString(quantity));
+            holder.cost.setText(Double.toString(product.getPrice()));
             holder.quantity.setText(Integer.toString(selected.getQuantity()));
 
-            holder.cartItem.setOnClickListener(this);
-            holder.increaseButton.setOnClickListener(this);
-            holder.decreaseButton.setOnClickListener(this);
-            holder.removeButton.setOnClickListener(this);
-//            holder.thumbnail.setImageResource(product.getThumbnail());
+            holder.cartItem.setOnTouchListener(new View.OnTouchListener() {
+
+                private GestureDetector gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+                    @Override
+                    public boolean onDoubleTap(MotionEvent e){
+                        listener.onItemClick(holder.cartItem,position);
+                        return false;
+                    }
+
+                });
+                @Override
+                public boolean onTouch(View v, MotionEvent event) {
+
+                    gestureDetector.onTouchEvent(event);
+                    return true;
+                }
+            });
+
+            holder.increaseButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onItemClick(v,position);
+                    int count = Integer.parseInt(holder.quantity.getText().toString()) + 1;
+                    Cart_Product product1 = orderedProducts.get(position);
+                    product1.setQuantity(count);
+                    orderedProducts.set(position,product1);
+                    notifyItemChanged(position);
+                    holder.quantity.setText(Integer.toString(count));
+                }
+            });
+            holder.decreaseButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int count = Integer.parseInt(holder.quantity.getText().toString());
+                    count--;
+                    if(count > 0) {
+                        listener.onItemClick(v, position);
+                        Cart_Product product1 = orderedProducts.get(position);
+                        product1.setQuantity(count);
+                        orderedProducts.set(position,product1);
+                        notifyItemChanged(position);
+                        holder.quantity.setText(Integer.toString(count));
+                    }
+                }
+            });
+            holder.removeButton.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                        listener.onItemClick(v, position);
+                        return false;
+                }
+            });
 //            holder.
 
         }
@@ -85,9 +136,4 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> impleme
         return product;
     }
 
-
-    @Override
-    public void onClick(View view) {
-
-    }
 }

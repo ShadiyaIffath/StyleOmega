@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,8 +20,10 @@ import android.widget.Toast;
 import com.example.iffath.style_omega.Activity.Launcher;
 import com.example.iffath.style_omega.Adapter.CartRecycleAdapter;
 import com.example.iffath.style_omega.Adapter.RecyclerViewAdapter;
+import com.example.iffath.style_omega.Interface.CustomItemClickListener;
 import com.example.iffath.style_omega.Model.Cart;
 import com.example.iffath.style_omega.Model.Cart_Product;
+import com.example.iffath.style_omega.Model.Product;
 import com.example.iffath.style_omega.Model.User;
 import com.example.iffath.style_omega.R;
 
@@ -56,16 +59,45 @@ public class ViewCart extends Fragment implements View.OnClickListener {
         cartItems = new ArrayList<>();
         cartItems = getProducts();
         if(cartItems!= null){
+            totalPrice = view.findViewById(R.id.totalPricetxt);
+            checkout = view.findViewById(R.id.checkout_button);
+            checkout.setOnClickListener(this);
 
             recycler_cart = view.findViewById(R.id.recycler_cart);
-            myAdapter = new CartRecycleAdapter(this.getContext(),cartItems);
+            recycler_cart.setHasFixedSize(true);
+            myAdapter = new CartRecycleAdapter(this.getContext(),cartItems, new CustomItemClickListener() {
+                @Override
+                public void onItemClick(View v, int position) {
+                    int id = v.getId();
+                    double cost = Double.parseDouble(totalPrice.getText().toString());
+                    Cart_Product product = cartItems.get(position);
+                    switch(id){
+                        case(R.id.increase):
+                            cost += product.getPrice();
+                            break;
+                        case(R.id.decrease):
+                            cost -= product.getPrice();
+                            break;
+                        case(R.id.item_remove):
+                            cost -= (product.getPrice() * product.getQuantity());
+                            cartItems.remove(position);
+                            myAdapter.notifyItemRemoved(position);
+                            break;
+                        case R.id.cart_item:
+                            Bundle args = new Bundle();
+                            Product productSelected = null;
+                            args.putParcelable("Item",productSelected);
+                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            transaction.replace(R.id.display_screen,new Detailed_item())
+                                    .addToBackStack(null)
+                                    .commit();
+                    }
+                    totalPrice.setText(Double.toString(cost));
+                }
+            });
             recycler_cart.setAdapter(myAdapter);
             recycler_cart.setLayoutManager(new LinearLayoutManager(getContext()));
 
-            totalPrice = view.findViewById(R.id.totalPricetxt);
-            checkout = view.findViewById(R.id.checkout_button);
-            recycler_cart.setHasFixedSize(true);
-            checkout.setOnClickListener(this);
         }else{
             Toast.makeText(getActivity(),"No items",Toast.LENGTH_SHORT).show();
         }

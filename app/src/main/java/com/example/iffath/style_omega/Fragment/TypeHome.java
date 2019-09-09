@@ -53,13 +53,12 @@ public class TypeHome extends Fragment {
         products = new ArrayList<>();
 
         products = getConsumerItems(consumerType);
-        //        if(products != null){
-//
-//        }
-//        else {
+        if(products == null){
+
+        }
 
         types = getTypes();
-//        }
+
 
         //inside type home fragment
         //this is to get the list of items

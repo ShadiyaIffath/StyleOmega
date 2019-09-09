@@ -76,7 +76,7 @@
             <Button
                 android:id="@+id/item_remove"
                 android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_height="15dp"
                 android:background="@drawable/close"
                 android:layout_centerInParent="true"
                 android:layout_gravity="right"
@@ -95,8 +95,9 @@
                 <Button
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:id="@+id/increase"
+                    android:id="@+id/decrease"
                     android:background="@color/mediumpurple"
+                    android:focusableInTouchMode="true"
                     android:text="-"
                     android:layout_weight="1"
                     android:textSize="13sp"
@@ -117,7 +118,7 @@
                 <Button
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:id="@+id/decrease"
+                    android:id="@+id/increase"
                     android:background="@color/mediumpurple"
                     android:text="+"
                     android:layout_weight="1"

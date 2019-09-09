@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.iffath.style_omega.Fragment.Detailed_item;
 import com.example.iffath.style_omega.Model.Product;
-import com.example.iffath.style_omega.Model.SingletonProduct;
 import com.example.iffath.style_omega.R;
 import com.example.iffath.style_omega.Utility.ProductGridDiff;
 
