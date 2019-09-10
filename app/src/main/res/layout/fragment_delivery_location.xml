@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     tools:context=".Fragment.DeliveryLocation">
 
         <LinearLayout
@@ -46,6 +45,16 @@
             android:layout_margin="30dp"
             android:layout_marginTop="40dp">
 
+            <TextView
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Recipient Details"
+                android:textColor="@color/design_default_color_primary_dark"
+                android:textSize="24sp"
+                app:fontFamily="cursive"/>
+
             <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -54,7 +63,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
-
             android:weightSum="2">
 
                 <ImageView
@@ -154,6 +162,7 @@
                     android:layout_height="40dp"
                     android:layout_margin="30dp"
                     android:text="Proceed To Payment"
+                    android:textColor="@color/cardview_light_background"
                     android:background="@drawable/loginbuttons"/>
 
                 </LinearLayout>

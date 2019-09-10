@@ -50,7 +50,6 @@ public class DeliveryLocation extends Fragment implements View.OnClickListener {
         payment = view.findViewById(R.id.checkout_proceed);
         title = view.findViewById(R.id.checkout_title);
         progressBar = view.findViewById(R.id.checkout_progress);
-        frame = view.findViewById(R.id.checkout_progress);
 
         payment.setOnClickListener(this);
 
@@ -79,14 +78,12 @@ public class DeliveryLocation extends Fragment implements View.OnClickListener {
                 deliver.setError("The delivery address cannot be blank");
             }
         }else{
-            progressBar.incrementProgressBy(50);
-            title.setText("Payment");
+//            progressBar.incrementProgressBy(50);
+//            title.setText("Payment");
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.display_screen, new Payment())
                 .addToBackStack(null)
                 .commit();
-//      LayoutInflater.from(getContext()).inflate(R.id.payment_layout,frame,true);
         }
-
     }
 }

@@ -1,15 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayoutLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/payment_layout"
     tools:context=".Fragment.Payment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/lavender"
+        android:orientation="vertical">
 
-</RelativeLayoutLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:id="@+id/checkout_title"
+        android:gravity="center"
+        android:text="Payment"
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="40sp"
+        app:fontFamily="cursive">
+
+    </TextView>
+
+    <ProgressBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkout_progress"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:indeterminate="false"
+        android:progress="100"
+        android:minHeight="50dp"
+        android:minWidth="250dp"
+        android:max="100"/>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/thirstle"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="30dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:textColor="@color/indigo"
+                    android:text="Your Bill"
+                    android:layout_gravity="center"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:textSize="20sp"
+                    android:id="@+id/payment__cost"
+                    android:textColor="@color/indigo"
+                    android:text="Rs. 0"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@color/midnightblue"
+                    android:weightSum="3">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="3">
+
+                            <ImageButton
+                                android:layout_width="70dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/master"
+                                android:layout_margin="10dp"
+                                android:scaleType="centerCrop"
+                                android:layout_weight="1"
+                                android:layout_gravity="center"/>
+
+                            <ImageButton
+                                android:layout_width="70dp"
+                                android:layout_height="60dp"
+                                android:layout_gravity="center"
+                                android:layout_margin="10dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/visa"
+                                android:scaleType="centerCrop" />
+
+                            <ImageButton
+                                android:layout_width="50dp"
+                                android:layout_height="40dp"
+                                android:scaleType="centerCrop"
+                                android:layout_margin="10dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:background="@drawable/amex"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal"
+                            android:weightSum="4">
+
+                            <EditText
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@null"
+                                android:gravity="center"
+                                android:id="@+id/card_1"
+                                android:inputType="numberDecimal"
+                                android:maxLength="4"
+                                android:text="0000"
+                                android:textColor="@color/cardview_light_background" />
+
+                            <EditText
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@null"
+                                android:gravity="center"
+                                android:id="@+id/card_2"
+                                android:inputType="numberDecimal"
+                                android:maxLength="4"
+                                android:text="0000"
+                                android:textColor="@color/cardview_light_background" />
+
+                            <EditText
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@null"
+                                android:gravity="center"
+                                android:id="@+id/card_3"
+                                android:inputType="numberDecimal"
+                                android:maxLength="4"
+                                android:text="0000"
+                                android:textColor="@color/cardview_light_background" />
+
+                            <EditText
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@null"
+                                android:gravity="center"
+                                android:id="@+id/card_4"
+                                android:inputType="numberDecimal"
+                                android:maxLength="4"
+                                android:text="0000"
+                                android:textColor="@color/cardview_light_background" />
+
+                        </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_margin="10dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:id="@+id/payment_holder"
+                            android:gravity="center"
+                            android:inputType="textPersonName"
+                            android:text="Holder's Name"
+                            android:textColor="@color/cardview_light_background" />
+
+                        <EditText
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/payment_month"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:gravity="center"
+                            android:inputType="date"
+                            android:text="MM/YY"
+                            android:textColor="@color/cardview_light_background" />
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:layout_gravity="center"
+                        android:id="@+id/payment_cvn"
+                        android:background="@null"
+                        android:text="CVN"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/cardview_light_background"/>
+
+                </LinearLayout>
+
+                <Button
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:id="@+id/payment_pay"
+                    android:layout_height="40dp"
+                    android:background="@drawable/loginbuttons"
+                    android:textColor="@color/cardview_light_background"
+                    android:text="Pay Now!"/>
+
+                <TextView
+                    android:layout_margin="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Or else"
+                    android:textSize="20sp"
+                    android:layout_gravity="center"/>
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/paypal"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
