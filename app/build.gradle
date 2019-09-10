@@ -27,6 +27,8 @@ dependencies {
     implementation 'com.github.satyan:sugar:1.5'
     implementation 'com.jakewharton:butterknife:8.5.1'
     implementation 'com.squareup.okhttp3:okhttp:3.8.0'
+    implementation 'com.google.android.gms:play-services-location:15.0.1'
+    implementation 'com.google.android.gms:play-services-maps:15.0.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'

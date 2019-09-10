@@ -30,8 +30,11 @@ import com.example.iffath.style_omega.R;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -61,7 +64,7 @@ public class ViewCart extends Fragment implements View.OnClickListener {
 
         cartItems = new ArrayList<>();
         cartItems = getProducts();
-        if(cartItems!= null){
+        if(!cartItems.isEmpty()){
 
             checkout.setOnClickListener(this);
 
@@ -73,18 +76,30 @@ public class ViewCart extends Fragment implements View.OnClickListener {
                     int id = v.getId();
                     double cost = Double.parseDouble(totalPrice.getText().toString());
                     Cart_Product product = cartItems.get(position);
+                    String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                     switch(id){
                         case(R.id.increase):
                             cost += product.getPrice();
+                            userCart.setUpdated(date);
+                            userCart.update();
                             break;
                         case(R.id.decrease):
                             cost -= product.getPrice();
+                            userCart.setUpdated(date);
+                            userCart.update();
                             break;
                         case(R.id.item_remove):
                             cost -= (product.getPrice() * product.getQuantity());
                             product.delete();
                             cartItems.remove(position);
+                            userCart.setUpdated(date);
+                            userCart.update();
                             myAdapter.notifyItemRemoved(position);
+
+                            if(cartItems.isEmpty()){    //disable checkout button when there are no items in the cart
+                                checkout.setEnabled(false);
+                                Toast.makeText(getActivity(),"Cart is empty",Toast.LENGTH_SHORT).show();
+                            }
                             break;
                         case R.id.cart_item:
                             Bundle args = new Bundle();
@@ -110,11 +125,8 @@ public class ViewCart extends Fragment implements View.OnClickListener {
 
         }else{
             Toast.makeText(getActivity(),"No items",Toast.LENGTH_SHORT).show();
-            checkout.setClickable(false);
+            checkout.setEnabled(false);
         }
-
-
-
 
         return view;
     }
@@ -122,6 +134,11 @@ public class ViewCart extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         Toast.makeText(getActivity(),"Check out",Toast.LENGTH_SHORT).show();
+        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.display_screen, new DeliveryLocation())
+                .addToBackStack(null)
+                .commit();
+        getActivity().setTitle("Check Out");
     }
 
     public List<Cart_Product> getProducts(){

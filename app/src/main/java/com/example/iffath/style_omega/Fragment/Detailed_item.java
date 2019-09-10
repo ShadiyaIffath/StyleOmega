@@ -205,14 +205,15 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
             }
 
             Cart userCart = null;
+            String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
             if (pendingCart != null) {  //use existing cart
                 Toast.makeText(getActivity(), "Item added to cart", Toast.LENGTH_SHORT).show();
                 userCart = pendingCart.get(0);
+                userCart.setUpdated(date);
             }
 
             else{   //create new cart for the user if they don't have one
-                String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                 userCart = new Cart(userid,product.getPrice(),false,date);
                 userCart.save();
                 Toast.makeText(getActivity(),"New Cart Created",Toast.LENGTH_SHORT).show();

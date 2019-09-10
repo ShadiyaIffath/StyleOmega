@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.iffath.style_omega">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission
+        android:name="android.permission.ACCESS_FINE_LOCATION">
+    </uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:name="com.orm.SugarApp"
         android:allowBackup="true"
@@ -35,6 +40,14 @@
         <meta-data
             android:name="DOMAIN_PACKAGE_NAME"
             android:value="com.example.iffath.style_omega.Model" />
-    </application>
 
+        <!--Android maps api -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCRPqZOdkrr41LeWJ3en2SLADPRzPakkTI" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+    </application>
 </manifest>
