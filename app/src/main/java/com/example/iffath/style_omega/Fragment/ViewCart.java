@@ -82,6 +82,7 @@ public class ViewCart extends Fragment implements View.OnClickListener {
                             break;
                         case(R.id.item_remove):
                             cost -= (product.getPrice() * product.getQuantity());
+                            product.delete();
                             cartItems.remove(position);
                             myAdapter.notifyItemRemoved(position);
                             break;

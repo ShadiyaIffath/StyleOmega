@@ -180,7 +180,7 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
         builder.show();
     }
 
-    public void placeOrder(){   //method which creates/ updates an existing cart
+    private void placeOrder(){   //method which creates/ updates an existing cart
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
         Long userid = sharedPreferences.getLong("user",0);
 
@@ -205,10 +205,12 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
             }
 
             Cart userCart = null;
+
             if (pendingCart != null) {  //use existing cart
                 Toast.makeText(getActivity(), "Item added to cart", Toast.LENGTH_SHORT).show();
                 userCart = pendingCart.get(0);
             }
+
             else{   //create new cart for the user if they don't have one
                 String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                 userCart = new Cart(userid,product.getPrice(),false,date);
@@ -224,6 +226,7 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
                 addedItem.setQuantity(addedItem.getQuantity()+Integer.parseInt(quantity.getText().toString()));
                 addedItem.update();
             }
+
             else {  // creates a new item in the cart
                 addedItem =
                         new Cart_Product(userCart.getId(), product.getId(), product.getPrice(), Integer.parseInt(quantity.getText().toString()));

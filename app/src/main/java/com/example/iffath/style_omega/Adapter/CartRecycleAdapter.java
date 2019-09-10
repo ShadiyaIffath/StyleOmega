@@ -54,7 +54,7 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> {
         Product product = getProduct(productId);
 
         if(product!= null){
-            Double quantity = selected.getQuantity()* product.getPrice(); //calculate cost
+            //Double quantity = selected.getQuantity()* product.getPrice(); //calculate cost
             holder.title.setText(product.getTitle());
             holder.category.setText(product.getType());
             holder.consumer.setText(product.getConsumer());
@@ -86,7 +86,9 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> {
                     listener.onItemClick(v,position);
                     int count = Integer.parseInt(holder.quantity.getText().toString()) + 1;
                     Cart_Product product1 = orderedProducts.get(position);
+
                     product1.setQuantity(count);
+                    product1.update();
                     orderedProducts.set(position,product1);
                     notifyItemChanged(position);
                     holder.quantity.setText(Integer.toString(count));
@@ -100,7 +102,10 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> {
                     if(count > 0) {
                         listener.onItemClick(v, position);
                         Cart_Product product1 = orderedProducts.get(position);
+
                         product1.setQuantity(count);
+                        product1.update();
+
                         orderedProducts.set(position,product1);
                         notifyItemChanged(position);
                         holder.quantity.setText(Integer.toString(count));
