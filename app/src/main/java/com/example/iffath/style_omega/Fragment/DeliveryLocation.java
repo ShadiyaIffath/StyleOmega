@@ -1,6 +1,7 @@
 package com.example.iffath.style_omega.Fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.iffath.style_omega.Model.Cart;
+import com.example.iffath.style_omega.Model.Recipient;
+import com.example.iffath.style_omega.Model.User;
 import com.example.iffath.style_omega.R;
 
 
@@ -26,12 +30,16 @@ public class DeliveryLocation extends Fragment implements View.OnClickListener {
     EditText contact;
     EditText email;
     TextView title;
-    FrameLayout frame;
+    SharedPreferences sharedPreferences;
     ProgressBar progressBar;
-
+    long cartId =-1;
 
     public DeliveryLocation() {
         // Required empty public constructor
+    }
+
+    public DeliveryLocation(long cartId){
+        this.cartId = cartId;
     }
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,8 +59,14 @@ public class DeliveryLocation extends Fragment implements View.OnClickListener {
         title = view.findViewById(R.id.checkout_title);
         progressBar = view.findViewById(R.id.checkout_progress);
 
-        payment.setOnClickListener(this);
+        User user = getUser();
 
+        if(user != null){
+            reciever.setText(user.getName());
+            contact.setText(user.getContactNumber());
+            email.setText(user.getEmail());
+        }
+        payment.setOnClickListener(this);
         return view;
     }
 
@@ -78,12 +92,19 @@ public class DeliveryLocation extends Fragment implements View.OnClickListener {
                 deliver.setError("The delivery address cannot be blank");
             }
         }else{
-//            progressBar.incrementProgressBy(50);
-//            title.setText("Payment");
+            Recipient recipient1 = new Recipient(recipient,address,number,recEmail);
+
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.display_screen, new Payment())
-                .addToBackStack(null)
+        transaction.replace(R.id.display_screen, new Payment()) //new Payment(cartId, recipient1)
                 .commit();
         }
+    }
+
+    private User getUser(){
+        User user = null;
+        sharedPreferences = getActivity().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        long id = sharedPreferences.getLong("user",0);
+        user = User.findById(User.class,id);
+        return user;
     }
 }
