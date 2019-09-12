@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/history_card"
+    android:orientation="vertical"
+    app:cardCornerRadius="3dp"
+    app:cardElevation="3dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:layout_margin="10dp"
+    android:padding="8dp"
+    android:layout_width="match_parent"
+    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.2"
+            android:padding="10dp"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="100dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:background="@drawable/bag"
+                android:scaleType="centerCrop" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/history_cart_id"
+                android:layout_gravity="center"
+                android:textSize="15sp"
+                android:textColor="@color/indigo"
+                app:fontFamily="cursive"
+                android:text="cart Id"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:id="@+id/history_recipient"
+                android:layout_gravity="center"
+                android:layout_marginTop="5sp"
+                app:fontFamily="cursive"
+                android:textColor="@color/indigo"
+                android:text="Recipient Name"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="0766065920"
+                android:layout_marginTop="5sp"
+                android:textColor="@color/indigo"
+                app:fontFamily="cursive"
+                android:id="@+id/history_contactnum" />
+        </LinearLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/thirstle"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:elevation="4dp"
+            app:cardCornerRadius="3dp"
+            android:layout_margin="10dp"
+            android:layout_weight="0.8">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="4"
+            android:padding="8dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:weightSum="2">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="Checked out on :"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:id="@+id/history_checkedout"
+                    android:layout_height="40dp"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:text="dd/MM/YY"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:weightSum="2">
+                <TextView
+                    android:layout_width="110dp"
+                    android:layout_height="40dp"
+                    android:text="Deliver Location:"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:id="@+id/history_address"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:text="No. 34, humes road, galle"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:weightSum="2">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="Total Cost:"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:id="@+id/history_cost"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    android:layout_weight="1"
+                    android:text="Rs.1000"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:weightSum="2">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="Payment type:"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:id="@+id/history_payment_type"
+                    android:textColor="@color/common_google_signin_btn_text_dark_focused"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:text="Visa"/>
+            </LinearLayout>
+
+        </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.cardview.widget.CardView>

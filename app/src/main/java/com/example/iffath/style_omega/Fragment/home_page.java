@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.iffath.style_omega.Model.Cart;
 import com.example.iffath.style_omega.R;
 
 
@@ -36,7 +37,6 @@ public class home_page extends Fragment implements View.OnClickListener{
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_home_page, container, false);
         getActivity().setTitle("Select Type");
-
         women = view.findViewById(R.id.womensImg);
         men = view.findViewById(R.id.mensImage);
         kids = view.findViewById(R.id.kidsImage);

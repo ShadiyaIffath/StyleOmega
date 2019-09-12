@@ -49,7 +49,6 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> {
     public void onBindViewHolder(@NonNull final CartHolder holder, final int position) {
         Cart_Product selected = orderedProducts.get(position);
 
-//        holder.title
         int productId = selected.getItemID();
         Product product = getProduct(productId);
 

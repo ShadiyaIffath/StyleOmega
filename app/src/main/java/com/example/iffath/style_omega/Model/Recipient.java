@@ -1,7 +1,8 @@
 package com.example.iffath.style_omega.Model;
 
-public class Recipient {
+import com.orm.SugarRecord;
 
+public class Recipient extends SugarRecord {
     private String name;
     private String address;
     private String contactNumber;
@@ -16,6 +17,7 @@ public class Recipient {
         this.address = address;
         this.contactNumber = contactNumber;
         this.email = email;
+        paymentType = null;
     }
 
     public Recipient(String name, String address, String contactNumber, String email, String paymentType) {

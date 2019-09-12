@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.iffath.style_omega.Fragment.ContactUs;
 import com.example.iffath.style_omega.Fragment.Detailed_item;
+import com.example.iffath.style_omega.Fragment.History;
 import com.example.iffath.style_omega.Fragment.Profile;
 import com.example.iffath.style_omega.Fragment.TypeHome;
 import com.example.iffath.style_omega.Fragment.ViewCart;
@@ -128,9 +129,10 @@ public class home extends AppCompatActivity {
                 Toast.makeText(this,"Home",Toast.LENGTH_SHORT).show();
                 fragment = new home_page();
                 break;
-//            case R.id.nav_history:
-//                fragmentLogic = History.class;
-//                break;
+            case R.id.nav_history:
+                Toast.makeText(this,"History",Toast.LENGTH_SHORT).show();
+                fragment = new History();
+                break;
             case R.id.nav_viewCart:
                 Toast.makeText(this,"My Cart",Toast.LENGTH_SHORT).show();
                 fragment = new ViewCart();

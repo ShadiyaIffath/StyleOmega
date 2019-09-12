@@ -16,24 +16,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Activity.Launcher"
-            android:theme="@style/SplashTheme"><intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
             </activity>
         <activity android:name=".Activity.home" />
         <activity android:name=".Activity.Register" />
         <activity
             android:name=".Activity.Login"/>
-        <activity android:name=".Activity.MainActivity"></activity>
+        <activity android:name=".Activity.MainActivity">
+        </activity>
 
         <meta-data
             android:name="DATABASE"
             android:value="sugar_example.db" />
         <meta-data
             android:name="VERSION"
-            android:value="7" />
+            android:value="12" />
         <meta-data
             android:name="QUERY_LOG"
             android:value="true" />

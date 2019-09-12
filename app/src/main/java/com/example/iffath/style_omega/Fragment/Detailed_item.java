@@ -182,7 +182,7 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
 
     private void placeOrder(){   //method which creates/ updates an existing cart
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
-        Long userid = sharedPreferences.getLong("user",0);
+        Long userid = sharedPreferences.getLong("user",-1);
 
         //            String [] values = {"0",Long.toString(userid)};
 //            List<Cart> pendingCart = Cart.find(Cart.class,"status=? and userid=?", values);
@@ -194,29 +194,27 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
 //                            Condition.prop("userId").eq(userid)).list();
 
 
-        if(userid!= null) {  //retrieve the carts that belong to the user that hasn't been checked out yet
+        if(userid!= -1) {  //retrieve the carts that belong to the user that hasn't been checked out yet
 
-       List<Cart> pendingCart = Cart.find(Cart.class,"status=?","0"); //this works
-
+       List<Cart> pendingCart = Cart.listAll(Cart.class); //this works
+            Cart userCart = null;
             for(Cart x: pendingCart){
-                if (x.getUserId()!= userid){
-                    pendingCart.remove(x);
+                if (x.getUserId()== userid && !x.isStatus()){
+                    userCart = x;
+                    break;
                 }
             }
 
-            Cart userCart = null;
+
             String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
-            if (pendingCart != null) {  //use existing cart
-                Toast.makeText(getActivity(), "Item added to cart", Toast.LENGTH_SHORT).show();
-                userCart = pendingCart.get(0);
+            if (userCart != null) {  //use existing cart
                 userCart.setUpdated(date);
             }
 
             else{   //create new cart for the user if they don't have one
-                userCart = new Cart(userid,product.getPrice(),false,date);
+                userCart = new Cart(userid,0,false,date);
                 userCart.save();
-                Toast.makeText(getActivity(),"New Cart Created",Toast.LENGTH_SHORT).show();
             }
 
             long existingOrderId = verifyItemExistsInCart(userCart.getId(),product.getId());
@@ -225,14 +223,20 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
             if(existingOrderId != -1){ // updates quantity of the existing item
                 addedItem = Cart_Product.findById(Cart_Product.class,existingOrderId);
                 addedItem.setQuantity(addedItem.getQuantity()+Integer.parseInt(quantity.getText().toString()));
-                addedItem.update();
+                Toast.makeText(getActivity(),"Existing item updated" +
+                        "",Toast.LENGTH_SHORT).show();
+                addedItem.save();
             }
 
             else {  // creates a new item in the cart
+                Toast.makeText(getActivity(),"New item Created",Toast.LENGTH_SHORT).show();
                 addedItem =
                         new Cart_Product(userCart.getId(), product.getId(), product.getPrice(), Integer.parseInt(quantity.getText().toString()));
                 addedItem.save();
             }
+            userCart.setPrice(addedItem.getPrice()*addedItem.getQuantity()+userCart.getPrice());    //update price shown by the cart
+            userCart.save();
+
         }
         else{
             Toast.makeText(getActivity(), "Order failed", Toast.LENGTH_SHORT).show();

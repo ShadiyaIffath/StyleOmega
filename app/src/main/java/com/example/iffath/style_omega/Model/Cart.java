@@ -6,21 +6,28 @@ import java.util.Date;
 
 public class Cart extends SugarRecord {
     private long userId;
-    private double price;
+    private double price = 0;
     private boolean status;
-    private String deliveryAddress;
     private String updated;
     private String created;
-
+    private Recipient recipient;
     public Cart(){
 
     }
 
-    public Cart(long userId, double price, boolean status, String delivery, String updated, String created) {
+    public Cart(long userId, double price, boolean status, String updated, String created, Recipient recipient) {
+        this.userId = userId;
+        this.price = price;
+        this.status = status;
+        this.updated = updated;
+        this.created = created;
+        this.recipient = recipient;
+    }
+
+    public Cart(long userId, double price, boolean status, String updated, String created) {
         this.status = status;
         this.userId = userId;
         this.price = price;
-        this.deliveryAddress = delivery;
         this.updated = updated;
         this.created = created;
     }
@@ -38,6 +45,14 @@ public class Cart extends SugarRecord {
         status = false;
         this.created = created;
         this.updated = created;
+    }
+
+    public Recipient getRecipient() {
+        return recipient;
+    }
+
+    public void setRecipient(Recipient recipient) {
+        this.recipient = recipient;
     }
 
     public long getUserId() {
@@ -62,14 +77,6 @@ public class Cart extends SugarRecord {
 
     public void setStatus(boolean status) {
         this.status = status;
-    }
-
-    public String getDeliveryAddress() {
-        return deliveryAddress;
-    }
-
-    public void setDeliveryAddress(String deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
     }
 
     public String getUpdated() {

@@ -95,7 +95,7 @@ public class DeliveryLocation extends Fragment implements View.OnClickListener {
             Recipient recipient1 = new Recipient(recipient,address,number,recEmail);
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.display_screen, new Payment()) //new Payment(cartId, recipient1)
+        transaction.replace(R.id.display_screen, new Payment(recipient1)) //new Payment(cartId, recipient1)
                 .commit();
         }
     }

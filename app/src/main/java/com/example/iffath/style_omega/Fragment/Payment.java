@@ -1,6 +1,7 @@
 package com.example.iffath.style_omega.Fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -14,11 +15,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.iffath.style_omega.Model.Cart;
 import com.example.iffath.style_omega.Model.Recipient;
 import com.example.iffath.style_omega.R;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class Payment extends Fragment implements View.OnClickListener {
     EditText cardHolder;
@@ -28,19 +35,19 @@ public class Payment extends Fragment implements View.OnClickListener {
     EditText num2;
     EditText num3;
     EditText num4;
+    TextView cost;
     Button pay;
     Button visa;
     Button paypal;
     Button master;
     Button amex;
-    long cartId = -1;
+    Cart cart = null;
     Recipient recipient;
 
     public Payment() {
         // Required empty public constructor
     }
-    public Payment(long cartId, Recipient recipient){
-        this.cartId = cartId;
+    public Payment( Recipient recipient){
         this.recipient = recipient;
     }
 
@@ -66,7 +73,13 @@ public class Payment extends Fragment implements View.OnClickListener {
         visa = view.findViewById(R.id.visa);
         amex = view.findViewById(R.id.amex);
         master = view.findViewById(R.id.master);
+        cost = view.findViewById(R.id.payment__cost);
 
+        setCart();
+        if(cart != null) {
+            cost.setText("Rs. "+Double.toString(cart.getPrice()));
+        }
+        cardHolder.setText(recipient.getName());
         pay.setOnClickListener(this);
         paypal.setOnClickListener(this);
         visa.setOnClickListener(this);
@@ -84,22 +97,22 @@ public class Payment extends Fragment implements View.OnClickListener {
 
             case R.id.amex:
                 Toast.makeText(getContext(),"American Express",Toast.LENGTH_SHORT).show();
-               // recipient.setPaymentType("AmEx");
+                recipient.setPaymentType("AmEx");
                 break;
 
             case R.id.visa:
                 Toast.makeText(getContext(),"Visa",Toast.LENGTH_SHORT).show();
-               // recipient.setPaymentType("Visa");
+                recipient.setPaymentType("Visa");
                 break;
 
             case R.id.master:
                 Toast.makeText(getContext(),"Master Card",Toast.LENGTH_SHORT).show();
-               // recipient.setPaymentType("MasterCard");
+                recipient.setPaymentType("MasterCard");
                 break;
 
             case R.id.paypal:
                 Toast.makeText(getContext(), "Payment Successful", Toast.LENGTH_SHORT).show();
-              //  recipient.setPaymentType("Paypal");
+                recipient.setPaymentType("Paypal");
                 onSuccess();
                 break;
         }
@@ -115,34 +128,51 @@ public class Payment extends Fragment implements View.OnClickListener {
         String dateOfExpiry = expiry.getText().toString();
         String cardOwner = cardHolder.getText().toString();
 
-        if(card1.length() !=4   || card2.length() !=4 || card3.length() !=4 || card4.length() !=4 || verify.length() !=3 ||
-                dateOfExpiry.length() != 5 || dateOfExpiry.charAt(2) != '/' || cardOwner.length() == 0 || !TextUtils.isDigitsOnly(verify)
-                || !TextUtils.isDigitsOnly(card1) || !TextUtils.isDigitsOnly(card2) ||!TextUtils.isDigitsOnly(card3)
-                || !TextUtils.isDigitsOnly(card4)){
-            num1.setText("0000");
-            num2.setText("0000");
-            num3.setText("0000");
-            num4.setText("0000");
-            cvn.setText("CVN");
-            expiry.setText("MM/YY");
-            Toast.makeText(getContext(),"Payment Failed", Toast.LENGTH_SHORT).show();
+        if(recipient.getPaymentType()== null){
+            Toast.makeText(getContext(),"Please Select Payment Type", Toast.LENGTH_SHORT).show();
         }
-        else{
-            Toast.makeText(getContext(), "Payment Successful", Toast.LENGTH_SHORT).show();
-            onSuccess();
+        else {
+            if (card1.length() != 4 || card2.length() != 4 || card3.length() != 4 || card4.length() != 4 || verify.length() != 3 ||
+                    dateOfExpiry.length() != 5 || dateOfExpiry.charAt(2) != '/' || cardOwner.length() == 0 || !TextUtils.isDigitsOnly(verify)
+                    || !TextUtils.isDigitsOnly(card1) || !TextUtils.isDigitsOnly(card2) || !TextUtils.isDigitsOnly(card3)
+                    || !TextUtils.isDigitsOnly(card4)) {
+                num1.setText("0000");
+                num2.setText("0000");
+                num3.setText("0000");
+                num4.setText("0000");
+                cvn.setText("CVN");
+                expiry.setText("MM/YY");
+                Toast.makeText(getContext(), "Payment Failed", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "Payment Successful", Toast.LENGTH_SHORT).show();
+                onSuccess();
+            }
         }
     }
 
     private void onSuccess(){
-        if(cartId != -1) {
-            Cart cart = Cart.findById(Cart.class, cartId);
-            //recipient.save();
-            //cart.setRecipient(recipient);
-            //cart.setStatus(true);
-            //cart.update();
+        if(cart != null) {
+            String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+            recipient.save();
+            cart.setRecipient(recipient);
+            cart.setUpdated(date);
+            cart.setStatus(true);
+            cart.save();
         }
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.display_screen, new home_page())
                 .commit();
+    }
+
+    public void setCart(){
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
+        Long userid = sharedPreferences.getLong("user",0);
+        List<Cart> allCarts = Cart.listAll(Cart.class);
+        for(Cart x: allCarts){
+            if(x.getUserId()== userid && x.isStatus()== false){
+                cart = x;
+                break;
+            }
+        }
     }
 }

@@ -61,72 +61,77 @@ public class ViewCart extends Fragment implements View.OnClickListener {
         getActivity().setTitle("My Cart");
         totalPrice = view.findViewById(R.id.totalPricetxt);
         checkout = view.findViewById(R.id.checkout_button);
+        userCart = null;
 
         cartItems = new ArrayList<>();
         cartItems = getProducts();
-        if(!cartItems.isEmpty()){
 
-            checkout.setOnClickListener(this);
+        if (userCart != null || !cartItems.isEmpty()) {
 
-            recycler_cart = view.findViewById(R.id.recycler_cart);
-            recycler_cart.setHasFixedSize(true);
-            myAdapter = new CartRecycleAdapter(this.getContext(),cartItems, new CustomItemClickListener() {
-                @Override
-                public void onItemClick(View v, int position) {
-                    int id = v.getId();
-                    double cost = Double.parseDouble(totalPrice.getText().toString());
-                    Cart_Product product = cartItems.get(position);
-                    String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-                    switch(id){
-                        case(R.id.increase):
-                            cost += product.getPrice();
-                            userCart.setUpdated(date);
-                            userCart.update();
-                            break;
-                        case(R.id.decrease):
-                            cost -= product.getPrice();
-                            userCart.setUpdated(date);
-                            userCart.update();
-                            break;
-                        case(R.id.item_remove):
-                            cost -= (product.getPrice() * product.getQuantity());
-                            product.delete();
-                            cartItems.remove(position);
-                            userCart.setUpdated(date);
-                            userCart.update();
-                            myAdapter.notifyItemRemoved(position);
+                checkout.setOnClickListener(this);
 
-                            if(cartItems.isEmpty()){    //disable checkout button when there are no items in the cart
-                                checkout.setEnabled(false);
-                                Toast.makeText(getActivity(),"Cart is empty",Toast.LENGTH_SHORT).show();
-                            }
-                            break;
-                        case R.id.cart_item:
-                            Bundle args = new Bundle();
-                            Product productSelected = SingletonProduct.findProduct(product.getItemID());
+                recycler_cart = view.findViewById(R.id.recycler_cart);
+                recycler_cart.setHasFixedSize(true);
+                myAdapter = new CartRecycleAdapter(this.getContext(), cartItems, new CustomItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+                        int id = v.getId();
+                        double cost = Double.parseDouble(totalPrice.getText().toString());
+                        Cart_Product product = cartItems.get(position);
+                        String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                        switch (id) {
+                            case (R.id.increase):
+                                cost += product.getPrice();
+                                userCart.setUpdated(date);
+                                userCart.setPrice(cost);
+                                userCart.save();
+                                break;
+                            case (R.id.decrease):
+                                cost -= product.getPrice();
+                                userCart.setUpdated(date);
+                                userCart.setPrice(cost);
+                                userCart.save();
+                                break;
+                            case (R.id.item_remove):
+                                cost -= (product.getPrice() * product.getQuantity());
+                                cartItems.remove(position);
+                                product.delete();
+                                userCart.setUpdated(date);
+                                userCart.setPrice(cost);
+                                userCart.save();
+                                myAdapter.notifyItemRemoved(position);
 
-                            //the entire product object is sent by implementing the parceable interface in
-                            //the product model class
-                            args.putParcelable("Item",productSelected);
-                            Fragment detailed_fragment = new Detailed_item();
-                            detailed_fragment.setArguments(args);
+                                if (cartItems.isEmpty()) {    //disable checkout button when there are no items in the cart
+                                    checkout.setEnabled(false);
+                                    Toast.makeText(getActivity(), "Cart is empty", Toast.LENGTH_SHORT).show();
+                                }
+                                break;
+                            case R.id.cart_item:
+                                Bundle args = new Bundle();
+                                Product productSelected = SingletonProduct.findProduct(product.getItemID());
 
-                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.display_screen,detailed_fragment)
-                                    .addToBackStack(null)
-                                    .commit();
-                            getActivity().setTitle(productSelected.getTitle());
+                                //the entire product object is sent by implementing the parceable interface in
+                                //the product model class
+                                args.putParcelable("Item", productSelected);
+                                Fragment detailed_fragment = new Detailed_item();
+                                detailed_fragment.setArguments(args);
+
+                                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                transaction.replace(R.id.display_screen, detailed_fragment)
+                                        .addToBackStack(null)
+                                        .commit();
+                                getActivity().setTitle(productSelected.getTitle());
+                        }
+                        totalPrice.setText(Double.toString(cost));
                     }
-                    totalPrice.setText(Double.toString(cost));
-                }
-            });
-            recycler_cart.setAdapter(myAdapter);
-            recycler_cart.setLayoutManager(new LinearLayoutManager(getContext()));
+                });
+                recycler_cart.setAdapter(myAdapter);
+                recycler_cart.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        }else{
-            Toast.makeText(getActivity(),"No items",Toast.LENGTH_SHORT).show();
-            checkout.setEnabled(false);
-        }
+            } else {
+                Toast.makeText(getActivity(), "No items", Toast.LENGTH_SHORT).show();
+                checkout.setEnabled(false);
+            }
 
         return view;
     }
@@ -146,36 +151,32 @@ public class ViewCart extends Fragment implements View.OnClickListener {
 
         sharedPreferences = getActivity().getSharedPreferences(Launcher.keyPreference, Context.MODE_PRIVATE);
         long id = sharedPreferences.getLong("user",-1);
-
-        if(id != -1){
+        double sum = 0;
+        if(id != -1) {
             // retrieve existing cart of user
-            List<Cart> pendingCart = Cart.find(Cart.class,"status=?","0");
-            for(Cart x: pendingCart){
-                if (x.getUserId()!= id){
-                    pendingCart.remove(x);
+            List<Cart> pendingCart = Cart.listAll(Cart.class);
+            for (Cart x : pendingCart) {
+                if (x.getUserId() == id && !x.isStatus()) {
+                    userCart = x;
+                    break;
                 }
             }
-            userCart = pendingCart.get(0);
+
         }
 
-        //static test code
-//        orderedProducts.add(new Cart_Product(userCart.getId(),1,12000,1));
-//        orderedProducts.add(new Cart_Product(userCart.getId(), 3,1500,2));
-//        orderedProducts.add(new Cart_Product(userCart.getId(), 4,12000,1));
-//        orderedProducts.add(new Cart_Product(userCart.getId(),5,12250,1));
-        long cartId = userCart.getId();
-        orderedProducts = Cart_Product.listAll(Cart_Product.class);
-        double sum = 0;
-        for(Cart_Product xProduct: orderedProducts){
-            if(xProduct.getCartId()!= cartId){
-                orderedProducts.remove(xProduct);
-            }
-            else{
-                sum += (xProduct.getQuantity()*xProduct.getPrice());
-            }
-        }
+        if(userCart != null) {
+            long cartId = userCart.getId();
+            sum = userCart.getPrice();
 
-        totalPrice.setText(Double.toString(sum));
+            List<Cart_Product> allProductsOrdered = Cart_Product.listAll(Cart_Product.class);
+            for (Cart_Product xProduct : allProductsOrdered) {
+                if (xProduct.getCartId() == cartId) {
+                    orderedProducts.add(xProduct);
+                }
+            }
+
+            totalPrice.setText(Double.toString(sum));
+        }
         return orderedProducts;
     }
 }
