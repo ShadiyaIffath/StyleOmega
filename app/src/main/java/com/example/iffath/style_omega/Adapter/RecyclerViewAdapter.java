@@ -20,6 +20,7 @@ import com.example.iffath.style_omega.Fragment.Detailed_item;
 import com.example.iffath.style_omega.Model.Product;
 import com.example.iffath.style_omega.R;
 import com.example.iffath.style_omega.Utility.ProductGridDiff;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         final Product product = productList.get(position); //get a specific product
 
         holder.title.setText(product.getTitle());
-        holder.product_thumbnail.setImageResource(product.getThumbnail());
+        //holder.product_thumbnail.setImageResource(product.getThumbnail());
+        Picasso.get()
+                .load(product.getThumb())
+                .error(R.drawable.dressfail1)
+                .placeholder(R.drawable.dressfail)
+                .into(holder.product_thumbnail);
         holder.price.setText(Double.toString(product.getPrice()));
         holder.item_cardview.setOnClickListener(new View.OnClickListener() {
 

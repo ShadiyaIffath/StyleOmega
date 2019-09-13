@@ -1,30 +1,44 @@
 package com.example.iffath.style_omega.Model;
 
-import android.media.Image;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
 
-public class Product implements Parcelable {
+public class Product implements Parcelable{
     private int id;
     private String title;
     private String description;
     private String type;
     private String consumer;
+    private String thumb;
     private int quantity;
     private double price;
     private int thumbnail;
-    private ArrayList<String> colors;
-    private ArrayList<String> sizes;
-    private ArrayList<Image> images;
+    private String[] colors;
+    private String[] sizes;
+    private String[] images;
 
 
     public Product(){
 
     }
 
-    public Product(int id, String title, String description, String type, String customer, int quantity, double price, int thumbnail, ArrayList<String> colors, ArrayList<String> sizes, ArrayList<Image> images) {
+    public Product(int id, String title, String description, String type, String consumer, String thumb, int quantity, double price, String[] colors, String[] sizes,String[] images) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.type = type;
+        this.consumer = consumer;
+        this.thumb = thumb;
+        this.quantity = quantity;
+        this.price = price;
+        this.colors = colors;
+        this.sizes = sizes;
+        this.images = images;
+    }
+
+    public Product(int id, String title, String description, String type, String customer, int quantity, double price, int thumbnail, String[] colors, String[] sizes, String[] images) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -38,7 +52,7 @@ public class Product implements Parcelable {
         this.images = images;
     }
 
-    public Product(int id, String title, String description, String type, String customer, int quantity, double price, int thumbnail,ArrayList<String> colors, ArrayList<String> sizes) {
+    public Product(int id, String title, String description, String type, String customer, int quantity, double price, int thumbnail,String[] colors, String[] sizes) {
         this.id = id;
         this.title = title;
         this.thumbnail = thumbnail;
@@ -49,7 +63,7 @@ public class Product implements Parcelable {
         this.price = price;
         this.colors = colors;
         this.sizes = sizes;
-        images = new ArrayList<>();
+
     }
 
     protected Product(Parcel in) {
@@ -58,13 +72,14 @@ public class Product implements Parcelable {
         description = in.readString();
         type = in.readString();
         consumer = in.readString();
+        thumb = in.readString();
         quantity = in.readInt();
         price = in.readDouble();
         thumbnail = in.readInt();
-        colors = in.createStringArrayList();
-        sizes = in.createStringArrayList();
+        colors = in.createStringArray();
+        sizes = in.createStringArray();
+        images = in.createStringArray();
     }
-
 
     public static final Creator<Product> CREATOR = new Creator<Product>() {
         @Override
@@ -77,6 +92,14 @@ public class Product implements Parcelable {
             return new Product[size];
         }
     };
+
+    public String getThumb() {
+        return thumb;
+    }
+
+    public void setThumb(String thumb) {
+        this.thumb = thumb;
+    }
 
     public int getId() {
         return id;
@@ -142,27 +165,27 @@ public class Product implements Parcelable {
         this.price = price;
     }
 
-    public ArrayList<String> getColors() {
+    public String[] getColors() {
         return colors;
     }
 
-    public void setColors(ArrayList<String> colors) {
+    public void setColors(String[] colors) {
         this.colors = colors;
     }
 
-    public ArrayList<String> getSizes() {
+    public String[] getSizes() {
         return sizes;
     }
 
-    public void setSizes(ArrayList<String> sizes) {
+    public void setSizes(String[] sizes) {
         this.sizes = sizes;
     }
 
-    public ArrayList<Image> getImages() {
+    public String[] getImages() {
         return images;
     }
 
-    public void setImages(ArrayList<Image> images) {
+    public void setImages(String[] images) {
         this.images = images;
     }
 
@@ -189,14 +212,18 @@ public class Product implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(id);
         parcel.writeString(title);
         parcel.writeString(description);
         parcel.writeString(type);
         parcel.writeString(consumer);
+        parcel.writeString(thumb);
         parcel.writeInt(quantity);
         parcel.writeDouble(price);
         parcel.writeInt(thumbnail);
-        parcel.writeStringList(colors);
-        parcel.writeStringList(sizes);
+        parcel.writeStringArray(colors);
+        parcel.writeStringArray(sizes);
+        parcel.writeStringArray(images);
     }
 }
+

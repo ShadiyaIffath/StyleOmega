@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.iffath.style_omega.Adapter.HistoryCartAdapter;
 import com.example.iffath.style_omega.CustomViewHolder.HistoryHolder;
+import com.example.iffath.style_omega.Interface.CustomItemClickListener;
 import com.example.iffath.style_omega.Model.Cart;
 import com.example.iffath.style_omega.Model.Cart_Product;
 import com.example.iffath.style_omega.R;
@@ -51,10 +53,19 @@ public class History extends Fragment {
         if(!orders.isEmpty()){
             recyclerView = view.findViewById(R.id.cart_history);
             recyclerView.setHasFixedSize(true);
-            adapter = new HistoryCartAdapter(getContext(),orders);
+            adapter = new HistoryCartAdapter(this.getContext(), orders, new CustomItemClickListener() {
+                @Override
+                public void onItemClick(View v, int position) {
+//                    if(v.getId() == R.id.history_card){
+//                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                        transaction.replace(R.id.display_screen, new ViewCart())
+//                                .addToBackStack(null)
+//                                .commit();
+//                    }
+                }
+            });
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         }
         else{
             Toast.makeText(getActivity(), "You have not made any purchases", Toast.LENGTH_SHORT).show();
@@ -70,7 +81,6 @@ public class History extends Fragment {
                 allOrders.add(s);
             }
         }
-
         return allOrders;
     }
 

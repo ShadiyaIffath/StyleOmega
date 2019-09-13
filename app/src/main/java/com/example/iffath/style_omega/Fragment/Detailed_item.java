@@ -19,12 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.iffath.style_omega.Activity.Launcher;
+import com.example.iffath.style_omega.BuildConfig;
 import com.example.iffath.style_omega.Model.Cart;
 import com.example.iffath.style_omega.Model.Cart_Product;
 import com.example.iffath.style_omega.Model.Product;
 import com.example.iffath.style_omega.R;
 import com.orm.query.Condition;
 import com.orm.query.Select;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -92,14 +94,17 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
                 title.setText(product.getTitle());
                 description.setText(product.getDescription());
                 category.setText(product.getType());
-                thumbnail.setImageResource(product.getThumbnail());
+                Picasso.get()
+                        .load(product.getThumb())
+                        .error(R.drawable.dressfail1)
+                        .placeholder(R.drawable.dressfail)
+                        .into(thumbnail);
+              //  thumbnail.setImageResource(product.getThumbnail());
                 price.append(Double.toString(product.getPrice()));
                 color.append(product.allColors());
                 size.append(product.allSizes());
             }
         }
-
-
         return view;
     }
 
@@ -246,13 +251,19 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
 
 
     private void shareItem(){
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        String shareBody = "Item "+product.getTitle()+" Price: Rs."+product.getPrice()+" Type: "+product.getType();
-        String subject = "Style Omega Clothing Shop";
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT,subject);
-        shareIntent.putExtra(Intent.EXTRA_TEXT,shareBody);
-        startActivity(Intent.createChooser(shareIntent,"Share Using..."));
+        try {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("text/plain");
+            String shareBody = "Item " + product.getTitle() + " Price: Rs." + product.getPrice() + " Type: " + product.getType();
+            shareBody += "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "\n\n";
+            String subject = "Style Omega Clothing Shop";
+            shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+            startActivity(Intent.createChooser(shareIntent, "Share Using..."));
+        }
+        catch(Exception ex){
+            Toast.makeText(getContext(),"Share Failed",Toast.LENGTH_SHORT).show();
+        }
     }
 
     private long verifyItemExistsInCart(long cartId,long itemId){

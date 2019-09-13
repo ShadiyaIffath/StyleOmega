@@ -18,6 +18,7 @@ import com.example.iffath.style_omega.Model.Cart_Product;
 import com.example.iffath.style_omega.Model.Product;
 import com.example.iffath.style_omega.Model.SingletonProduct;
 import com.example.iffath.style_omega.R;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -27,7 +28,7 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> {
     private Context context;
     CustomItemClickListener listener;
     private List<Cart_Product> orderedProducts;
-    private final List<Product> allProducts = SingletonProduct.getProducts();
+    private final List<Product> allProducts = SingletonProduct.getInstance().getProducts();
 
     public CartRecycleAdapter(Context context, List<Cart_Product> products, CustomItemClickListener listener) {
         this.context = context;
@@ -57,7 +58,11 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> {
             holder.title.setText(product.getTitle());
             holder.category.setText(product.getType());
             holder.consumer.setText(product.getConsumer());
-            holder.thumbnail.setImageResource(product.getThumbnail());
+            Picasso.get()
+                    .load(product.getThumb())
+                    .error(R.drawable.dressfail1)
+                    .placeholder(R.drawable.dressfail)
+                    .into(holder.thumbnail);
             holder.cost.setText(Double.toString(product.getPrice()));
             holder.quantity.setText(Integer.toString(selected.getQuantity()));
 

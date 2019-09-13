@@ -26,6 +26,7 @@ import com.example.iffath.style_omega.Fragment.Profile;
 import com.example.iffath.style_omega.Fragment.TypeHome;
 import com.example.iffath.style_omega.Fragment.ViewCart;
 import com.example.iffath.style_omega.Fragment.home_page;
+import com.example.iffath.style_omega.Model.SingletonProduct;
 import com.example.iffath.style_omega.Model.User;
 import com.example.iffath.style_omega.R;
 import com.google.android.material.navigation.NavigationView;
@@ -42,6 +43,7 @@ public class home extends AppCompatActivity {
     TextView nametxt;
     String username;
     SharedPreferences sharedPreferences;
+    SingletonProduct singletonProduct = SingletonProduct.getInstance();
     public static String loggedUser= null;
 
     @Override

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class TypeHome extends Fragment {
     ListView listView;
     RecyclerViewAdapter myAdapter;
     RecyclerView productGrid;
+    private SingletonProduct singletonProduct = SingletonProduct.getInstance();
 
     public TypeHome() {
         // Required empty public constructor
@@ -52,9 +54,11 @@ public class TypeHome extends Fragment {
 
         products = new ArrayList<>();
 
-        products = getConsumerItems(consumerType);
+        products = singletonProduct.getConsumers(consumerType);
+
         if(products == null){
             //show a dialog when there are no items to display
+            Log.i("Error","No items");
         }
 
         types = getTypes();
@@ -100,18 +104,6 @@ public class TypeHome extends Fragment {
                 break;
         }
         return types;
-    }
-
-    //clothing items according to consumer type(women,men,kids)
-    public List<Product> getConsumerItems(String selector){
-        List<Product> allProducts = SingletonProduct.getProducts();
-
-        for (Product x:allProducts) {
-            if(x.getConsumer().equals(selector)){
-                products.add(x);
-            }
-        }
-        return products;
     }
 
     //list of the products of a specific type is updated
