@@ -97,10 +97,10 @@ public class Profile extends Fragment {
         name.setFocusable(false);
         //update database
         User user = User.findById(User.class,logged.get(0).getId());
-        user.name = name.getText().toString();
-        user.contactNumber = contactNumber.getText().toString();
-        user.email = email.getText().toString();
-        user.password = password.getText().toString();
+        user.setName(name.getText().toString());
+        user.setContactNumber(contactNumber.getText().toString());
+        user.setEmail(email.getText().toString());
+        user.setPassword(password.getText().toString());
         user.save();
     }
 

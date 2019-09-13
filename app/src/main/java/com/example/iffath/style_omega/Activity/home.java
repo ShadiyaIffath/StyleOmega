@@ -124,6 +124,7 @@ public class home extends AppCompatActivity {
             mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
+
                     return false;
                 }
 

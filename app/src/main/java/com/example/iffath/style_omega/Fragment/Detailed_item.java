@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -18,14 +19,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.iffath.style_omega.Activity.Launcher;
 import com.example.iffath.style_omega.BuildConfig;
 import com.example.iffath.style_omega.Model.Cart;
 import com.example.iffath.style_omega.Model.Cart_Product;
 import com.example.iffath.style_omega.Model.Product;
+
 import com.example.iffath.style_omega.R;
-import com.orm.query.Condition;
-import com.orm.query.Select;
+
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -33,8 +33,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class Detailed_item extends Fragment implements View.OnClickListener{
@@ -99,7 +97,7 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
                         .error(R.drawable.dressfail1)
                         .placeholder(R.drawable.dressfail)
                         .into(thumbnail);
-              //  thumbnail.setImageResource(product.getThumbnail());
+                //  thumbnail.setImageResource(product.getThumbnail());
                 price.append(Double.toString(product.getPrice()));
                 color.append(product.allColors());
                 size.append(product.allSizes());
@@ -110,35 +108,35 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-            int id = view.getId();
-            switch(id){
-                case R.id.btnAdd:
-                    increaseQuantity();
-                    break;
+        int id = view.getId();
+        switch(id){
+            case R.id.btnAdd:
+                increaseQuantity();
+                break;
 
-                case R.id.btnSub:
-                    decreaseQuantity();
-                    break;
+            case R.id.btnSub:
+                decreaseQuantity();
+                break;
 
-                case R.id.add_cart_btn:
-                    addToCart();
-                    break;
+            case R.id.add_cart_btn:
+                addToCart();
+                break;
 
-                case R.id.share_button:
-                    shareItem();
-                    break;
-            }
+            case R.id.share_button:
+                shareItem();
+                break;
+        }
     }
 
     public void increaseQuantity(){     //increase button
-            int sum = Integer.parseInt(quantity.getText().toString());
-            sum++;
-            if(product.getQuantity() < sum){
-                Toast.makeText(getActivity(), "You cannot increase anymore", Toast.LENGTH_SHORT).show();
-            }else{
-                quantity.setText(String.valueOf(sum));
-                priceTag.setText(String.valueOf(sum*product.getPrice()));
-            }
+        int sum = Integer.parseInt(quantity.getText().toString());
+        sum++;
+        if(product.getQuantity() < sum){
+            Toast.makeText(getActivity(), "You cannot increase anymore", Toast.LENGTH_SHORT).show();
+        }else{
+            quantity.setText(String.valueOf(sum));
+            priceTag.setText(String.valueOf(sum*product.getPrice()));
+        }
     }
 
     public void decreaseQuantity(){     //decrease button
@@ -189,19 +187,9 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("preferences", Context.MODE_PRIVATE);
         Long userid = sharedPreferences.getLong("user",-1);
 
-        //            String [] values = {"0",Long.toString(userid)};
-//            List<Cart> pendingCart = Cart.find(Cart.class,"status=? and userid=?", values);
-
-//        List<Cart> pendingCart = Cart.findWithQuery(Cart.class,"Select * from Cart where userId = ? ", userid.toString());
-
-//        List<Cart> pendingCart = Select.from(Cart.class)
-//                        .where(Condition.prop("status").eq(0),
-//                            Condition.prop("userId").eq(userid)).list();
-
-
         if(userid!= -1) {  //retrieve the carts that belong to the user that hasn't been checked out yet
 
-       List<Cart> pendingCart = Cart.listAll(Cart.class); //this works
+            List<Cart> pendingCart = Cart.listAll(Cart.class); //this works
             Cart userCart = null;
             for(Cart x: pendingCart){
                 if (x.getUserId()== userid && !x.isStatus()){
@@ -254,8 +242,9 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
         try {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
-            String shareBody = "Item " + product.getTitle() + " Price: Rs." + product.getPrice() + " Type: " + product.getType();
-            shareBody += "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "\n\n";
+            String shareBody = "Item: " +
+                    "" + product.getTitle() + "\nPrice: Rs." + product.getPrice() + "\nType: " + product.getType()+"\n"+product.getThumb();
+            shareBody += " \nThe url of the application: https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "\n\n";
             String subject = "Style Omega Clothing Shop";
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
@@ -265,8 +254,7 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
             Toast.makeText(getContext(),"Share Failed",Toast.LENGTH_SHORT).show();
         }
     }
-
-    private long verifyItemExistsInCart(long cartId,long itemId){
+            private long verifyItemExistsInCart(long cartId,long itemId){
         long valid= -1;
         List<Cart_Product> allOrders = Cart_Product.listAll(Cart_Product.class);
 

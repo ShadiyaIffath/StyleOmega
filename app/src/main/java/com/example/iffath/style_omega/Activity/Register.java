@@ -15,6 +15,7 @@ import com.example.iffath.style_omega.Model.User;
 import com.example.iffath.style_omega.R;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -74,6 +75,7 @@ public class Register extends AppCompatActivity {
         }
         else {
             Toast.makeText(this, "Welcome "+username, Toast.LENGTH_SHORT).show();
+
             User user = new User(name,username,email,password,number);
             user.save();
             String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());

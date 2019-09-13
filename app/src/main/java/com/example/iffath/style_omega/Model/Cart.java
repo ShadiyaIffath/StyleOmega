@@ -2,49 +2,48 @@ package com.example.iffath.style_omega.Model;
 
 import com.orm.SugarRecord;
 
-import java.util.Date;
 
 public class Cart extends SugarRecord {
-    private long userId;
-    private double price = 0;
-    private boolean status;
-    private String updated;
-    private String created;
+    private long UserId;
+    private double Price = 0;
+    private boolean Status;
+    private String Updated;
+    private String Created;
     private Recipient recipient;
     public Cart(){
 
     }
 
     public Cart(long userId, double price, boolean status, String updated, String created, Recipient recipient) {
-        this.userId = userId;
-        this.price = price;
-        this.status = status;
-        this.updated = updated;
-        this.created = created;
+        this.UserId = userId;
+        this.Price = price;
+        this.Status = status;
+        this.Updated = updated;
+        this.Created = created;
         this.recipient = recipient;
     }
 
     public Cart(long userId, double price, boolean status, String updated, String created) {
-        this.status = status;
-        this.userId = userId;
-        this.price = price;
-        this.updated = updated;
-        this.created = created;
+        this.Status = status;
+        this.UserId = userId;
+        this.Price = price;
+        this.Updated = updated;
+        this.Created = created;
     }
 
     public Cart(long userId,double price, boolean status,String created){
-        this.status = status;
-        this.userId = userId;
-        this.price = price;
-        this.created = created;
-        this.updated = created;
+        this.Status = status;
+        this.UserId = userId;
+        this.Price = price;
+        this.Created = created;
+        this.Updated = created;
     }
 
     public Cart(long userId,String created){  //the first time
-        this.userId = userId;
-        status = false;
-        this.created = created;
-        this.updated = created;
+        this.UserId = userId;
+        Status = false;
+        this.Created = created;
+        this.Updated = created;
     }
 
     public Recipient getRecipient() {
@@ -56,42 +55,42 @@ public class Cart extends SugarRecord {
     }
 
     public long getUserId() {
-        return userId;
+        return UserId;
     }
 
     public void setUserId(long userId) {
-        this.userId = userId;
+        this.UserId = userId;
     }
 
     public double getPrice() {
-        return price;
+        return Price;
     }
 
     public void setPrice(double price) {
-        this.price = price;
+        this.Price = price;
     }
 
     public boolean isStatus() {
-        return status;
+        return Status;
     }
 
     public void setStatus(boolean status) {
-        this.status = status;
+        this.Status = status;
     }
 
     public String getUpdated() {
-        return updated;
+        return Updated;
     }
 
     public void setUpdated(String updated) {
-        this.updated = updated;
+        this.Updated = updated;
     }
 
     public String getCreated() {
-        return created;
+        return Created;
     }
 
     public void setCreated(String created) {
-        this.created = created;
+        this.Created = created;
     }
 }
