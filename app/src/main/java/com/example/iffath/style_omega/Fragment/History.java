@@ -74,6 +74,7 @@ public class History extends Fragment {
     }
 
     private List<Cart> getCarts(){
+
         List<Cart> allCarts = Cart.listAll(Cart.class);
         List<Cart> allOrders = new ArrayList<>();
         for(Cart s: allCarts){

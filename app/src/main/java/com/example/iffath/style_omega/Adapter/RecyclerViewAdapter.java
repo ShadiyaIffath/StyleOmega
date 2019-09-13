@@ -57,7 +57,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 .error(R.drawable.dressfail1)
                 .placeholder(R.drawable.dressfail)
                 .into(holder.product_thumbnail);
-        holder.price.setText(Double.toString(product.getPrice()));
+        holder.price.setText("Rs."+Double.toString(product.getPrice()));
         holder.item_cardview.setOnClickListener(new View.OnClickListener() {
 
             @Override

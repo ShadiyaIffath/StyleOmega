@@ -2,6 +2,7 @@ package com.example.iffath.style_omega.Activity;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -12,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -40,6 +42,7 @@ public class home extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navDrawer;
     private View navigationHeader;
+    SearchView mSearchView;
     TextView nametxt;
     String username;
     SharedPreferences sharedPreferences;
@@ -86,6 +89,12 @@ public class home extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
     private ActionBarDrawerToggle setupDrawerToggle() {
         return new ActionBarDrawerToggle(this, drawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
     }
@@ -107,6 +116,22 @@ public class home extends AppCompatActivity {
 
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
+        }
+        else if(item.getItemId() == R.id.search_icon){
+            mSearchView = (SearchView) item.getActionView();
+            mSearchView.setQueryHint("Search");
+
+            mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String newText) {
+                    return false;
+                }
+            });
         }
         return super.onOptionsItemSelected(item);
     }
