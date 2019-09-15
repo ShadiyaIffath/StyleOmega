@@ -25,7 +25,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
     private Context context;
     private List<Product> productList;
     private final List<Product> allProducts;
@@ -58,6 +58,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 .placeholder(R.drawable.dressfail)
                 .into(holder.product_thumbnail);
         holder.price.setText("Rs."+Double.toString(product.getPrice()));
+        holder.quantity.setText(Integer.toString(product.getQuantity()));
         holder.item_cardview.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -106,11 +107,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView title;                                            //initialized here in the holder
         ImageView product_thumbnail;
         TextView price;
+        TextView quantity;
         CardView item_cardview;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            quantity = itemView.findViewById(R.id.item_quantity);
             price = itemView.findViewById(R.id.item_price);
             title = itemView.findViewById(R.id.item_title);
             product_thumbnail = itemView.findViewById(R.id.item_icon_image);
