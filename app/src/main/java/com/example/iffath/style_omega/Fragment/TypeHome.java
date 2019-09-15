@@ -3,6 +3,7 @@ package com.example.iffath.style_omega.Fragment;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -51,24 +52,15 @@ public class TypeHome extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_type_home, container, false);
         getActivity().setTitle(consumerType);
-
-        products = new ArrayList<>();
-
-        products = singletonProduct.getConsumers(consumerType);
-
-        if(products == null){
-            //show a dialog when there are no items to display
-            Log.i("Error","No items");
-        }
-
         types = getTypes();
 
-
-        //inside type home fragment
-        //this is to get the list of items
         productGrid = view.findViewById(R.id.item_list_recycle);
+        products = new ArrayList<>();
+        products = singletonProduct.getConsumers(consumerType);
         myAdapter= new RecyclerViewAdapter(this.getContext(),products);
+
         productGrid.setLayoutManager(new GridLayoutManager(this.getContext(),2));
+        productGrid.setItemAnimator(new DefaultItemAnimator());
         productGrid.setAdapter(myAdapter);
 
         //this is for the list of item types
@@ -79,9 +71,10 @@ public class TypeHome extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String selection = types[i];
+                Log.i("Selected",selection);
                   Toast.makeText(getActivity(), selection, Toast.LENGTH_SHORT).show();
-                  updateProductType(selection);
-              //    myAdapter.refreshView(selection);  this is correct way to go
+                  myAdapter.getFilter().filter(selection);
+                 // updateProductType(selection);
             }
         });
         listView.setAdapter(buttons);

@@ -40,10 +40,10 @@
         <TextView
             android:id="@+id/item_quantity"
             android:layout_width="match_parent"
-            android:layout_height="10dp"
+            android:layout_height="20dp"
             android:textColor="@color/colorAccent"
             android:gravity="center"
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:text="5"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.cardview.widget.CardView>

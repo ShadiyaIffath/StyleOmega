@@ -2,9 +2,12 @@ package com.example.iffath.style_omega.Adapter;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,27 +16,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.iffath.style_omega.Fragment.Detailed_item;
 import com.example.iffath.style_omega.Model.Product;
 import com.example.iffath.style_omega.R;
-import com.example.iffath.style_omega.Utility.ProductGridDiff;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> implements Filterable {
     private Context context;
     private List<Product> productList;
-    private final List<Product> allProducts;
+    private List<Product> filteredProducts;
 
     public RecyclerViewAdapter(Context context, List<Product> products) {
         this.context = context;
         this.productList = products;
-        this.allProducts = products;
+        this.filteredProducts = products;
     }
 
     @NonNull
@@ -48,10 +49,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) { //set the values of a single card
-        final Product product = productList.get(position); //get a specific product
+        final Product product = filteredProducts.get(position); //get a specific product
 
         holder.title.setText(product.getTitle());
-        //holder.product_thumbnail.setImageResource(product.getThumbnail());
+
         Picasso.get()
                 .load(product.getThumb())
                 .error(R.drawable.dressfail1)
@@ -81,26 +82,42 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             }
         });
     }
-    //update the arraylist in the grid view and display the updated version
-    public void refreshView(String selection){
-        List<Product> newList = new ArrayList<>();
-        for (Product x:this.allProducts) {
-            if(selection.equals(x.getType())){
-                    newList.add(x);
-            }
-        }
-       // this.productList = this.allProducts;
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new ProductGridDiff(this.productList,newList));
-        this.productList.clear();
-        this.productList.addAll(newList);
-        diffResult.dispatchUpdatesTo(this);
-
-
-    }
 
     @Override
     public int getItemCount() {
-        return productList.size();      //method to get the count of the products available
+        return filteredProducts.size();      //method to get the count of the products available
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String typeSelected = charSequence.toString();
+                if (typeSelected.isEmpty()) {
+                    filteredProducts = productList;
+                } else {
+                    List<Product> filteredList = new ArrayList<>();
+                    for(Product temp: productList){
+                        if(typeSelected.equals(temp.getType())){
+                            filteredList.add(temp);
+                            Log.i("Added",temp.getTitle());
+                        }
+                    }
+                    filteredProducts = filteredList;
+
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = filteredProducts;
+                return  filterResults;
+            }
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                filteredProducts = (ArrayList<Product>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{     //view objects in a  single card is
