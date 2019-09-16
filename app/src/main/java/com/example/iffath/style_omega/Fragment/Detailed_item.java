@@ -10,7 +10,9 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.iffath.style_omega.Adapter.ImageSlider;
 import com.example.iffath.style_omega.BuildConfig;
 import com.example.iffath.style_omega.Model.Cart;
 import com.example.iffath.style_omega.Model.Cart_Product;
@@ -27,11 +30,14 @@ import com.example.iffath.style_omega.Model.Product;
 import com.example.iffath.style_omega.R;
 
 import com.squareup.picasso.Picasso;
+import com.viewpagerindicator.CirclePageIndicator;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.Unbinder;
 
@@ -43,14 +49,16 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
     Product product;
     TextView size;
     TextView color;
-    ImageView thumbnail;
+    ImageView imageSlider;
     TextView quantity;
     TextView priceTag;
     TextView shareButton;
     Button add;
     Button sub;
     Button addToCart;
-    int orderedVal =0;
+    ViewPager pages;
+    private int pageCount = 0;
+    private int currentPage =0;
 
     private Unbinder unbinder;
 
@@ -65,10 +73,10 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
         View view = inflater.inflate(R.layout.fragment_detailed_item, container, false);
         product = null;
 
+        pages = view.findViewById(R.id.image_pages);
         title = view.findViewById(R.id.product_title);
         description = view.findViewById(R.id.product_desc);
         category = view.findViewById(R.id.product_category);
-        thumbnail = view.findViewById(R.id.thumbnail_item);
         price = view.findViewById(R.id.product_price);
         color = view.findViewById(R.id.product_color);
         size = view.findViewById(R.id.product_size);
@@ -89,18 +97,68 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
             product = bundle.getParcelable("Item");
 
             if(product != null){
-                title.setText(product.getTitle());
-                description.setText(product.getDescription());
-                category.setText(product.getType());
-                Picasso.get()
-                        .load(product.getThumb())
-                        .error(R.drawable.dressfail1)
-                        .placeholder(R.drawable.dressfail)
-                        .into(thumbnail);
-                //  thumbnail.setImageResource(product.getThumbnail());
                 price.append(Double.toString(product.getPrice()));
                 color.append(product.allColors());
                 size.append(product.allSizes());
+                title.setText(product.getTitle());
+                description.setText(product.getDescription());
+                category.setText(product.getType());
+
+//                Picasso.get()
+//                        .load(product.getThumb())
+//                        .error(R.drawable.dressfail1)
+//                        .placeholder(R.drawable.dressfail)
+//                        .into(thumbnail);
+//                //  thumbnail.setImageResource(product.getThumbnail());
+
+                //image slider section
+                String[] images = product.getImages();
+                pages.setAdapter(new ImageSlider(getContext(),images));
+                CirclePageIndicator indicator = view.findViewById(R.id.image_indicator);
+                indicator.setViewPager(pages);
+                float density = getResources().getDisplayMetrics().density;
+                indicator.setRadius(5 * density);
+                pageCount = images.length;
+
+                final Handler handler = new Handler();
+                final Runnable Update = new Runnable() {
+                    public void run() {
+                        if (currentPage == pageCount) {
+                            currentPage = 0;
+                        }
+                        pages.setCurrentItem(currentPage++, true);
+                    }
+                };
+                //auto scroll of the pager
+                Timer swipeTimer = new Timer();
+                swipeTimer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        if (currentPage == pageCount) {
+                            currentPage = 0;
+                        }
+                        handler.post(Update);
+                    }
+                }, 3000, 3000);
+
+                // page listener for the indicator
+                indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+                    @Override
+                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int position) {
+                        currentPage = position;
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int state) {
+
+                    }
+                });
             }
         }
         return view;

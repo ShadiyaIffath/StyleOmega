@@ -99,17 +99,17 @@ public class TypeHome extends Fragment {
         return types;
     }
 
-    //list of the products of a specific type is updated
-    public void updateProductType(String selectedType){
-        List<Product> tempProducts = new ArrayList<>();
-        for(Product temp: products){
-            if(temp.getType().equalsIgnoreCase(selectedType)){
-                tempProducts.add(temp);
-            }
-        }
-        myAdapter = new RecyclerViewAdapter(this.getContext(),tempProducts);
-        productGrid.setAdapter(myAdapter);
-
-    }
+//    //list of the products of a specific type is updated
+//    public void updateProductType(String selectedType){
+//        List<Product> tempProducts = new ArrayList<>();
+//        for(Product temp: products){
+//            if(temp.getType().equalsIgnoreCase(selectedType)){
+//                tempProducts.add(temp);
+//            }
+//        }
+//        myAdapter = new RecyclerViewAdapter(this.getContext(),tempProducts);
+//        productGrid.setAdapter(myAdapter);
+//
+//    }
 
 }
