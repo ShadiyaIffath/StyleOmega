@@ -37,6 +37,7 @@ public class home extends AppCompatActivity {
     private Toolbar toolbar;
     private NavigationView navDrawer;
     private View navigationHeader;
+    private searchResults result;
     SearchView mSearchView;
     TextView nametxt;
     String username;
@@ -118,7 +119,9 @@ public class home extends AppCompatActivity {
             mSearchView = (SearchView) item.getActionView();
             mSearchView.setQueryHint("Search");
             mSearchView.setSubmitButtonEnabled(true);
-            final searchResults result = new searchResults();
+            if(result == null){
+                result = new searchResults();
+            }
 
             mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override

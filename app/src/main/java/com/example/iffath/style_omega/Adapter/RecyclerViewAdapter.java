@@ -98,29 +98,37 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     filteredProducts = productList;
                 } else {
                     List<Product> filteredList = new ArrayList<>();
-                    for(Product temp: productList){
-                        if(typeSelected.equalsIgnoreCase(temp.getType())){
-                            filteredList.add(temp);
-                            Log.i("Added",temp.getTitle());
-                            continue;
+                    for(String search: typeSelected.split(" ")) {
+                        for (Product temp : productList) {
+                            if(!filteredList.contains(temp)) {
+                                if (search.equalsIgnoreCase(temp.getType())) {
+                                    filteredList.add(temp);
+                                    Log.i("Added", temp.getTitle());
+                                    continue;
+                                }
+                                search.toLowerCase();
+                                if (search.contains(temp.getTitle().toLowerCase())) {
+                                    filteredList.add(temp);
+                                    Log.i("Added", temp.getTitle());
+                                    continue;
+                                }
+                                if (temp.getTitle().toLowerCase().contains(search)) {
+                                    filteredList.add(temp);
+                                    Log.i("Added", temp.getTitle());
+                                    continue;
+                                }
+                                if (search.equals(temp.getConsumer().toLowerCase())) {
+                                    filteredList.add(temp);
+                                    Log.i("Added", temp.getTitle());
+                                    continue;
+                                }
+                                if (isInteger(search) && (Integer.parseInt(search) > temp.getPrice())) {
+                                    filteredList.add(temp);
+                                    Log.i("Added", temp.getTitle());
+                                    continue;
+                                }
+                            }
                         }
-                        typeSelected.toLowerCase();
-                        if(typeSelected.contains(temp.getTitle().toLowerCase())){
-                            filteredList.add(temp);
-                            Log.i("Added",temp.getTitle());
-                            continue;
-                        }
-                        if(temp.getTitle().toLowerCase().contains(typeSelected)){
-                            filteredList.add(temp);
-                            Log.i("Added",temp.getTitle());
-                            continue;
-                        }
-                        if(typeSelected.equals(temp.getConsumer().toLowerCase())){
-                            filteredList.add(temp);
-                            Log.i("Added",temp.getTitle());
-                            continue;
-                        }
-//                        if(typeSelected)
                     }
                     filteredProducts = filteredList;
 
@@ -136,6 +144,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 notifyDataSetChanged();
             }
         };
+    }
+
+    //method which validates if a string can be converted to an integer
+    public boolean isInteger( String input ) {
+        try {
+            Integer.parseInt( input );
+            return true;
+        }
+        catch( Exception e ) {
+            return false;
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{     //view objects in a  single card is
