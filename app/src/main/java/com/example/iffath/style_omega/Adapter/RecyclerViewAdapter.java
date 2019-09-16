@@ -99,10 +99,28 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 } else {
                     List<Product> filteredList = new ArrayList<>();
                     for(Product temp: productList){
-                        if(typeSelected.equals(temp.getType())){
+                        if(typeSelected.equalsIgnoreCase(temp.getType())){
                             filteredList.add(temp);
                             Log.i("Added",temp.getTitle());
+                            continue;
                         }
+                        typeSelected.toLowerCase();
+                        if(typeSelected.contains(temp.getTitle().toLowerCase())){
+                            filteredList.add(temp);
+                            Log.i("Added",temp.getTitle());
+                            continue;
+                        }
+                        if(temp.getTitle().toLowerCase().contains(typeSelected)){
+                            filteredList.add(temp);
+                            Log.i("Added",temp.getTitle());
+                            continue;
+                        }
+                        if(typeSelected.equals(temp.getConsumer().toLowerCase())){
+                            filteredList.add(temp);
+                            Log.i("Added",temp.getTitle());
+                            continue;
+                        }
+//                        if(typeSelected)
                     }
                     filteredProducts = filteredList;
 

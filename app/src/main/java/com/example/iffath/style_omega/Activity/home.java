@@ -6,34 +6,29 @@ import androidx.appcompat.widget.SearchView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.iffath.style_omega.Fragment.ContactUs;
-import com.example.iffath.style_omega.Fragment.Detailed_item;
 import com.example.iffath.style_omega.Fragment.History;
 import com.example.iffath.style_omega.Fragment.Profile;
-import com.example.iffath.style_omega.Fragment.TypeHome;
 import com.example.iffath.style_omega.Fragment.ViewCart;
 import com.example.iffath.style_omega.Fragment.home_page;
+import com.example.iffath.style_omega.Fragment.searchResults;
 import com.example.iffath.style_omega.Model.SingletonProduct;
 import com.example.iffath.style_omega.Model.User;
 import com.example.iffath.style_omega.R;
 import com.google.android.material.navigation.NavigationView;
 
 import org.jetbrains.annotations.NotNull;
+
 import butterknife.ButterKnife;
 
 public class home extends AppCompatActivity {
@@ -49,13 +44,15 @@ public class home extends AppCompatActivity {
     SingletonProduct singletonProduct = SingletonProduct.getInstance();
     public static String loggedUser= null;
 
+    public home() {
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         setTitle("Select Type");
         //display home fragment as the default for the home screen
-          //homeFragment(); //fail
         if(savedInstanceState == null){
             getSupportFragmentManager()
                     .beginTransaction()
@@ -120,19 +117,30 @@ public class home extends AppCompatActivity {
         else if(item.getItemId() == R.id.search_icon){
             mSearchView = (SearchView) item.getActionView();
             mSearchView.setQueryHint("Search");
+            mSearchView.setSubmitButtonEnabled(true);
+            final searchResults result = new searchResults();
 
             mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
-
+                    result.setMyAdapterFilter(query);
                     return false;
                 }
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
+                    if(!newText.isEmpty()) {
+                        result.setMyAdapterFilter(newText);
+                    }
                     return false;
                 }
             });
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.display_screen, result,"Home")
+                    .addToBackStack("Home")
+                    .commit();
+
         }
         return super.onOptionsItemSelected(item);
     }

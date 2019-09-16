@@ -42,7 +42,7 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/thirstle"
+            android:background="@color/cardview_shadow_end_color"
             android:padding="10dp">
 
             <LinearLayout
