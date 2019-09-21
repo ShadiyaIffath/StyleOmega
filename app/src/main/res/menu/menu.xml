@@ -20,10 +20,11 @@
             android:id="@+id/nav_history"
             android:icon="@drawable/history"
             android:title="@string/history" />
-    </group>
+
 
     <item android:title="Other">
         <menu>
+            <group android:checkableBehavior="single">
             <item
                 android:id="@+id/nav_contact"
                 android:icon="@drawable/help"
@@ -32,6 +33,8 @@
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/signout"
                 android:title="@string/signout"/>
+            </group>
         </menu>
     </item>
+    </group>
 </menu>

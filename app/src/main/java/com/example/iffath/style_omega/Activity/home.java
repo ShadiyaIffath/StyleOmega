@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.iffath.style_omega.Fragment.ContactUs;
 import com.example.iffath.style_omega.Fragment.History;
 import com.example.iffath.style_omega.Fragment.Profile;
 import com.example.iffath.style_omega.Fragment.ViewCart;
@@ -180,6 +181,11 @@ public class home extends AppCompatActivity {
             case R.id.nav_editprofile:
                 Toast.makeText(this,"View Profile",Toast.LENGTH_SHORT).show();
                 fragment = new Profile();
+                break;
+
+            case R.id.nav_contact:
+                Toast.makeText(this,"Contact Us",Toast.LENGTH_SHORT).show();
+                fragment = new ContactUs();
                 break;
 
             case R.id.nav_logout:

@@ -57,9 +57,16 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 .load(product.getThumb())
                 .error(R.drawable.dressfail1)
                 .placeholder(R.drawable.dressfail)
+                .fit()
+                .centerCrop()
                 .into(holder.product_thumbnail);
         holder.price.setText("Rs."+Double.toString(product.getPrice()));
-        holder.quantity.setText(Integer.toString(product.getQuantity()));
+        if(product.getQuantity() ==0){
+            holder.quantity.setText("SOLD OUT");
+        }
+        else{
+            holder.quantity.setText(Integer.toString(product.getQuantity()));
+        }
         holder.item_cardview.setOnClickListener(new View.OnClickListener() {
 
             @Override

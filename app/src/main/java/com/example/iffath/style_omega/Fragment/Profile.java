@@ -29,13 +29,12 @@ public class Profile extends Fragment {
     EditText contactNumber;
     EditText email;
     EditText password;
-    List<User> logged;
     SharedPreferences sharedPreferences;
-    String username;
     Button button;
-
+    User user;
     public Profile() {
         // Required empty public constructor
+
     }
 
     @Override
@@ -43,25 +42,24 @@ public class Profile extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=  inflater.inflate(R.layout.fragment_profile, container, false);
-
+        sharedPreferences = getActivity().getSharedPreferences(Launcher.keyPreference, Context.MODE_PRIVATE);
+        long id = sharedPreferences.getLong("user",0);
+        user = User.findById(User.class,id);
         //retrieve logged user's username
         uname = view.findViewById(R.id.profileUsername);
-        username = home.loggedUser;
-        uname.setText(username);
-
-        logged =User.find(User.class,"username=?",username);
+        uname.setText(user.getUsername());
 
         name = view.findViewById(R.id.profileName);
-        name.setText(logged.get(0).getName());
+        name.setText(user.getName());
 
         contactNumber = view.findViewById(R.id.contactProfile);
-        contactNumber.setText(logged.get(0).getContactNumber());
+        contactNumber.setText(user.getContactNumber());
 
         email = view.findViewById(R.id.emailProfile);
-        email.setText(logged.get(0).getEmail());
+        email.setText(user.getEmail());
 
         password = view.findViewById(R.id.passwordProfile);
-        password.setText(logged.get(0).getPassword());
+        password.setText(user.getPassword());
 
         button = view.findViewById(R.id.profileButton);
         button.setText("Edit");
@@ -96,7 +94,6 @@ public class Profile extends Fragment {
         contactNumber.setFocusable(false);
         name.setFocusable(false);
         //update database
-        User user = User.findById(User.class,logged.get(0).getId());
         user.setName(name.getText().toString());
         user.setContactNumber(contactNumber.getText().toString());
         user.setEmail(email.getText().toString());

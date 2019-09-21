@@ -110,6 +110,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="32dp"
         android:background="@drawable/loginbuttons"
+        android:textColor="@color/cardview_light_background"
         android:text="@string/edit"
         app:layout_constraintBottom_toBottomOf="@+id/regContainer"
         app:layout_constraintEnd_toEndOf="parent"

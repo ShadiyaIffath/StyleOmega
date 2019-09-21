@@ -9,6 +9,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -16,14 +19,17 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class SingletonProduct {
 
     private static SingletonProduct productList = new SingletonProduct();
-    private static String gUrl;
+    private String gUrl;
     private static ArrayList<Product> products;
     private Gson gson;
     private OkHttpClient client;
@@ -69,7 +75,7 @@ public class SingletonProduct {
     public void getAllProducts(){
         gson = new GsonBuilder().create();
         productListTypeToken = new TypeToken<ArrayList<Product>>() {}.getType();
-        gUrl = "http://192.168.1.4:8080/HostelLK/ProductController";
+        gUrl = "http://192.168.1.7:8080/HostelLK/ProductController";
         Log.i("Response","Client started");
         client = new OkHttpClient();
         Request request = new Request
@@ -104,6 +110,41 @@ public class SingletonProduct {
 
                     }
                 });
+    }
+
+    public void loginTest() throws IOException{
+        MediaType MEDIA_TYPE = MediaType.parse("application/json");
+        gUrl = "http://192.168.1.7:8080/HostelLK/ProductController";
+
+        OkHttpClient client = new OkHttpClient();
+
+        JSONObject postdata = new JSONObject();
+
+        RequestBody body = new FormBody.Builder()
+                .add("username", "shadiya")
+                .add("pw", "1234")
+                .build();
+
+        Request request = new Request.Builder()
+                .url(gUrl)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                String mMessage = e.getMessage();
+                Log.w("Response", mMessage);
+                //call.cancel();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String mMessage = response.body().string();
+                Log.e("Response", mMessage);
+            }
+        });
     }
 
 }
