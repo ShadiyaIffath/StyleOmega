@@ -42,7 +42,6 @@ public class SingletonProduct {
     }
 
     public List<Product> getProducts(){
-    //    setTheProducts();
         return products;
     }
 
@@ -112,17 +111,15 @@ public class SingletonProduct {
                 });
     }
 
-    public void loginTest() throws IOException{
-        MediaType MEDIA_TYPE = MediaType.parse("application/json");
+    public void makeInquiry(String sender,String email, String inquriy) throws IOException{
         gUrl = "http://192.168.1.7:8080/HostelLK/ProductController";
 
         OkHttpClient client = new OkHttpClient();
-
-        JSONObject postdata = new JSONObject();
-
         RequestBody body = new FormBody.Builder()
-                .add("username", "shadiya")
-                .add("pw", "1234")
+                .add("form","contact")
+                .add("name", sender)
+                .add("email", email)
+                .add("inquiry",inquriy)
                 .build();
 
         Request request = new Request.Builder()
@@ -145,6 +142,41 @@ public class SingletonProduct {
                 Log.e("Response", mMessage);
             }
         });
+    }
+
+    public void placeOrder(int id, int quantity){
+        gUrl = "http://192.168.1.7:8080/HostelLK/ProductController";
+        OkHttpClient client = new OkHttpClient();
+        RequestBody body = new FormBody.Builder()
+                .add("form","purchased")
+                .add("id", Integer.toString(id))
+                .add("quantity", Integer.toString(quantity))
+                .build();
+
+        Request request = new Request.Builder()
+                .url(gUrl)
+                .post(body)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                String fail = e.getMessage();
+                Log.w("Response", fail);
+                //call.cancel();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String pass = response.body().string();
+                Log.e("Response", pass);
+            }
+        });
+    }
+
+    public void register(){
+
     }
 
 }

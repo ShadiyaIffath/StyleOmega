@@ -14,7 +14,6 @@ public class Product implements Parcelable{
     private String thumb;
     private int quantity;
     private double price;
-    private int thumbnail;
     private String[] colors;
     private String[] sizes;
     private String[] images;
@@ -38,7 +37,7 @@ public class Product implements Parcelable{
         this.images = images;
     }
 
-    public Product(int id, String title, String description, String type, String customer, int quantity, double price, int thumbnail, String[] colors, String[] sizes, String[] images) {
+    public Product(int id, String title, String description, String type, String customer, int quantity, double price, String[] colors, String[] sizes, String[] images) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -46,16 +45,14 @@ public class Product implements Parcelable{
         this.consumer = customer;
         this.quantity = quantity;
         this.price = price;
-        this.thumbnail = thumbnail;
         this.colors = colors;
         this.sizes = sizes;
         this.images = images;
     }
 
-    public Product(int id, String title, String description, String type, String customer, int quantity, double price, int thumbnail,String[] colors, String[] sizes) {
+    public Product(int id, String title, String description, String type, String customer, int quantity, double price,String[] colors, String[] sizes) {
         this.id = id;
         this.title = title;
-        this.thumbnail = thumbnail;
         this.description = description;
         this.type = type;
         this.consumer = customer;
@@ -75,7 +72,6 @@ public class Product implements Parcelable{
         thumb = in.readString();
         quantity = in.readInt();
         price = in.readDouble();
-        thumbnail = in.readInt();
         colors = in.createStringArray();
         sizes = in.createStringArray();
         images = in.createStringArray();
@@ -115,14 +111,6 @@ public class Product implements Parcelable{
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public int getThumbnail() {
-        return thumbnail;
-    }
-
-    public void setThumbnail(int thumbnail) {
-        this.thumbnail = thumbnail;
     }
 
     public String getDescription() {
@@ -220,7 +208,6 @@ public class Product implements Parcelable{
         parcel.writeString(thumb);
         parcel.writeInt(quantity);
         parcel.writeDouble(price);
-        parcel.writeInt(thumbnail);
         parcel.writeStringArray(colors);
         parcel.writeStringArray(sizes);
         parcel.writeStringArray(images);

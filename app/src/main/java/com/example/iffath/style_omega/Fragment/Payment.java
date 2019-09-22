@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.iffath.style_omega.Model.Cart;
 import com.example.iffath.style_omega.Model.Recipient;
+import com.example.iffath.style_omega.Model.SingletonProduct;
 import com.example.iffath.style_omega.Model.User;
 import com.example.iffath.style_omega.R;
 
@@ -42,6 +43,7 @@ public class Payment extends Fragment implements View.OnClickListener {
     Button amex;
     Cart cart = null;
     Recipient recipient;
+    private SingletonProduct singletonProduct = SingletonProduct.getInstance();
 
     public Payment() {
         // Required empty public constructor
@@ -132,7 +134,7 @@ public class Payment extends Fragment implements View.OnClickListener {
         }
         else {
             if (card1.length() != 4 || card2.length() != 4 || card3.length() != 4 || card4.length() != 4 || verify.length() != 3 ||
-                    dateOfExpiry.length() != 5 || dateOfExpiry.charAt(2) != '/' || cardOwner.length() == 0 || !TextUtils.isDigitsOnly(verify)
+                    dateOfExpiry.length() != 5 || dateOfExpiry.charAt(2) != '/' || TextUtils.isEmpty(cardOwner) || !TextUtils.isDigitsOnly(verify)
                     || !TextUtils.isDigitsOnly(card1) || !TextUtils.isDigitsOnly(card2) || !TextUtils.isDigitsOnly(card3)
                     || !TextUtils.isDigitsOnly(card4)) {
                 num1.setText("0000");

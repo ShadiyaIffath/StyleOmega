@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -62,11 +63,10 @@ public class Login extends AppCompatActivity {
             }
         }
         else{
-            if (username.isEmpty()) {
+            if (TextUtils.isEmpty(username)) {
                 uname.setError("Username cannot be blank");
             }
-            if (password.isEmpty()
-            ) {
+            if (TextUtils.isEmpty(password)) {
                 pw.setError("Password cannot be blank");
             }
             Toast.makeText(this, "Login attempt failed", Toast.LENGTH_SHORT).show();

@@ -10,6 +10,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,8 @@ import com.example.iffath.style_omega.Activity.Launcher;
 import com.example.iffath.style_omega.Model.SingletonProduct;
 import com.example.iffath.style_omega.Model.User;
 import com.example.iffath.style_omega.R;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 
@@ -92,20 +95,20 @@ public class ContactUs extends Fragment implements View.OnClickListener {
         inquiryAbout = inquiry.getText().toString();
 
         if(inquirerEmail.isEmpty() || inquirerName.isEmpty() || inquiryAbout.isEmpty()){
-            if(inquirerEmail.isEmpty()){
+            if(TextUtils.isEmpty(inquirerEmail)){
                 email.setError("Enter valid email address");
             }
-            if(inquirerName.isEmpty()){
+            if(TextUtils.isEmpty(inquirerName)){
                 name.setError("Enter name");
             }
-            if(inquiryAbout.isEmpty()){
+            if(TextUtils.isEmpty(inquiryAbout)){
                 inquiry.setError("Enter inquiry information");
             }
             Toast.makeText(getContext(),"Please make sure to fill all fields",Toast.LENGTH_SHORT).show();
         }
         else{
             try {
-                singletonProduct.loginTest();
+                singletonProduct.makeInquiry(inquirerName,inquirerEmail,inquiryAbout);
                 Toast.makeText(getContext(),"Inquiry has been sent",Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 Log.e("Post","Failed");
