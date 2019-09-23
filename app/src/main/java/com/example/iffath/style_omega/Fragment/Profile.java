@@ -1,12 +1,17 @@
 package com.example.iffath.style_omega.Fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,20 +22,24 @@ import android.widget.Toast;
 
 import com.example.iffath.style_omega.Activity.Launcher;
 import com.example.iffath.style_omega.Activity.home;
+import com.example.iffath.style_omega.Model.Cart;
+import com.example.iffath.style_omega.Model.Cart_Product;
 import com.example.iffath.style_omega.Model.User;
 import com.example.iffath.style_omega.R;
 
 import java.util.List;
 
 
-public class Profile extends Fragment {
+public class Profile extends Fragment implements View.OnClickListener {
+    private String pw="";
     EditText name;
     TextView uname;
     EditText contactNumber;
     EditText email;
-    EditText password;
     SharedPreferences sharedPreferences;
     Button button;
+    Button remove;
+    Button password;
     User user;
     public Profile() {
         // Required empty public constructor
@@ -58,25 +67,15 @@ public class Profile extends Fragment {
         email = view.findViewById(R.id.emailProfile);
         email.setText(user.getEmail());
 
-        password = view.findViewById(R.id.passwordProfile);
-        password.setText(user.getPassword());
-
         button = view.findViewById(R.id.profileButton);
         button.setText("Edit");
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String title = button.getText().toString();
-                if(title.equals("Edit")){
-                    editClick();
-                    button.setText("Confirm");
-                }
-                else{
-                    button.setText("Edit");
-                    confirmEdit();
-                }
-            }
-        });
+        button.setOnClickListener(this);
+
+        remove = view.findViewById(R.id.profileRemove);
+        remove.setOnClickListener(this);
+
+        password = view.findViewById(R.id.profilePassword);
+        password.setOnClickListener(this);
         return view;
     }
     public void editClick(){ //enable textfield editability
@@ -84,21 +83,101 @@ public class Profile extends Fragment {
         name.setFocusableInTouchMode(true);
         contactNumber.setFocusableInTouchMode(true);
         email.setFocusableInTouchMode(true);
-        password.setFocusableInTouchMode(true);
+        button.setText("Confirm");
     }
 
     public void confirmEdit(){  //disable textfield editability
         Toast.makeText(getActivity(),"Profile updated",Toast.LENGTH_SHORT).show();
         email.setFocusable(false);
-        password.setFocusable(false);
         contactNumber.setFocusable(false);
         name.setFocusable(false);
+        button.setText("Edit");
         //update database
         user.setName(name.getText().toString());
         user.setContactNumber(contactNumber.getText().toString());
         user.setEmail(email.getText().toString());
-        user.setPassword(password.getText().toString());
         user.save();
     }
 
+    public void removeProfile(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Delete Profile?");
+        final EditText input = new EditText(getContext());
+        input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        builder.setMessage("Enter password to confirm the deletion: ");
+        builder.setView(input);
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        pw = input.getText().toString();
+                        validatePassword();
+                    }
+                });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+
+    }
+
+    public void validatePassword(){
+        if(pw.equals(user.password)) {
+
+            List<Cart> pendingCart = Cart.listAll(Cart.class);
+            Cart usercart = null;
+            for (Cart x : pendingCart) {
+                if (!x.isStatus() && x.getUserId() == user.getId()) {
+                    usercart = x;
+                    break;
+                }
+            }
+
+            if (usercart != null) {
+                List<Cart_Product> products = Cart_Product.listAll(Cart_Product.class);
+                for (Cart_Product x : products) {
+                    if (x.getCartId() == usercart.getId()) {
+                        x.delete();
+                    }
+                }
+            }
+            Log.i("cart", Integer.toString(pendingCart.size()));
+            user.delete();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.apply();
+            Intent intent = new Intent(getActivity(), Launcher.class);
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(getContext(),"Invalid password entered",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.profileButton:
+                if(button.getText().toString().equals("Edit")){
+                    editClick();
+                }
+                else{
+                    confirmEdit();
+                }
+                break;
+
+            case R.id.profileRemove:
+                removeProfile();
+                break;
+
+            case R.id.profilePassword:
+                break;
+
+        }
+    }
 }

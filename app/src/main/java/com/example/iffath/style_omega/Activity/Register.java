@@ -40,60 +40,60 @@ public class Register extends AppCompatActivity {
 
         if (!username.isEmpty() && !User.find(User.class,"username=?",username).isEmpty()) {
             uname.setError("Username is already in use");
-        }
+        }else {
 
-        nameTxt = findViewById(R.id.regName);
-        name = nameTxt.getText().toString();
+            nameTxt = findViewById(R.id.regName);
+            name = nameTxt.getText().toString();
 
-        numberTxt = findViewById(R.id.regNumber);
-        number = numberTxt.getText().toString();
+            numberTxt = findViewById(R.id.regNumber);
+            number = numberTxt.getText().toString();
 
-        emailTxt = findViewById(R.id.regEmail);
-        email = emailTxt.getText().toString();
+            emailTxt = findViewById(R.id.regEmail);
+            email = emailTxt.getText().toString();
 
-        passTxt = findViewById(R.id.regPw);
-        password = passTxt.getText().toString();
-
-
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty()|| number.isEmpty() ||username.isEmpty()) {
-            if (name.isEmpty()) {
-                nameTxt.setError("Name cannot be blank");
-            }
-            if (email.isEmpty()) {
-                emailTxt.setError("E-mail cannot be blank");
-            }
-            if (password.isEmpty()) {
-                passTxt.setError("Password cannot be blank");
-            }
-            if (username.isEmpty()) {
-                uname.setError("Username cannot be blank");
-            }
-            if(number.isEmpty()){
-                numberTxt.setError("Contact number cannot be blank");
-            }
-            Toast.makeText(this, "Registration failed", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Toast.makeText(this, "Welcome "+username, Toast.LENGTH_SHORT).show();
-
-            User user = new User(name,username,email,password,number);
-            user.save();
-            String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-            Cart cart = new Cart(user.getId(), date);
-            cart.save();
+            passTxt = findViewById(R.id.regPw);
+            password = passTxt.getText().toString();
 
 
-            //once successfully registered the username is stored to prevent the user having to login again unless they logout
-            SharedPreferences sharedPreferences  = getSharedPreferences(Launcher.keyPreference, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putLong("user",user.getId());
-            editor.apply();
+            if (name.isEmpty() || email.isEmpty() || password.isEmpty() || number.isEmpty() || username.isEmpty()) {
+                if (name.isEmpty()) {
+                    nameTxt.setError("Name cannot be blank");
+                }
+                if (email.isEmpty()) {
+                    emailTxt.setError("E-mail cannot be blank");
+                }
+                if (password.isEmpty()) {
+                    passTxt.setError("Password cannot be blank");
+                }
+                if (username.isEmpty()) {
+                    uname.setError("Username cannot be blank");
+                }
+                if (number.isEmpty()) {
+                    numberTxt.setError("Contact number cannot be blank");
+                }
+                Toast.makeText(this, "Registration failed", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Welcome " + username, Toast.LENGTH_SHORT).show();
+
+                User user = new User(name, username, email, password, number);
+                user.save();
+                String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+                Cart cart = new Cart(user.getId(), date);
+                cart.save();
+
+
+                //once successfully registered the username is stored to prevent the user having to login again unless they logout
+                SharedPreferences sharedPreferences = getSharedPreferences(Launcher.keyPreference, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putLong("user", user.getId());
+                editor.apply();
 //            editor.putString("username",username);
 //            editor.apply();
 
-            Intent intent = new Intent(this,home.class);
-            startActivity(intent);
+                Intent intent = new Intent(this, home.class);
+                startActivity(intent);
 
+            }
         }
 
     }

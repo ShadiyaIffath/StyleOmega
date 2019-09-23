@@ -1,140 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@drawable/custom_half_screen"
     tools:context=".Fragment.Profile">
 
-    <ImageView
-        android:id="@+id/regContainer"
-        android:layout_width="359dp"
-        android:layout_height="390dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="100dp"
-        android:src="@drawable/rectangle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
         android:id="@+id/profileUsername"
-        android:layout_width="190dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="75dp"
-        android:gravity="center"
-        android:text="Username"
-        android:textColor="@android:color/background_light"
-        android:textSize="45sp"
-        app:fontFamily="cursive"
-        app:layout_constraintBottom_toTopOf="@+id/regContainer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/profileName"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/logintext"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:gravity="center"
-        android:inputType="text"
-        android:text="Name"
-        android:textColor="@color/midnightblue"
-        app:layout_constraintBottom_toTopOf="@+id/emailProfile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/emailProfile"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/logintext"
-        android:focusableInTouchMode="false"
-        android:gravity="center"
-        android:text="email address"
-        android:textColor="@color/midnightblue"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/contactProfile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/contactProfile"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:background="@drawable/logintext"
-        android:focusableInTouchMode="false"
-        android:gravity="center"
-        android:text="contact number"
-        android:inputType="phone"
-        android:textColor="@color/midnightblue"
-        app:layout_constraintBottom_toTopOf="@+id/passwordProfile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/profileButton"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/loginbuttons"
-        android:textColor="@color/cardview_light_background"
-        android:text="@string/edit"
-        app:layout_constraintBottom_toBottomOf="@+id/regContainer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/passwordProfile"
-        android:layout_width="300dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="40dp"
-        android:background="@drawable/logintext"
-        android:ems="10"
-        android:focusableInTouchMode="false"
+        android:padding="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:text="Username"
         android:gravity="center"
-        android:inputType="textPassword"
-        android:textColor="@color/midnightblue"
-        app:layout_constraintBottom_toTopOf="@+id/profileButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:passwordToggleEnabled="true" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:textColor="@android:color/background_light"
+        android:textSize="34sp"
+        app:fontFamily="cursive" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="5dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="50dp"
+        android:orientation="vertical"
+        android:background="@drawable/rectangle">
+
+        <EditText
+            android:id="@+id/profileName"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/logintext"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textColor="@color/midnightblue"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/emailProfile"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_margin="20dp"
+            android:background="@drawable/logintext"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textColor="@color/midnightblue"
+            android:inputType="textEmailAddress"
+            android:text="Email"
+            android:gravity="center"/>
+
+        <EditText
+            android:id="@+id/contactProfile"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/logintext"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:textColor="@color/midnightblue"
+            android:inputType="phone"
+            android:text="Contact Number"
+            android:gravity="center"/>
+
+        <Button
+            android:id="@+id/profileButton"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="20dp"
+            android:textColor="@color/cardview_light_background"
+            android:text="@string/edit"
+            android:background="@drawable/loginbuttons"/>
+
+        <Button
+            android:id="@+id/profilePassword"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/loginbuttons"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:text="Change Password"
+            android:textColor="@color/cardview_light_background" />
+
+        <Button
+            android:id="@+id/profileRemove"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/loginbuttons"
+            android:text="@string/delete"
+            android:backgroundTint="@color/colorAccent"
+            android:textColor="@color/cardview_light_background"/>
+
+
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
+
+</LinearLayout>
