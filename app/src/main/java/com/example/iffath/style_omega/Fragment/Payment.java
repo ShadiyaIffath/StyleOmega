@@ -43,6 +43,7 @@ public class Payment extends Fragment implements View.OnClickListener {
     Button amex;
     Cart cart = null;
     Recipient recipient;
+    double price;
     private SingletonProduct singletonProduct = SingletonProduct.getInstance();
 
     public Payment() {
@@ -76,9 +77,11 @@ public class Payment extends Fragment implements View.OnClickListener {
         master = view.findViewById(R.id.master);
         cost = view.findViewById(R.id.payment__cost);
 
+
         setCart();
         if(cart != null) {
-            cost.setText("Rs. "+Double.toString(cart.getPrice()));
+            price = (cart.getPrice()*11/10);
+            cost.setText("Rs. "+Double.toString(price));
         }
         cardHolder.setText(recipient.getName());
         pay.setOnClickListener(this);
@@ -155,11 +158,13 @@ public class Payment extends Fragment implements View.OnClickListener {
         if(cart != null) {
             String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
             recipient.save();
+            cart.setPrice(price);
             cart.setRecipient(recipient);
             cart.setUpdated(date);
             cart.setStatus(true);
             cart.save();
         }
+        singletonProduct.placeOrder(cart.getId());
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.display_screen, new home_page())
                 .commit();

@@ -50,7 +50,7 @@ public class Login extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Welcome Back " + username, Toast.LENGTH_SHORT).show();
 
-//                on successful login we store the logged in user's username so that the user doesn't have to login everytime
+//                on successful login store the logged in user's username so that the user doesn't have to login everytime
 //                    the app launches
                 sharedPreferences = getSharedPreferences(Launcher.keyPreference, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();

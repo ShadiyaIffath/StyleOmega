@@ -22,6 +22,7 @@ import com.example.iffath.style_omega.Model.Cart_Product;
 import com.example.iffath.style_omega.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class History extends Fragment {
@@ -74,10 +75,9 @@ public class History extends Fragment {
     }
 
     private List<Cart> getCarts(){
-//        Cart.deleteAll(Cart.class);
-//        Cart_Product.deleteAll(Cart_Product.class);
         List<Cart> allCarts = Cart.listAll(Cart.class);
         List<Cart> allOrders = new ArrayList<>();
+        Collections.reverse(allCarts);
         for(Cart s: allCarts){
             if(s.isStatus()){
                 allOrders.add(s);

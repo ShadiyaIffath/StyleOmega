@@ -66,7 +66,7 @@ public class ViewCart extends Fragment implements View.OnClickListener {
         cartItems = new ArrayList<>();
         cartItems = getProducts();
 
-        if (userCart != null || !cartItems.isEmpty()) {
+        if (userCart != null && !cartItems.isEmpty()) {
 
                 checkout.setOnClickListener(this);
 

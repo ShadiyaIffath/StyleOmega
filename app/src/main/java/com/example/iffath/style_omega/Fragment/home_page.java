@@ -68,5 +68,4 @@ public class home_page extends Fragment implements View.OnClickListener{
                 .commit();
         getActivity().setTitle(type);
     }
-
 }

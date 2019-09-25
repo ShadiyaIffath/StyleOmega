@@ -9,12 +9,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Hashtable;
 import java.util.List;
 
 import okhttp3.Call;
@@ -72,9 +71,10 @@ public class SingletonProduct {
 
 
     public void getAllProducts(){
+        gUrl = "http://192.168.8.103:8080/HostelLK/ProductController";
         gson = new GsonBuilder().create();
         productListTypeToken = new TypeToken<ArrayList<Product>>() {}.getType();
-        gUrl = "http://192.168.1.7:8080/HostelLK/ProductController";
+
         Log.i("Response","Client started");
         client = new OkHttpClient();
         Request request = new Request
@@ -112,8 +112,7 @@ public class SingletonProduct {
     }
 
     public void makeInquiry(String sender,String email, String inquriy) throws IOException{
-        gUrl = "http://192.168.1.7:8080/HostelLK/ProductController";
-
+        gUrl = "http://192.168.8.103:8080/HostelLK/ProductController";
         OkHttpClient client = new OkHttpClient();
         RequestBody body = new FormBody.Builder()
                 .add("form","contact")
@@ -121,7 +120,7 @@ public class SingletonProduct {
                 .add("email", email)
                 .add("inquiry",inquriy)
                 .build();
-
+        Log.i("Response","Client started");
         Request request = new Request.Builder()
                 .url(gUrl)
                 .post(body)
@@ -144,15 +143,17 @@ public class SingletonProduct {
         });
     }
 
-    public void placeOrder(int id, int quantity){
-        gUrl = "http://192.168.1.7:8080/HostelLK/ProductController";
+    public void placeOrder(long cartId){
+        gUrl = "http://192.168.8.103:8080/HostelLK/ProductController";
         OkHttpClient client = new OkHttpClient();
+        gson = new GsonBuilder().create();
+        Dictionary orders = getItems(cartId);
+        String orderedItems = gson.toJson(orders);
         RequestBody body = new FormBody.Builder()
                 .add("form","purchased")
-                .add("id", Integer.toString(id))
-                .add("quantity", Integer.toString(quantity))
+                .add("items",orderedItems)
                 .build();
-
+        Log.i("Response","Client started");
         Request request = new Request.Builder()
                 .url(gUrl)
                 .post(body)
@@ -175,8 +176,15 @@ public class SingletonProduct {
         });
     }
 
-    public void register(){
-
+    public Dictionary getItems(long cartId){
+        Dictionary items = new Hashtable();
+        List<Cart_Product> orders = Cart_Product.listAll(Cart_Product.class);
+        for(Cart_Product x: orders){
+            if(x.getCartId() == cartId) {
+                items.put(x.getItemID(), x.getQuantity());
+            }
+        }
+        return items;
     }
 
 }
