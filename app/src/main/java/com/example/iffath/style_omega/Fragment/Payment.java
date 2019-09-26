@@ -137,9 +137,9 @@ public class Payment extends Fragment implements View.OnClickListener {
         }
         else {
             if (card1.length() != 4 || card2.length() != 4 || card3.length() != 4 || card4.length() != 4 || verify.length() != 3 ||
-                    dateOfExpiry.length() != 5 || dateOfExpiry.charAt(2) != '/' || TextUtils.isEmpty(cardOwner) || !TextUtils.isDigitsOnly(verify)
-                    || !TextUtils.isDigitsOnly(card1) || !TextUtils.isDigitsOnly(card2) || !TextUtils.isDigitsOnly(card3)
-                    || !TextUtils.isDigitsOnly(card4)) {
+                    dateOfExpiry.length() != 5 || dateOfExpiry.charAt(2) != '/' || TextUtils.isEmpty(cardOwner) ||
+                    !TextUtils.isDigitsOnly(verify) || !TextUtils.isDigitsOnly(card1) || !TextUtils.isDigitsOnly(card2)
+                    || !TextUtils.isDigitsOnly(card3)|| !TextUtils.isDigitsOnly(card4)) {
                 num1.setText("0000");
                 num2.setText("0000");
                 num3.setText("0000");

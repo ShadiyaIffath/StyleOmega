@@ -9,6 +9,9 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -32,8 +35,7 @@ public class SingletonProduct {
     private static ArrayList<Product> products;
     private Gson gson;
     private OkHttpClient client;
-    Type productListTypeToken;
-    Request request;
+    private Type productListTypeToken;
 
     private SingletonProduct(){
         products = new ArrayList<>();
@@ -65,118 +67,139 @@ public class SingletonProduct {
         }
         return consumerProduct;
     }
+    @Contract(pure = true)
     public static SingletonProduct getInstance(){
         return productList;
     }
 
 
-    public void getAllProducts(){
-        gUrl = "http://192.168.8.103:8080/HostelLK/ProductController";
-        gson = new GsonBuilder().create();
-        productListTypeToken = new TypeToken<ArrayList<Product>>() {}.getType();
+    private void getAllProducts(){
+        try {
+            gUrl = "http://192.168.8.100:8080/HostelLK/ProductController";
+            gson = new GsonBuilder().create();
+            productListTypeToken = new TypeToken<ArrayList<Product>>() {
+            }.getType();
 
-        Log.i("Response","Client started");
-        client = new OkHttpClient();
-        Request request = new Request
-                .Builder()
-                .url(gUrl)
-                .build();
+            Log.i("Response", "Client started");
+            client = new OkHttpClient();
+            Request request = new Request
+                    .Builder()
+                    .url(gUrl)
+                    .build();
 
-        client.newCall(request)
-                .enqueue(new Callback() {
-                    @Override
-                    public void onFailure(Call call, IOException e) {
-                        Log.i("Response",e.toString());
-                    }
+            client.newCall(request)
+                    .enqueue(new Callback() {
+                        @Override
+                        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                            Log.i("Response", e.toString());
+                        }
 
-                    @Override
-                    public void onResponse(Call call, Response response) throws IOException {
-                        try {
-                            String message ="";
-                            if (!response.isSuccessful()) {
-                                Log.i("Response", "not successful");
-                            } else {
-                                message = response.body().string();
-                                products = gson.fromJson(message, productListTypeToken);
+                        @Override
+                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                            try {
+                                String message = "";
+                                if (!response.isSuccessful()) {
+                                    Log.i("Response", "not successful");
+                                } else {
+                                    if(response.body()!=null) {
+                                        message = response.body().string();
+                                        products = gson.fromJson(message, productListTypeToken);
+                                    }
+                                }
+                                Log.i("JSON", message);
+                            } catch (JsonSyntaxException e) {
+                                e.printStackTrace();
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                            Log.i("JSON", message);
                         }
-                        catch (JsonSyntaxException e) {
-                            e.printStackTrace();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                });
+                    });
+        }
+        catch(Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     public void makeInquiry(String sender,String email, String inquriy) throws IOException{
-        gUrl = "http://192.168.8.103:8080/HostelLK/ProductController";
-        OkHttpClient client = new OkHttpClient();
-        RequestBody body = new FormBody.Builder()
-                .add("form","contact")
-                .add("name", sender)
-                .add("email", email)
-                .add("inquiry",inquriy)
-                .build();
-        Log.i("Response","Client started");
-        Request request = new Request.Builder()
-                .url(gUrl)
-                .post(body)
-                .build();
+        try {
+            gUrl = "http://192.168.8.100:8080/HostelLK/ProductController";
+            OkHttpClient client = new OkHttpClient();
+            RequestBody body = new FormBody.Builder()
+                    .add("form", "contact")
+                    .add("name", sender)
+                    .add("email", email)
+                    .add("inquiry", inquriy)
+                    .build();
+            Log.i("Response", "Client started");
+            Request request = new Request.Builder()
+                    .url(gUrl)
+                    .post(body)
+                    .build();
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                String mMessage = e.getMessage();
-                Log.w("Response", mMessage);
-                //call.cancel();
-            }
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    String mMessage = e.getMessage();
+                    Log.w("Response", mMessage);
+                    //call.cancel();
+                }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
 
-                String mMessage = response.body().string();
-                Log.e("Response", mMessage);
-            }
-        });
+                    if(response.body()!=null) {
+                        String mMessage = response.body().string();
+                        Log.e("Response", mMessage);
+                    }
+                }
+            });
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
     public void placeOrder(long cartId){
-        gUrl = "http://192.168.8.103:8080/HostelLK/ProductController";
-        OkHttpClient client = new OkHttpClient();
-        gson = new GsonBuilder().create();
-        Dictionary orders = getItems(cartId);
-        String orderedItems = gson.toJson(orders);
-        RequestBody body = new FormBody.Builder()
-                .add("form","purchased")
-                .add("items",orderedItems)
-                .build();
-        Log.i("Response","Client started");
-        Request request = new Request.Builder()
-                .url(gUrl)
-                .post(body)
-                .build();
+        try {
+            gUrl = "http://192.168.8.100:8080/HostelLK/ProductController";
+            OkHttpClient client = new OkHttpClient();
+            gson = new GsonBuilder().create();
+            Dictionary orders = getItems(cartId);
+            String orderedItems = gson.toJson(orders);
+            RequestBody body = new FormBody.Builder()
+                    .add("form", "purchased")
+                    .add("items", orderedItems)
+                    .build();
+            Log.i("Response", "Client started");
+            Request request = new Request.Builder()
+                    .url(gUrl)
+                    .post(body)
+                    .build();
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                String fail = e.getMessage();
-                Log.w("Response", fail);
-                //call.cancel();
-            }
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    String fail = e.getMessage();
+                    Log.w("Response", fail);
+                    //call.cancel();
+                }
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
+                @Override
+                public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
 
-                String pass = response.body().string();
-                Log.e("Response", pass);
-            }
-        });
+                    if(response.body()!=null) {
+                        String mMessage = response.body().string();
+                        Log.e("Response", mMessage);
+                    }
+                }
+            });
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
     }
 
-    public Dictionary getItems(long cartId){
+    private Dictionary getItems(long cartId){
         Dictionary items = new Hashtable();
         List<Cart_Product> orders = Cart_Product.listAll(Cart_Product.class);
         for(Cart_Product x: orders){

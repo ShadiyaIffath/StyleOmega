@@ -39,8 +39,6 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import butterknife.Unbinder;
-
 public class Detailed_item extends Fragment implements View.OnClickListener{
     TextView title;
     TextView price;
@@ -59,8 +57,6 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
     ViewPager pages;
     private int pageCount = 0;
     private int currentPage =0;
-
-    private Unbinder unbinder;
 
     public Detailed_item(){
 
@@ -104,14 +100,6 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
                 description.setText(product.getDescription());
                 category.setText(product.getType());
 
-//                Picasso.get()
-//                        .load(product.getThumb())
-//                        .error(R.drawable.dressfail1)
-//                        .placeholder(R.drawable.dressfail)
-//                        .into(thumbnail);
-//                //  thumbnail.setImageResource(product.getThumbnail());
-
-                //image slider section
                 String[] images = product.getImages();
                 pages.setAdapter(new ImageSlider(getContext(),images));
                 CirclePageIndicator indicator = view.findViewById(R.id.image_indicator);
@@ -256,7 +244,6 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
                 }
             }
 
-
             String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
             if (userCart != null) {  //use existing cart
@@ -281,8 +268,8 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
 
             else {  // creates a new item in the cart
                 Toast.makeText(getActivity(),"New item Created",Toast.LENGTH_SHORT).show();
-                addedItem =
-                        new Cart_Product(userCart.getId(), product.getId(), product.getPrice(), Integer.parseInt(quantity.getText().toString()));
+                addedItem = new Cart_Product
+                        (userCart.getId(), product.getId(), product.getPrice(), Integer.parseInt(quantity.getText().toString()));
                 addedItem.save();
             }
             userCart.setPrice(addedItem.getPrice()*addedItem.getQuantity()+userCart.getPrice());    //update price shown by the cart
@@ -301,8 +288,10 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
             String shareBody = "Item: " +
-                    "" + product.getTitle() + "\nPrice: Rs." + product.getPrice() + "\nType: " + product.getType()+"\n"+product.getThumb();
-            shareBody += " \nThe url of the application: https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "\n\n";
+                    "" + product.getTitle() + "\nPrice: Rs." + product.getPrice() + "\nType: "
+                    + product.getType()+"\n"+product.getThumb();
+            shareBody += " \nThe url of the application: https://play.google.com/store/apps/details?id="
+                    + BuildConfig.APPLICATION_ID + "\n\n";
             String subject = "Style Omega Clothing Shop";
             shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareBody);

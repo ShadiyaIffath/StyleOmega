@@ -16,10 +16,15 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 
 import com.example.iffath.style_omega.Fragment.ContactUs;
+import com.example.iffath.style_omega.Fragment.DeliveryLocation;
+import com.example.iffath.style_omega.Fragment.Detailed_item;
 import com.example.iffath.style_omega.Fragment.History;
+import com.example.iffath.style_omega.Fragment.Payment;
 import com.example.iffath.style_omega.Fragment.Profile;
+import com.example.iffath.style_omega.Fragment.TypeHome;
 import com.example.iffath.style_omega.Fragment.ViewCart;
 import com.example.iffath.style_omega.Fragment.home_page;
 import com.example.iffath.style_omega.Fragment.searchResults;
@@ -30,7 +35,6 @@ import com.google.android.material.navigation.NavigationView;
 
 import org.jetbrains.annotations.NotNull;
 
-import butterknife.ButterKnife;
 
 public class home extends AppCompatActivity {
     private DrawerLayout drawer;
@@ -82,10 +86,9 @@ public class home extends AppCompatActivity {
         //navigation view is settled along with the header text field value
         navDrawer = findViewById(R.id.navigationHome);
         navigationHeader = navDrawer.getHeaderView(0);
-        nametxt = ButterKnife.findById(navigationHeader,R.id.navigation_user);
+        nametxt = navigationHeader.findViewById(R.id.navigation_user);
         nametxt.setText(username); //set username in the navigation header
         setupDrawerContent(navDrawer);
-
     }
 
     @Override
@@ -105,7 +108,41 @@ public class home extends AppCompatActivity {
             drawer.closeDrawer(GravityCompat.START);
         }
         else {
-            super.onBackPressed();
+            FragmentManager manager = getSupportFragmentManager();
+            if(manager.getBackStackEntryCount() > 0) {
+                super.onBackPressed();
+            }
+            Fragment currentFragment = manager.findFragmentById(R.id.display_screen);
+            if(currentFragment instanceof home_page){
+                navDrawer.getMenu().getItem(0).setChecked(true);
+            }
+            else if(currentFragment instanceof History){
+                navDrawer.getMenu().getItem(3).setChecked(true);
+            }
+            else if(currentFragment instanceof ContactUs){
+                navDrawer.getMenu().getItem(4).setChecked(true);
+            }
+            else if(currentFragment instanceof DeliveryLocation){
+                navDrawer.getMenu().getItem(2).setChecked(true);
+            }
+            else if(currentFragment instanceof Payment){
+                navDrawer.getMenu().getItem(2).setChecked(true);
+            }
+            else if(currentFragment instanceof ViewCart){
+                navDrawer.getMenu().getItem(2).setChecked(true);
+            }
+            else if(currentFragment instanceof searchResults){
+                navDrawer.getMenu().getItem(0).setChecked(true);
+            }
+            else if(currentFragment instanceof Detailed_item) {
+                navDrawer.getMenu().getItem(0).setChecked(true);
+            }
+            else if(currentFragment instanceof Profile) {
+                navDrawer.getMenu().getItem(1).setChecked(true);
+            }
+            else if(currentFragment instanceof TypeHome) {
+                navDrawer.getMenu().getItem(0).setChecked(true);
+            }
         }
     }
 

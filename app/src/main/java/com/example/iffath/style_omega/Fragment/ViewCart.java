@@ -19,16 +19,13 @@ import android.widget.Toast;
 
 import com.example.iffath.style_omega.Activity.Launcher;
 import com.example.iffath.style_omega.Adapter.CartRecycleAdapter;
-import com.example.iffath.style_omega.Adapter.RecyclerViewAdapter;
 import com.example.iffath.style_omega.Interface.CustomItemClickListener;
 import com.example.iffath.style_omega.Model.Cart;
 import com.example.iffath.style_omega.Model.Cart_Product;
 import com.example.iffath.style_omega.Model.Product;
 import com.example.iffath.style_omega.Model.SingletonProduct;
-import com.example.iffath.style_omega.Model.User;
 import com.example.iffath.style_omega.R;
 
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,8 +33,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 public class ViewCart extends Fragment implements View.OnClickListener {

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,7 +52,7 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> {
         Cart_Product selected = orderedProducts.get(position);
 
         int productId = selected.getItemID();
-        Product product = getProduct(productId);
+        final Product product = getProduct(productId);
 
         if(product!= null){
             //Double quantity = selected.getQuantity()* product.getPrice(); //calculate cost
@@ -89,13 +90,18 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> {
                 public void onClick(View v) {
                     listener.onItemClick(v,position);
                     int count = Integer.parseInt(holder.quantity.getText().toString()) + 1;
-                    Cart_Product product1 = orderedProducts.get(position);
+                    if(product.getQuantity() < count) {
+                        Cart_Product product1 = orderedProducts.get(position);
 
-                    product1.setQuantity(count);
-                    product1.update();
-                    orderedProducts.set(position,product1);
-                    notifyItemChanged(position);
-                    holder.quantity.setText(Integer.toString(count));
+                        product1.setQuantity(count);
+                        product1.update();
+                        orderedProducts.set(position, product1);
+                        notifyItemChanged(position);
+                        holder.quantity.setText(Integer.toString(count));
+                    }
+                    else{
+                        Toast.makeText(context,"You cannot increase anymore",Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             holder.decreaseButton.setOnClickListener(new View.OnClickListener() {

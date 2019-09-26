@@ -53,6 +53,7 @@ public class Profile extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view=  inflater.inflate(R.layout.fragment_profile, container, false);
+        getActivity().setTitle("View profile");
         context = getContext();
         sharedPreferences = getActivity().getSharedPreferences(Launcher.keyPreference, Context.MODE_PRIVATE);
         long id = sharedPreferences.getLong("user",0);
