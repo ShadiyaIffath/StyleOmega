@@ -22,7 +22,6 @@ import java.util.List;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -75,7 +74,7 @@ public class SingletonProduct {
 
     private void getAllProducts(){
         try {
-            gUrl = "http://192.168.8.100:8080/HostelLK/ProductController";
+            gUrl = "http://10.3.4.49:8080/HostelLK/ProductController";
             gson = new GsonBuilder().create();
             productListTypeToken = new TypeToken<ArrayList<Product>>() {
             }.getType();
@@ -122,7 +121,7 @@ public class SingletonProduct {
 
     public void makeInquiry(String sender,String email, String inquriy) throws IOException{
         try {
-            gUrl = "http://192.168.8.100:8080/HostelLK/ProductController";
+            gUrl = "http://10.3.4.49:8080/HostelLK/ProductController";
             OkHttpClient client = new OkHttpClient();
             RequestBody body = new FormBody.Builder()
                     .add("form", "contact")
@@ -161,7 +160,7 @@ public class SingletonProduct {
 
     public void placeOrder(long cartId){
         try {
-            gUrl = "http://192.168.8.100:8080/HostelLK/ProductController";
+            gUrl = "http://10.3.4.49:8080/HostelLK/ProductController";
             OkHttpClient client = new OkHttpClient();
             gson = new GsonBuilder().create();
             Dictionary orders = getItems(cartId);

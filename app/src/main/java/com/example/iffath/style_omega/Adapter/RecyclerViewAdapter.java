@@ -10,6 +10,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -138,6 +139,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         }
                     }
                     filteredProducts = filteredList;
+                    if(filteredList.isEmpty()){
+                        Toast.makeText(context,"No items",Toast.LENGTH_SHORT).show();
+                    }
 
                 }
                 FilterResults filterResults = new FilterResults();

@@ -57,12 +57,12 @@ public class History extends Fragment {
             adapter = new HistoryCartAdapter(this.getContext(), orders, new CustomItemClickListener() {
                 @Override
                 public void onItemClick(View v, int position) {
-//                    if(v.getId() == R.id.history_card){
-//                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//                        transaction.replace(R.id.display_screen, new ViewCart())
-//                                .addToBackStack(null)
-//                                .commit();
-//                    }
+                    if(v.getId() == R.id.history_card){
+                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.display_screen, new ViewCart(true,orders.get(position)))
+                                .addToBackStack(null)
+                                .commit();
+                    }
                 }
             });
             recyclerView.setAdapter(adapter);

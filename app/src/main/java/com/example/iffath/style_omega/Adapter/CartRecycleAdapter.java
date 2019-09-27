@@ -1,5 +1,6 @@
 package com.example.iffath.style_omega.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -29,12 +30,16 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> {
     private Context context;
     CustomItemClickListener listener;
     private List<Cart_Product> orderedProducts;
-    private final List<Product> allProducts = SingletonProduct.getInstance().getProducts();
+    private boolean status = false;
 
     public CartRecycleAdapter(Context context, List<Cart_Product> products, CustomItemClickListener listener) {
         this.context = context;
         this.orderedProducts = products;
         this.listener = listener;
+    }
+
+    public void setButtonDisable(boolean status){
+        this.status = status;
     }
 
 
@@ -47,12 +52,13 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> {
         return new CartHolder(view);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onBindViewHolder(@NonNull final CartHolder holder, final int position) {
         Cart_Product selected = orderedProducts.get(position);
 
         int productId = selected.getItemID();
-        final Product product = getProduct(productId);
+        final Product product = SingletonProduct.findProduct(productId);
 
         if(product!= null){
             //Double quantity = selected.getQuantity()* product.getPrice(); //calculate cost
@@ -66,6 +72,10 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> {
                     .into(holder.thumbnail);
             holder.cost.setText(Double.toString(product.getPrice()));
             holder.quantity.setText(Integer.toString(selected.getQuantity()));
+
+            if(status){
+                disableButtons(holder);
+            }
 
             holder.cartItem.setOnTouchListener(new View.OnTouchListener() { //handle double tap feature of the card
                                                                             //which redirects user to a detailed view of the item
@@ -88,19 +98,17 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> {
             holder.increaseButton.setOnClickListener(new View.OnClickListener() { // item quantity increase function
                 @Override
                 public void onClick(View v) {
-                    listener.onItemClick(v,position);
-                    int count = Integer.parseInt(holder.quantity.getText().toString()) + 1;
+                    int count = Integer.parseInt(holder.quantity.getText().toString())+1;
                     if(product.getQuantity() < count) {
+                        Toast.makeText(context, "You cannot increase anymore", Toast.LENGTH_SHORT).show();
+                    } else {
+                        listener.onItemClick(v,position);
                         Cart_Product product1 = orderedProducts.get(position);
-
                         product1.setQuantity(count);
                         product1.update();
                         orderedProducts.set(position, product1);
                         notifyItemChanged(position);
                         holder.quantity.setText(Integer.toString(count));
-                    }
-                    else{
-                        Toast.makeText(context,"You cannot increase anymore",Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -139,15 +147,10 @@ public class CartRecycleAdapter extends RecyclerView.Adapter<CartHolder> {
         return orderedProducts.size();
     }
 
-    public Product getProduct(int productId){
-        Product product= null;
-        for (Product x:allProducts) {
-            if(x.getId() == productId){
-                product = x;
-                break;
-            }
-        }
-        return product;
+    private void disableButtons(CartHolder holder){
+        holder.removeButton.setEnabled(false);
+        holder.increaseButton.setEnabled(false);
+        holder.decreaseButton.setEnabled(false);
     }
 
 }

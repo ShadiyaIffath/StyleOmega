@@ -47,7 +47,6 @@ public class home extends AppCompatActivity {
     TextView nametxt;
     String username;
     SharedPreferences sharedPreferences;
-    SingletonProduct singletonProduct = SingletonProduct.getInstance();
     public static String loggedUser= null;
 
     public home() {

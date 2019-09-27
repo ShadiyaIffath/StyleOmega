@@ -90,20 +90,28 @@ public class Profile extends Fragment implements View.OnClickListener {
         button.setText("Confirm");
     }
 
-    public void confirmEdit(){  //disable textfield editability
-        Toast.makeText(getActivity(),"Profile updated",Toast.LENGTH_SHORT).show();
-        email.setFocusable(false);
-        contactNumber.setFocusable(false);
-        name.setFocusable(false);
-        button.setText("Edit");
-        //update database
-        user.setName(name.getText().toString());
-        user.setContactNumber(contactNumber.getText().toString());
-        user.setEmail(email.getText().toString());
-        user.save();
+    private void confirmEdit(){  //disable textfield editability
+        String user_name = name.getText().toString();
+        String user_email = email.getText().toString();
+        String user_contact = contactNumber.getText().toString();
+        if(TextUtils.isEmpty(user_name)|| TextUtils.isEmpty(user_email)|| TextUtils.isEmpty(user_contact)){
+            Toast.makeText(getActivity(), "Error, Make sure to have values for all the fields", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            Toast.makeText(getActivity(), "Profile updated", Toast.LENGTH_SHORT).show();
+            email.setFocusable(false);
+            contactNumber.setFocusable(false);
+            name.setFocusable(false);
+            button.setText("Edit");
+            //update database
+            user.setName(user_name);
+            user.setContactNumber(user_contact);
+            user.setEmail(user_email);
+            user.save();
+        }
     }
 
-    public void removeProfile(){
+    private void removeProfile(){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Delete Profile?");

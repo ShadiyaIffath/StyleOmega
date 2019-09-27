@@ -42,11 +42,17 @@ public class ViewCart extends Fragment implements View.OnClickListener {
     RecyclerView recycler_cart;
     TextView totalPrice;
     Button checkout;
-    Cart userCart;
+    Cart userCart = null;
+    private boolean status = false;
     List<Cart_Product> cartItems;
 
     public ViewCart(){
         // Required empty public constructor
+    }
+
+    public ViewCart(boolean status, Cart cart){
+        this.status = status;
+        userCart = cart;
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,13 +62,18 @@ public class ViewCart extends Fragment implements View.OnClickListener {
         getActivity().setTitle("My Cart");
         totalPrice = view.findViewById(R.id.totalPricetxt);
         checkout = view.findViewById(R.id.checkout_button);
-        userCart = null;
-
         cartItems = new ArrayList<>();
-        cartItems = getProducts();
+
+        if(userCart != null){
+            cartItems = findProducts(userCart.getId());
+            checkout.setEnabled(false);
+        }
+        else {
+            cartItems = getProducts();
+        }
 
         if (userCart != null && !cartItems.isEmpty()) {
-
+                totalPrice.setText(Double.toString(userCart.getPrice()));
                 checkout.setOnClickListener(this);
 
                 recycler_cart = view.findViewById(R.id.recycler_cart);
@@ -76,10 +87,10 @@ public class ViewCart extends Fragment implements View.OnClickListener {
                         String date = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
                         switch (id) {
                             case (R.id.increase):
-                                cost += product.getPrice();
-                                userCart.setUpdated(date);
-                                userCart.setPrice(cost);
-                                userCart.save();
+                                    cost += product.getPrice();
+                                    userCart.setUpdated(date);
+                                    userCart.setPrice(cost);
+                                    userCart.save();
                                 break;
                             case (R.id.decrease):
                                 cost -= product.getPrice();
@@ -101,6 +112,7 @@ public class ViewCart extends Fragment implements View.OnClickListener {
                                     Toast.makeText(getActivity(), "Cart is empty", Toast.LENGTH_SHORT).show();
                                 }
                                 break;
+
                             case R.id.cart_item:
                                 Bundle args = new Bundle();
                                 Product productSelected = SingletonProduct.findProduct(product.getItemID());
@@ -122,6 +134,7 @@ public class ViewCart extends Fragment implements View.OnClickListener {
                 });
                 recycler_cart.setAdapter(myAdapter);
                 recycler_cart.setLayoutManager(new LinearLayoutManager(getContext()));
+                myAdapter.setButtonDisable(status);
 
             } else {
                 Toast.makeText(getActivity(), "No items", Toast.LENGTH_SHORT).show();
@@ -141,7 +154,7 @@ public class ViewCart extends Fragment implements View.OnClickListener {
         getActivity().setTitle("Check Out");
     }
 
-    public List<Cart_Product> getProducts(){
+    private List<Cart_Product> getProducts(){
         List<Cart_Product> orderedProducts = new ArrayList<>();
 
         sharedPreferences = getActivity().getSharedPreferences(Launcher.keyPreference, Context.MODE_PRIVATE);
@@ -162,15 +175,20 @@ public class ViewCart extends Fragment implements View.OnClickListener {
         if(userCart != null) {
             long cartId = userCart.getId();
             sum = userCart.getPrice();
-
-            List<Cart_Product> allProductsOrdered = Cart_Product.listAll(Cart_Product.class);
-            for (Cart_Product xProduct : allProductsOrdered) {
-                if (xProduct.getCartId() == cartId) {
-                    orderedProducts.add(xProduct);
-                }
-            }
+            orderedProducts = findProducts(cartId);
 
             totalPrice.setText(Double.toString(sum));
+        }
+        return orderedProducts;
+    }
+
+    private List<Cart_Product> findProducts(long cartId){
+        List<Cart_Product> orderedProducts = new ArrayList<>();
+        List<Cart_Product> allProductsOrdered = Cart_Product.listAll(Cart_Product.class);
+        for (Cart_Product xProduct : allProductsOrdered) {
+            if (xProduct.getCartId() == cartId) {
+                orderedProducts.add(xProduct);
+            }
         }
         return orderedProducts;
     }

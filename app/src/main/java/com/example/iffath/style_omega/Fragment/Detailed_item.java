@@ -47,7 +47,6 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
     Product product;
     TextView size;
     TextView color;
-    ImageView imageSlider;
     TextView quantity;
     TextView priceTag;
     TextView shareButton;
@@ -174,7 +173,7 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
         }
     }
 
-    public void increaseQuantity(){     //increase button
+    private void increaseQuantity(){     //increase button
         int sum = Integer.parseInt(quantity.getText().toString());
         sum++;
         if(product.getQuantity() < sum){
@@ -185,7 +184,7 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
         }
     }
 
-    public void decreaseQuantity(){     //decrease button
+    private void decreaseQuantity(){     //decrease button
         int sum = Integer.parseInt(quantity.getText().toString());
         sum--;
         if(sum < 0){
@@ -196,7 +195,7 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
         }
     }
 
-    public void addToCart(){        //Create cart object on confirmation
+    private void addToCart(){        //Create cart object on confirmation
         int sum = Integer.parseInt(quantity.getText().toString());
         if(sum <= 0){
             Toast.makeText(getActivity(), "You cannot place the order", Toast.LENGTH_SHORT).show();
@@ -206,7 +205,7 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
         }
     }
 
-    public void showPopupDialog(){    //method which shows a dialog for confirmation when customer clicks add to cart
+    private void showPopupDialog(){    //method which shows a dialog for confirmation when customer clicks add to cart
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Confirm add to cart");
         builder.setMessage("\tYou are about to place an order for \n\t"+
@@ -257,22 +256,23 @@ public class Detailed_item extends Fragment implements View.OnClickListener{
 
             long existingOrderId = verifyItemExistsInCart(userCart.getId(),product.getId());
             Cart_Product addedItem = null;
-
+            int itemCount = Integer.parseInt(quantity.getText().toString());
             if(existingOrderId != -1){ // updates quantity of the existing item
                 addedItem = Cart_Product.findById(Cart_Product.class,existingOrderId);
-                addedItem.setQuantity(addedItem.getQuantity()+Integer.parseInt(quantity.getText().toString()));
+                addedItem.setQuantity(addedItem.getQuantity()+itemCount);
                 Toast.makeText(getActivity(),"Existing item updated" +
                         "",Toast.LENGTH_SHORT).show();
                 addedItem.save();
+                userCart.setPrice(userCart.getPrice() +(itemCount * product.getPrice()));
             }
 
             else {  // creates a new item in the cart
                 Toast.makeText(getActivity(),"New item Created",Toast.LENGTH_SHORT).show();
                 addedItem = new Cart_Product
-                        (userCart.getId(), product.getId(), product.getPrice(), Integer.parseInt(quantity.getText().toString()));
+                        (userCart.getId(), product.getId(), product.getPrice(), itemCount);
                 addedItem.save();
+                userCart.setPrice(addedItem.getPrice()*addedItem.getQuantity()+userCart.getPrice());    //update price shown by the cart
             }
-            userCart.setPrice(addedItem.getPrice()*addedItem.getQuantity()+userCart.getPrice());    //update price shown by the cart
             userCart.save();
 
         }

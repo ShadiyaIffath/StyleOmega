@@ -35,8 +35,6 @@
         <activity android:name=".Activity.Register" />
         <activity
             android:name=".Activity.Login"/>
-        <activity android:name=".Activity.MainActivity">
-        </activity>
 
         <meta-data
             android:name="DATABASE"

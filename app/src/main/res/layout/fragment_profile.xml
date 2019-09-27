@@ -100,7 +100,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
-            android:backgroundTint="@color/colorPrimary"
+            android:backgroundTint="@color/indigo"
             android:text="Change Password"
             android:textColor="@color/cardview_light_background" />
 

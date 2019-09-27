@@ -76,4 +76,6 @@ public class HistoryCartAdapter extends RecyclerView.Adapter<HistoryHolder> {
     public int getItemCount() {
         return allCarts.size();
     }
+
+
 }
